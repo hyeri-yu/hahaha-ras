@@ -32,7 +32,6 @@ button,select,textarea{font:inherit}
 button{cursor:pointer}
 .shell{width:min(1160px,94%);margin:auto}
 
-/* 상단 로고 */
 header{
   padding:24px 0;
   display:flex;
@@ -80,7 +79,6 @@ nav button,nav a{
 
 nav button:hover,nav a:hover{background:var(--lavender)}
 
-/* 날짜와 시간 */
 .daily-board{
   margin:8px 0 38px;
   padding:22px 0;
@@ -144,7 +142,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   background:white;
 }
 
-/* 달력 */
 .calendar-wrap{
   margin:18px 0 0;
   width:100%;
@@ -249,7 +246,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   margin:13px 0 0;
 }
 
-/* 개인 일정 메모 */
 .memo-panel{
   margin-top:18px;
   padding:22px;
@@ -350,7 +346,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   font-size:14px;
 }
 
-/* 과목 카드 */
 .section{margin:35px 0 45px}
 
 .section h2{
@@ -362,7 +357,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 
 .courses{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:18px;
 }
 
@@ -370,7 +365,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   border:1px solid white;
   border-radius:26px;
   padding:24px;
-  min-height:250px;
+  min-height:220px;
   text-align:left;
   color:var(--purple);
   transition:transform .2s;
@@ -381,6 +376,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 .read{background:#FBECEF}
 .art{background:#FFF2DE}
 .sports{background:#E5F2EA}
+.safety{background:#EAF0FA}
 
 .icon{
   font-size:43px;
@@ -412,7 +408,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   color:#786782;
 }
 
-/* 학습 페이지 */
 .page{display:none;padding:20px 0 50px}
 .page.active{display:block}
 
@@ -530,6 +525,60 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 .primary{background:var(--purple);color:white}
 .soft{background:var(--lavender);color:var(--purple)}
 
+/* 안전교육 교실 */
+.safety-intro{
+  background:#F1F5FC;
+  border-radius:22px;
+  padding:28px;
+  text-align:center;
+  margin:20px 0;
+}
+
+.safety-intro .big-icon{font-size:65px}
+
+.safety-intro h3{
+  color:#526C96;
+  font-size:24px;
+  margin:8px 0;
+}
+
+.safety-topics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:20px;
+}
+
+.safety-topic{
+  background:#F8FAFE;
+  border:1px solid #E5EAF4;
+  border-radius:18px;
+  padding:20px 14px;
+  text-align:center;
+}
+
+.safety-topic .topic-icon{font-size:42px}
+.safety-topic h3{
+  color:#526C96;
+  font-size:18px;
+  margin:8px 0;
+}
+.safety-topic p{
+  font-size:14px;
+  color:#7E8798;
+  margin:0;
+}
+
+.safety-message{
+  background:#FFF8E9;
+  padding:20px;
+  border-radius:16px;
+  margin-top:18px;
+  text-align:center;
+  color:#927343;
+  font-weight:700;
+}
+
 footer{
   text-align:center;
   padding:30px 10px;
@@ -538,7 +587,6 @@ footer{
   border-top:1px solid #F0EBF2;
 }
 
-/* 모바일 */
 @media(max-width:750px){
   header{flex-direction:column;align-items:flex-start}
   .daily-top{grid-template-columns:1fr}
@@ -555,6 +603,7 @@ footer{
   .courses{grid-template-columns:1fr}
   .teacher{grid-template-columns:1fr}
   .memo-panel{padding:15px}
+  .safety-topics{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -570,7 +619,7 @@ footer{
     <span class="ras">RAS</span>
   </span>
   <span class="brand-line">
-    <span class="dream">꿈</span><span class="na">나</span><span class="dream" style="color:var(--yellow)">라</span><span class="agana"> 교실</span>
+    <span class="dream">꿈</span><span class="na">나</span><span style="color:var(--yellow)">라</span><span class="agana"> 교실</span>
   </span>
   <span class="brand-sub">READ · ART · SPORTS</span>
 </a>
@@ -579,6 +628,7 @@ footer{
 <button onclick="home()">홈</button>
 <button onclick="openRead()">속담풀이</button>
 <button onclick="coming()">명화감상</button>
+<button onclick="openSafety()">안전교육</button>
 <a href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">놀이체육 ↗</a>
 </nav>
 </header>
@@ -616,14 +666,12 @@ footer{
   </div>
 </div>
 
-<!-- 달력 -->
 <div class="calendar-wrap">
   <div class="calendar-title" id="calendarTitle"></div>
   <div class="calendar-grid" id="calendarGrid"></div>
   <p class="calendar-help">날짜를 누르면 우리 반 일정을 기록할 수 있어요.</p>
 </div>
 
-<!-- 개인 메모 -->
 <div class="memo-panel">
   <h3 class="memo-title">📝 나만의 일정 메모</h3>
   <div class="memo-date" id="memoDate"></div>
@@ -645,7 +693,7 @@ footer{
 </section>
 
 <!-- 과목 카드 -->
-<section class="section" id="courses">
+<section class="section">
 <h2>어떤 교실에서 배워볼까요?</h2>
 
 <div class="courses">
@@ -669,6 +717,13 @@ footer{
 <h3>하하하 놀이체육</h3>
 <p>몸을 움직이며 신나게 놀고 즐겁게 도전해요.</p>
 <span class="tag">체육 · 신체활동</span>
+</button>
+
+<button class="course safety" onclick="openSafety()">
+<span class="icon">🧭</span>
+<h3>나침반 안전교육</h3>
+<p>생활 속 위험을 알아보고 안전하게 행동하는 방법을 배워요.</p>
+<span class="tag">생활안전 · 교통안전 · 재난안전</span>
 </button>
 
 </div>
@@ -719,10 +774,6 @@ footer{
 <button class="btn primary" onclick="reveal()">속담과 뜻 만나기</button>
 <button class="btn soft" onclick="randomProverb()">다른 속담 뽑기</button>
 </div>
-
-<p style="text-align:center;color:#A394A8;font-size:13px">
-그림 관찰 → 생각 나누기 → 속담 확인하기
-</p>
 </section>
 
 <!-- 명화감상 -->
@@ -733,6 +784,51 @@ footer{
 <h2>하하하 명화감상</h2>
 <p>새로운 명화와 감상 활동이 준비되고 있어요!</p>
 </div>
+</section>
+
+<!-- 나침반 안전교육 -->
+<section id="safetyPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+
+<div class="page-title">
+<p>SAFETY · CARE · PRACTICE</p>
+<h2>🧭 나침반 안전교육</h2>
+<p>안전한 생활을 위한 나만의 방향을 찾아봐요.</p>
+</div>
+
+<div class="safety-intro">
+<div class="big-icon">🧭</div>
+<h3>안전한 길을 함께 찾아요!</h3>
+<p>위험한 상황을 알아차리고, 안전하게 행동하는 방법을 배워요.</p>
+</div>
+
+<div class="safety-topics">
+<div class="safety-topic">
+<div class="topic-icon">🏠</div>
+<h3>생활안전</h3>
+<p>교실과 집에서 안전하게 생활하는 방법을 알아봐요.</p>
+</div>
+
+<div class="safety-topic">
+<div class="topic-icon">🚦</div>
+<h3>교통안전</h3>
+<p>길을 건널 때와 자동차를 탈 때 지켜야 할 약속을 배워요.</p>
+</div>
+
+<div class="safety-topic">
+<div class="topic-icon">🔥</div>
+<h3>재난안전</h3>
+<p>화재나 재난이 발생했을 때 대피하는 방법을 알아봐요.</p>
+</div>
+</div>
+
+<div class="safety-message">
+안전 약속 하나! 모르는 상황이나 위험한 일이 생기면 혼자 해결하려 하지 말고 선생님이나 보호자에게 알려요.
+</div>
+
+<p style="text-align:center;color:#9A91A3;font-size:13px;margin-top:20px">
+안전교육 활동 자료는 계속 추가할 수 있어요.
+</p>
 </section>
 
 <footer>
@@ -773,14 +869,14 @@ function updateDateTime(){
   renderCalendar(now);
 }
 
-/* 날짜 키 만들기 */
+/* 날짜 키 */
 function dateKey(year,month,day){
   return year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
 }
 
 let selectedDateKey="";
 
-/* 저장된 메모 읽기 */
+/* 메모 불러오기 */
 function loadAllMemos(){
   try{
     return JSON.parse(localStorage.getItem("rasPersonalCalendar")||"{}");
@@ -789,7 +885,7 @@ function loadAllMemos(){
   }
 }
 
-/* 달력 그리기: 일정 제목도 날짜 칸에 표시 */
+/* 달력 그리기 */
 function renderCalendar(now){
   const year=now.getFullYear();
   const month=now.getMonth();
@@ -857,7 +953,6 @@ function renderCalendar(now){
 /* 날짜 선택 */
 function selectDate(key){
   selectedDateKey=key;
-
   renderCalendar(new Date());
 
   const parts=key.split("-").map(Number);
@@ -907,12 +1002,11 @@ function saveMemo(){
   renderCalendar(new Date());
 }
 
-/* 메모 데이터 저장 */
 function saveAllMemos(data){
   localStorage.setItem("rasPersonalCalendar",JSON.stringify(data));
 }
 
-/* 선택한 날짜 메모 표시 */
+/* 선택 날짜 메모 표시 */
 function showMemos(){
   const list=document.getElementById("memoList");
   list.innerHTML="";
@@ -959,14 +1053,12 @@ function showMemos(){
 
     actions.appendChild(edit);
     actions.appendChild(del);
-
     item.appendChild(text);
     item.appendChild(actions);
     list.appendChild(item);
   });
 }
 
-/* 메모 삭제 및 수정 준비 */
 function removeMemo(id){
   const data=loadAllMemos();
 
@@ -986,7 +1078,7 @@ function clearMemoInput(){
   document.getElementById("memoInput").value="";
 }
 
-/* 최초 실행: 오늘 날짜 자동 선택 */
+/* 최초 실행 */
 updateDateTime();
 
 const initialDate=new Date();
@@ -1019,13 +1111,12 @@ function showPage(id){
 }
 
 function home(){showPage("homePage")}
-
 function openRead(){
   showPage("readPage");
   dailyProverb();
 }
-
 function coming(){showPage("artPage")}
+function openSafety(){showPage("safetyPage")}
 
 function sports(){
   window.open(
@@ -1135,7 +1226,7 @@ function randomProverb(){
   showProverb();
 }
 
-/* 주제 선택 */
+/* 속담 주제 선택 */
 document.getElementById("topics").addEventListener("click",e=>{
   const b=e.target.closest("button[data-topic]");
   if(!b)return;
