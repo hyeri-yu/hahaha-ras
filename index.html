@@ -144,7 +144,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   background:white;
 }
 
-/* 넓어진 달력 */
+/* 달력 */
 .calendar-wrap{
   margin:18px 0 0;
   width:100%;
@@ -180,19 +180,22 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 .calendar-day.sat{color:#668CC5}
 
 .calendar-date{
-  min-height:58px;
+  min-width:0;
+  min-height:82px;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:2px;
+  align-items:stretch;
+  justify-content:flex-start;
+  gap:4px;
   border-radius:12px;
-  font-size:18px;
+  padding:7px 4px;
+  font-size:17px;
   color:var(--text);
   font-weight:700;
   cursor:pointer;
-  border:1px solid transparent;
+  border:1px solid #F0EBF2;
   background:#fff;
+  overflow:hidden;
 }
 
 .calendar-date:hover{
@@ -204,7 +207,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   background:#FCE8ED;
   color:#C45F7A;
   border:1px solid var(--pink);
-  font-weight:800;
 }
 
 .calendar-date.selected{
@@ -212,12 +214,32 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   outline-offset:1px;
 }
 
-.event-dot{
+.calendar-number{
+  text-align:center;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+.calendar-note{
   display:block;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--mint);
+  width:100%;
+  padding:3px 4px;
+  border-radius:5px;
+  background:#E5F2EA;
+  color:#557D68;
+  font-size:11px;
+  line-height:1.35;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-align:left;
+}
+
+.calendar-more{
+  font-size:10px;
+  color:#8B8091;
+  text-align:center;
 }
 
 .calendar-help{
@@ -227,7 +249,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   margin:13px 0 0;
 }
 
-/* 일정 메모 */
+/* 개인 일정 메모 */
 .memo-panel{
   margin-top:18px;
   padding:22px;
@@ -306,6 +328,12 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   white-space:pre-wrap;
   word-break:break-word;
   flex:1;
+}
+
+.memo-item-actions{
+  display:flex;
+  gap:5px;
+  flex-shrink:0;
 }
 
 .memo-item button{
@@ -510,14 +538,20 @@ footer{
   border-top:1px solid #F0EBF2;
 }
 
+/* 모바일 */
 @media(max-width:750px){
   header{flex-direction:column;align-items:flex-start}
   .daily-top{grid-template-columns:1fr}
   .daily-board{padding:15px 0}
-  .calendar-wrap{padding:13px 8px}
+  .calendar-wrap{padding:13px 7px}
   .calendar-grid{gap:3px}
-  .calendar-date{min-height:43px;font-size:15px}
+  .calendar-date{
+    min-height:66px;
+    padding:5px 2px;
+  }
   .calendar-day{font-size:14px}
+  .calendar-note{font-size:9px;padding:2px}
+  .calendar-more{font-size:9px}
   .courses{grid-template-columns:1fr}
   .teacher{grid-template-columns:1fr}
   .memo-panel{padding:15px}
@@ -549,6 +583,7 @@ footer{
 </nav>
 </header>
 
+<!-- 메인 홈페이지 -->
 <main id="homePage" class="page active">
 
 <section class="daily-board">
@@ -581,14 +616,14 @@ footer{
   </div>
 </div>
 
-<!-- 달력: 위쪽 정보와 같은 폭 -->
+<!-- 달력 -->
 <div class="calendar-wrap">
   <div class="calendar-title" id="calendarTitle"></div>
   <div class="calendar-grid" id="calendarGrid"></div>
   <p class="calendar-help">날짜를 누르면 우리 반 일정을 기록할 수 있어요.</p>
 </div>
 
-<!-- 개인용 일정 메모 -->
+<!-- 개인 메모 -->
 <div class="memo-panel">
   <h3 class="memo-title">📝 나만의 일정 메모</h3>
   <div class="memo-date" id="memoDate"></div>
@@ -609,10 +644,12 @@ footer{
 </div>
 </section>
 
+<!-- 과목 카드 -->
 <section class="section" id="courses">
 <h2>어떤 교실에서 배워볼까요?</h2>
 
 <div class="courses">
+
 <button class="course read" onclick="openRead()">
 <span class="icon">📖</span>
 <h3>하하하 속담풀이</h3>
@@ -633,6 +670,7 @@ footer{
 <p>몸을 움직이며 신나게 놀고 즐겁게 도전해요.</p>
 <span class="tag">체육 · 신체활동</span>
 </button>
+
 </div>
 </section>
 </main>
@@ -681,6 +719,7 @@ footer{
 <button class="btn primary" onclick="reveal()">속담과 뜻 만나기</button>
 <button class="btn soft" onclick="randomProverb()">다른 속담 뽑기</button>
 </div>
+
 <p style="text-align:center;color:#A394A8;font-size:13px">
 그림 관찰 → 생각 나누기 → 속담 확인하기
 </p>
@@ -710,10 +749,15 @@ function updateDateTime(){
   const now=new Date();
 
   document.getElementById("date").textContent=
-    now.toLocaleDateString("ko-KR",{month:"long",day:"numeric"});
+    now.toLocaleDateString("ko-KR",{
+      month:"long",
+      day:"numeric"
+    });
 
   document.getElementById("weekday").textContent=
-    now.toLocaleDateString("ko-KR",{weekday:"long"});
+    now.toLocaleDateString("ko-KR",{
+      weekday:"long"
+    });
 
   document.getElementById("clock").textContent=
     now.toLocaleTimeString("ko-KR",{
@@ -729,13 +773,23 @@ function updateDateTime(){
   renderCalendar(now);
 }
 
-let selectedDateKey="";
-
+/* 날짜 키 만들기 */
 function dateKey(year,month,day){
   return year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
 }
 
-/* 달력 만들기 */
+let selectedDateKey="";
+
+/* 저장된 메모 읽기 */
+function loadAllMemos(){
+  try{
+    return JSON.parse(localStorage.getItem("rasPersonalCalendar")||"{}");
+  }catch(error){
+    return {};
+  }
+}
+
+/* 달력 그리기: 일정 제목도 날짜 칸에 표시 */
 function renderCalendar(now){
   const year=now.getFullYear();
   const month=now.getMonth();
@@ -747,16 +801,18 @@ function renderCalendar(now){
   const grid=document.getElementById("calendarGrid");
   grid.innerHTML="";
 
+  const notes=loadAllMemos();
+
   ["일","월","화","수","목","금","토"].forEach((day,index)=>{
     const el=document.createElement("div");
-    el.className="calendar-day"+(index===0?" sun":index===6?" sat":"");
+    el.className="calendar-day"+
+      (index===0?" sun":index===6?" sat":"");
     el.textContent=day;
     grid.appendChild(el);
   });
 
   const firstDay=new Date(year,month,1).getDay();
   const lastDate=new Date(year,month+1,0).getDate();
-  const notes=loadAllMemos();
 
   for(let i=0;i<firstDay;i++){
     grid.appendChild(document.createElement("div"));
@@ -772,13 +828,25 @@ function renderCalendar(now){
     if(key===selectedDateKey)cell.classList.add("selected");
 
     const number=document.createElement("span");
+    number.className="calendar-number";
     number.textContent=day;
     cell.appendChild(number);
 
-    if(notes[key] && notes[key].length){
-      const dot=document.createElement("span");
-      dot.className="event-dot";
-      cell.appendChild(dot);
+    const dayMemos=notes[key]||[];
+
+    dayMemos.slice(0,2).forEach(memo=>{
+      const note=document.createElement("span");
+      note.className="calendar-note";
+      note.textContent=memo.text.split("\n")[0];
+      note.title=memo.text;
+      cell.appendChild(note);
+    });
+
+    if(dayMemos.length>2){
+      const more=document.createElement("span");
+      more.className="calendar-more";
+      more.textContent="+"+(dayMemos.length-2);
+      cell.appendChild(more);
     }
 
     cell.addEventListener("click",()=>selectDate(key));
@@ -789,6 +857,7 @@ function renderCalendar(now){
 /* 날짜 선택 */
 function selectDate(key){
   selectedDateKey=key;
+
   renderCalendar(new Date());
 
   const parts=key.split("-").map(Number);
@@ -804,19 +873,6 @@ function selectDate(key){
 
   document.getElementById("memoInput").value="";
   showMemos();
-}
-
-/* 개인 메모 저장소 */
-function loadAllMemos(){
-  try{
-    return JSON.parse(localStorage.getItem("rasPersonalCalendar")||"{}");
-  }catch(error){
-    return {};
-  }
-}
-
-function saveAllMemos(data){
-  localStorage.setItem("rasPersonalCalendar",JSON.stringify(data));
 }
 
 /* 메모 저장 */
@@ -851,7 +907,12 @@ function saveMemo(){
   renderCalendar(new Date());
 }
 
-/* 선택 날짜 메모 표시 */
+/* 메모 데이터 저장 */
+function saveAllMemos(data){
+  localStorage.setItem("rasPersonalCalendar",JSON.stringify(data));
+}
+
+/* 선택한 날짜 메모 표시 */
 function showMemos(){
   const list=document.getElementById("memoList");
   list.innerHTML="";
@@ -878,6 +939,7 @@ function showMemos(){
     text.textContent=memo.text;
 
     const actions=document.createElement("div");
+    actions.className="memo-item-actions";
 
     const edit=document.createElement("button");
     edit.textContent="수정";
@@ -904,9 +966,10 @@ function showMemos(){
   });
 }
 
-/* 메모 수정 및 삭제에 사용 */
+/* 메모 삭제 및 수정 준비 */
 function removeMemo(id){
   const data=loadAllMemos();
+
   data[selectedDateKey]=(data[selectedDateKey]||[])
     .filter(memo=>memo.id!==id);
 
@@ -923,7 +986,7 @@ function clearMemoInput(){
   document.getElementById("memoInput").value="";
 }
 
-/* 최초 실행 시 오늘 날짜 선택 */
+/* 최초 실행: 오늘 날짜 자동 선택 */
 updateDateTime();
 
 const initialDate=new Date();
@@ -956,10 +1019,12 @@ function showPage(id){
 }
 
 function home(){showPage("homePage")}
+
 function openRead(){
   showPage("readPage");
   dailyProverb();
 }
+
 function coming(){showPage("artPage")}
 
 function sports(){
@@ -1025,6 +1090,7 @@ practice:"장난감과 책을 제자리에 하나씩 정리해요."
 let current=0;
 let topic="전체";
 
+/* 오늘의 속담 */
 function dailyProverb(){
   const today=new Date();
   let key=today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
@@ -1046,6 +1112,7 @@ function dailyProverb(){
 
 function showProverb(){
   const p=proverbs[current];
+
   document.getElementById("scene").textContent=p.scene;
   document.getElementById("title").textContent=p.title;
   document.getElementById("meaning").textContent=p.meaning;
@@ -1068,6 +1135,7 @@ function randomProverb(){
   showProverb();
 }
 
+/* 주제 선택 */
 document.getElementById("topics").addEventListener("click",e=>{
   const b=e.target.closest("button[data-topic]");
   if(!b)return;
@@ -1088,6 +1156,7 @@ document.getElementById("topics").addEventListener("click",e=>{
   }
 });
 
+/* 그림 클릭 */
 document.getElementById("picture").addEventListener("click",reveal);
 
 document.getElementById("picture").addEventListener("keydown",e=>{
