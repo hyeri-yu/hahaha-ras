@@ -16,29 +16,24 @@
   --yellow:#E9B65F;
   --lavender:#F2EAF7;
   --text:#5F526A;
-  --muted:#8B8091;
 }
 
-* { box-sizing:border-box; }
+*{box-sizing:border-box}
 
-body {
+body{
   margin:0;
-  background:#FFFFFF;
+  background:#fff;
   color:var(--text);
   font-family:'Nanum Square Round',sans-serif;
   line-height:1.7;
 }
 
-button,select { font:inherit; }
-button { cursor:pointer; }
+button,select,textarea{font:inherit}
+button{cursor:pointer}
+.shell{width:min(1160px,94%);margin:auto}
 
-.shell {
-  width:min(1160px,94%);
-  margin:auto;
-}
-
-/* 상단 로고와 메뉴 */
-header {
+/* 상단 로고 */
+header{
   padding:24px 0;
   display:flex;
   justify-content:space-between;
@@ -47,37 +42,33 @@ header {
   gap:15px;
 }
 
-.brand {
+.brand{
   text-decoration:none;
   line-height:1.35;
   letter-spacing:-1px;
 }
 
-.brand-line {
+.brand-line{
   display:block;
   font-size:clamp(23px,3vw,34px);
   font-weight:800;
 }
 
-.dream { color:var(--pink); }
-.na { color:var(--mint); }
-.agana { color:var(--purple); }
-.ras { color:var(--yellow); }
+.dream{color:var(--pink)}
+.na{color:var(--mint)}
+.agana{color:var(--purple)}
+.ras{color:var(--yellow)}
 
-.brand-sub {
+.brand-sub{
   color:#A48EAA;
   font-size:11px;
   letter-spacing:3px;
   margin-top:7px;
 }
 
-nav {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
+nav{display:flex;gap:8px;flex-wrap:wrap}
 
-nav button,nav a {
+nav button,nav a{
   border:0;
   background:transparent;
   color:var(--purple);
@@ -87,18 +78,15 @@ nav button,nav a {
   font-weight:700;
 }
 
-nav button:hover,nav a:hover {
-  background:var(--lavender);
-}
+nav button:hover,nav a:hover{background:var(--lavender)}
 
-/* 날짜, 시간, 날씨, 달력 */
-.daily-board {
+/* 날짜와 시간 */
+.daily-board{
   margin:8px 0 38px;
   padding:22px 0;
-  background:#FFFFFF;
 }
 
-.daily-heading {
+.daily-heading{
   text-align:center;
   color:var(--purple);
   font-size:27px;
@@ -106,13 +94,13 @@ nav button:hover,nav a:hover {
   margin:0 0 20px;
 }
 
-.daily-top {
+.daily-top{
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   gap:14px;
 }
 
-.daily-box {
+.daily-box{
   background:#FAF8FB;
   border:1px solid #F0EBF2;
   border-radius:18px;
@@ -120,13 +108,13 @@ nav button:hover,nav a:hover {
   text-align:center;
 }
 
-.daily-label {
+.daily-label{
   font-size:17px;
   font-weight:800;
   color:#817389;
 }
 
-.daily-value {
+.daily-value{
   display:block;
   color:var(--purple);
   font-size:clamp(27px,4vw,38px);
@@ -135,17 +123,15 @@ nav button:hover,nav a:hover {
   font-weight:800;
 }
 
-.daily-sub {
+.daily-sub{
   font-size:19px;
   font-weight:800;
   color:var(--purple);
 }
 
-.clock-value {
-  font-variant-numeric:tabular-nums;
-}
+.clock-value{font-variant-numeric:tabular-nums}
 
-.weather-select {
+.weather-select{
   margin-top:8px;
   width:100%;
   max-width:190px;
@@ -158,77 +144,202 @@ nav button:hover,nav a:hover {
   background:white;
 }
 
-.calendar-wrap {
-  margin:17px auto 0;
-  max-width:560px;
-  padding:18px 20px;
+/* 넓어진 달력 */
+.calendar-wrap{
+  margin:18px 0 0;
+  width:100%;
+  padding:22px 24px;
   border:1px solid #F0EBF2;
   border-radius:20px;
-  background:#FFFFFF;
+  background:#fff;
 }
 
-.calendar-title {
+.calendar-title{
   text-align:center;
   color:var(--purple);
-  font-size:24px;
+  font-size:26px;
   font-weight:800;
-  margin-bottom:10px;
+  margin-bottom:15px;
 }
 
-.calendar-grid {
+.calendar-grid{
   display:grid;
   grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:5px;
+  gap:8px;
   text-align:center;
 }
 
-.calendar-day {
-  padding:7px 2px;
-  font-size:16px;
+.calendar-day{
+  padding:9px 2px;
+  font-size:17px;
   font-weight:800;
   color:var(--purple);
 }
 
-.calendar-day.sun { color:#D9788D; }
-.calendar-day.sat { color:#668CC5; }
+.calendar-day.sun{color:#D9788D}
+.calendar-day.sat{color:#668CC5}
 
-.calendar-date {
-  min-height:36px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  font-size:17px;
+.calendar-date{
+  min-height:58px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  border-radius:12px;
+  font-size:18px;
   color:var(--text);
   font-weight:700;
+  cursor:pointer;
+  border:1px solid transparent;
+  background:#fff;
 }
 
-.calendar-date.today {
-  background:var(--pink);
-  color:white;
+.calendar-date:hover{
+  background:#F8F2FA;
+  border-color:#E8DDEC;
+}
+
+.calendar-date.today{
+  background:#FCE8ED;
+  color:#C45F7A;
+  border:1px solid var(--pink);
   font-weight:800;
-  font-size:19px;
 }
 
-/* 과목 안내 */
-.section {
-  margin:35px 0 45px;
+.calendar-date.selected{
+  outline:2px solid var(--purple);
+  outline-offset:1px;
 }
 
-.section h2 {
+.event-dot{
+  display:block;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--mint);
+}
+
+.calendar-help{
+  text-align:center;
+  color:#94889A;
+  font-size:13px;
+  margin:13px 0 0;
+}
+
+/* 일정 메모 */
+.memo-panel{
+  margin-top:18px;
+  padding:22px;
+  background:#FAF8FB;
+  border:1px solid #F0EBF2;
+  border-radius:20px;
+}
+
+.memo-title{
+  font-size:21px;
+  font-weight:800;
+  color:var(--purple);
+  margin:0 0 4px;
+}
+
+.memo-date{
+  color:#8B7E91;
+  font-size:14px;
+  margin-bottom:13px;
+}
+
+.memo-input{
+  width:100%;
+  min-height:85px;
+  resize:vertical;
+  border:1px solid #E8DFEB;
+  border-radius:13px;
+  padding:13px;
+  background:#fff;
+  color:var(--text);
+  outline-color:var(--pink);
+}
+
+.memo-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.memo-button{
+  border:0;
+  border-radius:10px;
+  padding:10px 18px;
+  font-weight:800;
+}
+
+.memo-save{
+  background:var(--purple);
+  color:white;
+}
+
+.memo-clear{
+  background:#EEE8F1;
+  color:var(--purple);
+}
+
+.memo-list{
+  margin-top:17px;
+  display:grid;
+  gap:8px;
+}
+
+.memo-item{
+  background:#fff;
+  border:1px solid #EEE7F0;
+  border-radius:12px;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.memo-item-text{
+  white-space:pre-wrap;
+  word-break:break-word;
+  flex:1;
+}
+
+.memo-item button{
+  border:0;
+  background:#F8E9ED;
+  color:#A65D73;
+  border-radius:8px;
+  padding:6px 9px;
+  font-size:12px;
+}
+
+.memo-empty{
+  color:#A195A8;
+  font-size:14px;
+}
+
+/* 과목 카드 */
+.section{margin:35px 0 45px}
+
+.section h2{
   color:var(--purple);
   font-size:24px;
   font-weight:800;
   margin-bottom:20px;
 }
 
-.courses {
+.courses{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
 }
 
-.course {
-  border:1px solid #FFFFFF;
+.course{
+  border:1px solid white;
   border-radius:26px;
   padding:24px;
   min-height:250px;
@@ -238,23 +349,12 @@ nav button:hover,nav a:hover {
   box-shadow:none;
 }
 
-.course:hover {
-  transform:translateY(-4px);
-}
+.course:hover{transform:translateY(-4px)}
+.read{background:#FBECEF}
+.art{background:#FFF2DE}
+.sports{background:#E5F2EA}
 
-.read-하하하 속담풀이 {
-  background:#FBECEF;
-}
-
-.art-하하하 명화감상 {
-  background:#FFF2DE;
-}
-
-.sports-하하하 놀이체육 {
-  background:#E5F2EA;
-}
-
-.icon {
+.icon{
   font-size:43px;
   background:#FFFFFFC9;
   border-radius:17px;
@@ -262,20 +362,20 @@ nav button:hover,nav a:hover {
   padding:8px 14px;
 }
 
-.course h3 {
+.course h3{
   font-size:22px;
   font-weight:800;
   margin:15px 0 7px;
   color:#5F526A;
 }
 
-.course p {
+.course p{
   font-size:14px;
   color:#817389;
   line-height:1.8;
 }
 
-.tag {
+.tag{
   display:inline-block;
   background:#FFFFFFD9;
   border-radius:20px;
@@ -285,16 +385,10 @@ nav button:hover,nav a:hover {
 }
 
 /* 학습 페이지 */
-.page {
-  display:none;
-  padding:20px 0 50px;
-}
+.page{display:none;padding:20px 0 50px}
+.page.active{display:block}
 
-.page.active {
-  display:block;
-}
-
-.back {
+.back{
   border:0;
   background:var(--lavender);
   color:var(--purple);
@@ -303,25 +397,22 @@ nav button:hover,nav a:hover {
   font-weight:700;
 }
 
-.page-title {
-  text-align:center;
-  margin:20px 0;
-}
+.page-title{text-align:center;margin:20px 0}
 
-.page-title h2 {
+.page-title h2{
   color:var(--purple);
   font-size:30px;
   font-weight:800;
 }
 
-.topics {
+.topics{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
   margin:20px 0;
 }
 
-.topics button {
+.topics button{
   background:white;
   border:1px solid #E9DDED;
   color:var(--purple);
@@ -329,19 +420,19 @@ nav button:hover,nav a:hover {
   border-radius:25px;
 }
 
-.topics button.selected {
+.topics button.selected{
   background:var(--purple);
   color:white;
 }
 
-.learning {
+.learning{
   background:white;
   border:1px solid #F0EBF2;
   border-radius:25px;
   padding:25px;
 }
 
-.picture {
+.picture{
   min-height:290px;
   border-radius:22px;
   background:linear-gradient(145deg,#F4F8F2,#F9EDF1,#FFF5E6);
@@ -354,20 +445,17 @@ nav button:hover,nav a:hover {
   cursor:pointer;
 }
 
-.scene { font-size:100px; }
+.scene{font-size:100px}
 
-.hint-title {
+.hint-title{
   font-size:21px;
   font-weight:800;
   color:#80658E;
 }
 
-.hint-copy {
-  font-size:14px;
-  color:#93859A;
-}
+.hint-copy{font-size:14px;color:#93859A}
 
-.answer {
+.answer{
   display:none;
   background:#FFF8ED;
   padding:23px;
@@ -376,17 +464,17 @@ nav button:hover,nav a:hover {
   text-align:center;
 }
 
-.answer.show { display:block; }
+.answer.show{display:block}
 
-.answer h3 {
+.answer h3{
   color:#A87891;
   font-size:27px;
   font-weight:800;
 }
 
-.meaning { font-size:17px; }
+.meaning{font-size:17px}
 
-.teacher {
+.teacher{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
@@ -394,19 +482,16 @@ nav button:hover,nav a:hover {
   text-align:left;
 }
 
-.teacher div {
+.teacher div{
   background:#EDF5ED;
   padding:15px;
   border-radius:16px;
 }
 
-.teacher div:last-child {
-  background:#F3EDF7;
-}
+.teacher div:last-child{background:#F3EDF7}
+.teacher p{font-size:14px}
 
-.teacher p { font-size:14px; }
-
-.btn {
+.btn{
   border:0;
   border-radius:25px;
   padding:12px 20px;
@@ -414,18 +499,10 @@ nav button:hover,nav a:hover {
   margin:5px;
 }
 
-.primary {
-  background:var(--purple);
-  color:white;
-}
+.primary{background:var(--purple);color:white}
+.soft{background:var(--lavender);color:var(--purple)}
 
-.soft {
-  background:var(--lavender);
-  color:var(--purple);
-}
-
-/* ART 페이지 */
-footer {
+footer{
   text-align:center;
   padding:30px 10px;
   color:#A394A8;
@@ -433,35 +510,17 @@ footer {
   border-top:1px solid #F0EBF2;
 }
 
-@media(max-width:750px) {
-  header {
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .daily-top {
-    grid-template-columns:1fr;
-  }
-
-  .daily-board {
-    padding:15px 0;
-  }
-
-  .calendar-wrap {
-    padding:13px 10px;
-  }
-
-  .calendar-date {
-    min-height:32px;
-  }
-
-  .courses {
-    grid-template-columns:1fr;
-  }
-
-  .teacher {
-    grid-template-columns:1fr;
-  }
+@media(max-width:750px){
+  header{flex-direction:column;align-items:flex-start}
+  .daily-top{grid-template-columns:1fr}
+  .daily-board{padding:15px 0}
+  .calendar-wrap{padding:13px 8px}
+  .calendar-grid{gap:3px}
+  .calendar-date{min-height:43px;font-size:15px}
+  .calendar-day{font-size:14px}
+  .courses{grid-template-columns:1fr}
+  .teacher{grid-template-columns:1fr}
+  .memo-panel{padding:15px}
 }
 </style>
 </head>
@@ -484,20 +543,18 @@ footer {
 
 <nav>
 <button onclick="home()">홈</button>
-<button onclick="openRead()">READ</button>
-<button onclick="coming()">ART</button>
-<a href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">SPORTS ↗</a>
+<button onclick="openRead()">속담풀이</button>
+<button onclick="coming()">명화감상</button>
+<a href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">놀이체육 ↗</a>
 </nav>
 </header>
 
-<!-- 메인 홈페이지 -->
 <main id="homePage" class="page active">
 
 <section class="daily-board">
 <h1 class="daily-heading">오늘의 날짜를 함께 알아봐요!</h1>
 
 <div class="daily-top">
-
   <div class="daily-box">
     <div class="daily-label">📅 오늘은</div>
     <span class="daily-value" id="date"></span>
@@ -522,12 +579,33 @@ footer {
     </select>
     <div class="daily-sub">우리 반 날씨</div>
   </div>
-
 </div>
 
+<!-- 달력: 위쪽 정보와 같은 폭 -->
 <div class="calendar-wrap">
   <div class="calendar-title" id="calendarTitle"></div>
-  <div class="calendar-grid" id="calendarGrid" aria-label="이번 달 달력"></div>
+  <div class="calendar-grid" id="calendarGrid"></div>
+  <p class="calendar-help">날짜를 누르면 우리 반 일정을 기록할 수 있어요.</p>
+</div>
+
+<!-- 개인용 일정 메모 -->
+<div class="memo-panel">
+  <h3 class="memo-title">📝 나만의 일정 메모</h3>
+  <div class="memo-date" id="memoDate"></div>
+
+  <textarea
+    class="memo-input"
+    id="memoInput"
+    placeholder="예: 민서 생일, 봄 소풍, 준비물 챙기기..."
+  ></textarea>
+
+  <div class="memo-actions">
+    <button class="memo-button memo-save" onclick="saveMemo()">메모 저장</button>
+    <button class="memo-button memo-clear" onclick="clearMemoInput()">입력 지우기</button>
+  </div>
+
+  <div class="memo-list" id="memoList"></div>
+  <p class="calendar-help">이 메모는 현재 컴퓨터의 이 브라우저에만 저장됩니다.</p>
 </div>
 </section>
 
@@ -535,39 +613,37 @@ footer {
 <h2>어떤 교실에서 배워볼까요?</h2>
 
 <div class="courses">
-
 <button class="course read" onclick="openRead()">
 <span class="icon">📖</span>
-<h3>READ</h3>
-<p>읽고 생각하며 속담과 지혜를 배워요.</p>
-<span class="tag">읽기 · 속담</span>
+<h3>하하하 속담풀이</h3>
+<p>그림을 살펴보고 속담의 뜻과 지혜를 배워요.</p>
+<span class="tag">속담 · 생각 나누기</span>
 </button>
 
 <button class="course art" onclick="coming()">
 <span class="icon">🎨</span>
-<h3>ART</h3>
-<p>다양한 재료로 자유롭게 표현해요.</p>
-<span class="tag">미술 · 만들기 · 음악</span>
+<h3>하하하 명화감상</h3>
+<p>아름다운 명화를 감상하고 나만의 생각을 표현해요.</p>
+<span class="tag">명화 · 미술 · 표현</span>
 </button>
 
 <button class="course sports" onclick="sports()">
 <span class="icon">⚽</span>
-<h3>SPORTS</h3>
-<p>몸을 움직이며 즐겁게 놀이해요.</p>
+<h3>하하하 놀이체육</h3>
+<p>몸을 움직이며 신나게 놀고 즐겁게 도전해요.</p>
 <span class="tag">체육 · 신체활동</span>
 </button>
-
 </div>
 </section>
 </main>
 
-<!-- READ 속담 풀이 -->
+<!-- 속담풀이 -->
 <section id="readPage" class="page">
 <button class="back" onclick="home()">← 꿈나라 교실로</button>
 
 <div class="page-title">
 <p>READ · THINK · SHARE</p>
-<h2>하루에 하나씩 하는 속담풀이</h2>
+<h2>하하하 속담풀이</h2>
 <p>그림을 자세히 살펴보고 어떤 이야기가 숨어 있는지 생각해 보세요.</p>
 </div>
 
@@ -605,19 +681,18 @@ footer {
 <button class="btn primary" onclick="reveal()">속담과 뜻 만나기</button>
 <button class="btn soft" onclick="randomProverb()">다른 속담 뽑기</button>
 </div>
-
 <p style="text-align:center;color:#A394A8;font-size:13px">
 그림 관찰 → 생각 나누기 → 속담 확인하기
 </p>
 </section>
 
-<!-- ART 페이지 -->
+<!-- 명화감상 -->
 <section id="artPage" class="page">
 <button class="back" onclick="home()">← 꿈나라 교실로</button>
 <div class="learning" style="text-align:center;padding:60px 20px">
 <div style="font-size:70px">🎨</div>
-<h2>ART · 미술과 만들기</h2>
-<p>새로운 미술과 창의 놀이가 준비되고 있어요!</p>
+<h2>하하하 명화감상</h2>
+<p>새로운 명화와 감상 활동이 준비되고 있어요!</p>
 </div>
 </section>
 
@@ -630,20 +705,15 @@ Read · Art · Sports<br>
 </div>
 
 <script>
-/* 날짜, 요일, 실시간 시계 */
+/* 날짜와 시간 */
 function updateDateTime(){
   const now=new Date();
 
   document.getElementById("date").textContent=
-    now.toLocaleDateString("ko-KR",{
-      month:"long",
-      day:"numeric"
-    });
+    now.toLocaleDateString("ko-KR",{month:"long",day:"numeric"});
 
   document.getElementById("weekday").textContent=
-    now.toLocaleDateString("ko-KR",{
-      weekday:"long"
-    });
+    now.toLocaleDateString("ko-KR",{weekday:"long"});
 
   document.getElementById("clock").textContent=
     now.toLocaleTimeString("ko-KR",{
@@ -654,12 +724,18 @@ function updateDateTime(){
     });
 
   document.getElementById("timePeriod").textContent=
-    now.getHours()<12 ? "오전이에요" : "오후예요";
+    now.getHours()<12?"오전이에요":"오후예요";
 
   renderCalendar(now);
 }
 
-/* 이번 달 달력 만들기 */
+let selectedDateKey="";
+
+function dateKey(year,month,day){
+  return year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
+}
+
+/* 달력 만들기 */
 function renderCalendar(now){
   const year=now.getFullYear();
   const month=now.getMonth();
@@ -673,35 +749,202 @@ function renderCalendar(now){
 
   ["일","월","화","수","목","금","토"].forEach((day,index)=>{
     const el=document.createElement("div");
-    el.className="calendar-day"+
-      (index===0?" sun":index===6?" sat":"");
+    el.className="calendar-day"+(index===0?" sun":index===6?" sat":"");
     el.textContent=day;
     grid.appendChild(el);
   });
 
   const firstDay=new Date(year,month,1).getDay();
   const lastDate=new Date(year,month+1,0).getDate();
+  const notes=loadAllMemos();
 
   for(let i=0;i<firstDay;i++){
-    const blank=document.createElement("div");
-    grid.appendChild(blank);
+    grid.appendChild(document.createElement("div"));
   }
 
   for(let day=1;day<=lastDate;day++){
-    const cell=document.createElement("div");
-    cell.className="calendar-date"+(day===today?" today":"");
-    cell.textContent=day;
+    const key=dateKey(year,month,day);
+    const cell=document.createElement("button");
+    cell.type="button";
+    cell.className="calendar-date";
 
-    if(day===today){
-      cell.setAttribute("aria-label","오늘 "+day+"일");
+    if(day===today)cell.classList.add("today");
+    if(key===selectedDateKey)cell.classList.add("selected");
+
+    const number=document.createElement("span");
+    number.textContent=day;
+    cell.appendChild(number);
+
+    if(notes[key] && notes[key].length){
+      const dot=document.createElement("span");
+      dot.className="event-dot";
+      cell.appendChild(dot);
     }
 
+    cell.addEventListener("click",()=>selectDate(key));
     grid.appendChild(cell);
   }
 }
 
+/* 날짜 선택 */
+function selectDate(key){
+  selectedDateKey=key;
+  renderCalendar(new Date());
+
+  const parts=key.split("-").map(Number);
+  const selected=new Date(parts[0],parts[1]-1,parts[2]);
+
+  document.getElementById("memoDate").textContent=
+    selected.toLocaleDateString("ko-KR",{
+      year:"numeric",
+      month:"long",
+      day:"numeric",
+      weekday:"long"
+    });
+
+  document.getElementById("memoInput").value="";
+  showMemos();
+}
+
+/* 개인 메모 저장소 */
+function loadAllMemos(){
+  try{
+    return JSON.parse(localStorage.getItem("rasPersonalCalendar")||"{}");
+  }catch(error){
+    return {};
+  }
+}
+
+function saveAllMemos(data){
+  localStorage.setItem("rasPersonalCalendar",JSON.stringify(data));
+}
+
+/* 메모 저장 */
+function saveMemo(){
+  const input=document.getElementById("memoInput");
+  const text=input.value.trim();
+
+  if(!selectedDateKey){
+    alert("먼저 달력에서 날짜를 선택해 주세요.");
+    return;
+  }
+
+  if(!text){
+    alert("메모 내용을 입력해 주세요.");
+    return;
+  }
+
+  const data=loadAllMemos();
+
+  if(!data[selectedDateKey]){
+    data[selectedDateKey]=[];
+  }
+
+  data[selectedDateKey].push({
+    id:Date.now(),
+    text:text
+  });
+
+  saveAllMemos(data);
+  input.value="";
+  showMemos();
+  renderCalendar(new Date());
+}
+
+/* 선택 날짜 메모 표시 */
+function showMemos(){
+  const list=document.getElementById("memoList");
+  list.innerHTML="";
+
+  if(!selectedDateKey)return;
+
+  const data=loadAllMemos();
+  const memos=data[selectedDateKey]||[];
+
+  if(memos.length===0){
+    const empty=document.createElement("div");
+    empty.className="memo-empty";
+    empty.textContent="아직 저장된 일정이 없어요.";
+    list.appendChild(empty);
+    return;
+  }
+
+  memos.forEach(memo=>{
+    const item=document.createElement("div");
+    item.className="memo-item";
+
+    const text=document.createElement("div");
+    text.className="memo-item-text";
+    text.textContent=memo.text;
+
+    const actions=document.createElement("div");
+
+    const edit=document.createElement("button");
+    edit.textContent="수정";
+    edit.addEventListener("click",()=>{
+      document.getElementById("memoInput").value=memo.text;
+      removeMemo(memo.id);
+      document.getElementById("memoInput").focus();
+    });
+
+    const del=document.createElement("button");
+    del.textContent="삭제";
+    del.addEventListener("click",()=>{
+      if(confirm("이 일정을 삭제할까요?")){
+        removeMemo(memo.id);
+      }
+    });
+
+    actions.appendChild(edit);
+    actions.appendChild(del);
+
+    item.appendChild(text);
+    item.appendChild(actions);
+    list.appendChild(item);
+  });
+}
+
+/* 메모 수정 및 삭제에 사용 */
+function removeMemo(id){
+  const data=loadAllMemos();
+  data[selectedDateKey]=(data[selectedDateKey]||[])
+    .filter(memo=>memo.id!==id);
+
+  if(data[selectedDateKey].length===0){
+    delete data[selectedDateKey];
+  }
+
+  saveAllMemos(data);
+  showMemos();
+  renderCalendar(new Date());
+}
+
+function clearMemoInput(){
+  document.getElementById("memoInput").value="";
+}
+
+/* 최초 실행 시 오늘 날짜 선택 */
 updateDateTime();
+
+const initialDate=new Date();
+selectDate(dateKey(
+  initialDate.getFullYear(),
+  initialDate.getMonth(),
+  initialDate.getDate()
+));
+
 setInterval(updateDateTime,1000);
+
+/* 날씨 저장 */
+function saveWeather(){
+  const w=document.getElementById("weather").value;
+  localStorage.setItem("rasWeather",w);
+}
+
+const savedWeather=localStorage.getItem("rasWeather");
+if(savedWeather){
+  document.getElementById("weather").value=savedWeather;
+}
 
 /* 화면 이동 */
 function showPage(id){
@@ -712,18 +955,12 @@ function showPage(id){
   window.scrollTo(0,0);
 }
 
-function home(){
-  showPage("homePage");
-}
-
+function home(){showPage("homePage")}
 function openRead(){
   showPage("readPage");
   dailyProverb();
 }
-
-function coming(){
-  showPage("artPage");
-}
+function coming(){showPage("artPage")}
 
 function sports(){
   window.open(
@@ -731,17 +968,6 @@ function sports(){
     "_blank",
     "noopener"
   );
-}
-
-/* 날씨 선택 저장 */
-function saveWeather(){
-  const w=document.getElementById("weather").value;
-  localStorage.setItem("rasWeather",w);
-}
-
-const saved=localStorage.getItem("rasWeather");
-if(saved){
-  document.getElementById("weather").value=saved;
 }
 
 /* 속담 데이터 */
@@ -799,7 +1025,6 @@ practice:"장난감과 책을 제자리에 하나씩 정리해요."
 let current=0;
 let topic="전체";
 
-/* 오늘의 속담 */
 function dailyProverb(){
   const today=new Date();
   let key=today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
@@ -821,7 +1046,6 @@ function dailyProverb(){
 
 function showProverb(){
   const p=proverbs[current];
-
   document.getElementById("scene").textContent=p.scene;
   document.getElementById("title").textContent=p.title;
   document.getElementById("meaning").textContent=p.meaning;
@@ -844,7 +1068,6 @@ function randomProverb(){
   showProverb();
 }
 
-/* 주제 선택 */
 document.getElementById("topics").addEventListener("click",e=>{
   const b=e.target.closest("button[data-topic]");
   if(!b)return;
@@ -865,7 +1088,6 @@ document.getElementById("topics").addEventListener("click",e=>{
   }
 });
 
-/* 그림 클릭 */
 document.getElementById("picture").addEventListener("click",reveal);
 
 document.getElementById("picture").addEventListener("keydown",e=>{
