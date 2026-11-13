@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>꿈꾸며 나아가는 RAS 꿈나라 교실</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Square+Round:wght@400;700;800&display=swap');
 
 :root {
   --purple:#70577F;
@@ -21,7 +21,7 @@ body{
   margin:0;
   background:#FCF8F5;
   color:#665674;
-  font-family:'Gowun Dodum',sans-serif;
+  font-family:'Nanum Square Round',sans-serif;
   line-height:1.7;
 }
 button,select{font:inherit}
@@ -67,70 +67,115 @@ nav button,nav a{
   border-radius:30px;
 }
 nav button:hover,nav a:hover{background:var(--lavender)}
-.nav-main{background:var(--purple);color:white}
 
-/* 동화나라 메인 */
-.hero{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  gap:25px;
-  padding:45px;
-  min-height:390px;
-  border-radius:35px;
+/* 오늘 날짜·시간·달력 */
+.daily-board{
+  margin:8px 0 34px;
+  padding:25px;
+  border-radius:30px;
   background:linear-gradient(125deg,#F3EAF7,#FFF2EB,#EAF4EB);
-  box-shadow:0 18px 45px #70577F18;
-  overflow:hidden;
+  box-shadow:0 15px 38px #70577F14;
 }
-.kicker{
-  color:#A48CAE;
-  font-size:12px;
-  letter-spacing:3px;
-  font-weight:bold;
-}
-.hero h1{
-  font-family:'Jua',sans-serif;
-  font-size:clamp(30px,4vw,47px);
+.daily-heading{
+  text-align:center;
   color:var(--purple);
-  line-height:1.3;
+  font-family:'Jua',sans-serif;
+  font-size:clamp(25px,3vw,34px);
+  margin:0 0 18px;
 }
-.hero p{color:#84768B}
-.hero-art{
-  min-height:260px;
+.daily-top{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:14px;
+}
+.daily-box{
+  background:#ffffffc9;
+  border-radius:22px;
+  padding:18px 12px;
+  text-align:center;
+}
+.daily-label{font-size:17px;font-weight:800;color:#8A7892}
+.daily-value{
+  display:block;
+  color:var(--purple);
+  font-family:'Jua',sans-serif;
+  font-size:clamp(27px,4vw,39px);
+  line-height:1.35;
+  margin-top:5px;
+}
+.daily-sub{font-size:18px;font-weight:800;color:var(--purple)}
+.clock-value{font-variant-numeric:tabular-nums}
+.weather-select{
+  margin-top:8px;
+  width:100%;
+  max-width:190px;
+  font-size:16px;
+  font-weight:700;
+  padding:10px;
+  border:1px solid #E9DDED;
+  border-radius:13px;
+  color:var(--purple);
+  background:white;
+}
+.calendar-wrap{
+  margin:17px auto 0;
+  max-width:560px;
+  padding:17px 20px;
+  border-radius:22px;
+  background:#ffffffd9;
+}
+.calendar-title{
+  text-align:center;
+  font-family:'Jua',sans-serif;
+  color:var(--purple);
+  font-size:24px;
+  margin-bottom:10px;
+}
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:5px;
+  text-align:center;
+}
+.calendar-day{
+  padding:7px 2px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--purple);
+}
+.calendar-day.sun{color:#D9788D}
+.calendar-day.sat{color:#668CC5}
+.calendar-date{
+  min-height:36px;
   display:grid;
   place-items:center;
+  border-radius:50%;
+  font-size:17px;
+  color:#665674;
+  font-weight:700;
 }
-.castle{
-  width:300px;
-  height:250px;
-  border-radius:48% 52% 45% 55%;
-  background:linear-gradient(145deg,#FFF9ED,#F6E8F1,#E5F2E6);
-  display:grid;
-  place-items:center;
-  font-size:115px;
-  box-shadow:inset 0 0 0 9px #ffffff80,0 15px 35px #9d83a522;
+.calendar-date.today{
+  background:var(--pink);
+  color:white;
+  font-family:'Jua',sans-serif;
+  font-size:20px;
+  box-shadow:0 3px 8px #E58B9D55;
 }
-.stars{font-size:30px;text-align:center;margin-top:10px}
-.btn{
+.enter-class{
+  display:block;
+  margin:18px auto 0;
   border:0;
   border-radius:30px;
-  padding:12px 20px;
-  font-weight:bold;
-  margin:5px;
+  padding:14px 34px;
+  background:var(--purple);
+  color:white;
+  font-family:'Jua',sans-serif;
+  font-size:23px;
+  box-shadow:0 7px 18px #70577F35;
 }
-.primary{background:var(--purple);color:white}
-.soft{background:white;color:var(--purple)}
-.today{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:20px;
-}
-.today span{
-  background:#ffffffc9;
-  padding:8px 13px;
-  border-radius:25px;
-  font-size:13px;
+.enter-class:hover{
+  transform:translateY(-2px);
+  background:#60476F;
 }
 
 /* 과목 카드 */
@@ -178,27 +223,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   border-radius:25px;
   padding:7px 12px;
   font-size:12px;
-}
-
-/* 날씨와 안내 */
-.info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-.panel{
-  background:white;
-  border-radius:25px;
-  padding:23px;
-  box-shadow:0 10px 25px #70577F12;
-}
-.panel h3{font-family:'Jua',sans-serif;color:var(--purple)}
-select{
-  padding:10px;
-  border:1px solid #E9DDED;
-  border-radius:13px;
-  color:var(--purple);
-  background:white;
 }
 
 /* 학습 페이지 */
@@ -295,14 +319,15 @@ footer{
   font-size:13px;
   border-top:1px solid #eee5ed;
 }
+
+/* 휴대폰 화면 */
 @media(max-width:750px){
   header{flex-direction:column;align-items:flex-start}
-  .hero{grid-template-columns:1fr;padding:25px;text-align:center}
-  .hero-art{grid-row:1;min-height:210px}
-  .castle{width:240px;height:200px;font-size:90px}
-  .today{justify-content:center}
+  .daily-top{grid-template-columns:1fr}
+  .daily-board{padding:17px}
+  .calendar-wrap{padding:13px 10px}
+  .calendar-date{min-height:32px}
   .courses{grid-template-columns:1fr}
-  .info{grid-template-columns:1fr}
   .teacher{grid-template-columns:1fr}
 }
 </style>
@@ -335,30 +360,47 @@ footer{
 <!-- 메인 홈페이지 -->
 <main id="homePage" class="page active">
 
-<section class="hero">
-<div>
-<div class="kicker">MY LITTLE LEARNING WORLD</div>
-<h1>오늘도 반짝이는<br>배움의 모험을 시작해요!</h1>
-<p>읽고, 표현하고, 움직이며 성장하는 아이들.<br>작은 호기심이 커다란 배움이 되는 우리 반 꿈나라.</p>
-<button class="btn primary" onclick="openRead()">오늘의 속담 만나기 ✨</button>
-<a class="btn soft" href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">체육 놀이 가기</a>
-<div class="today">
-<span id="date"></span>
-<span id="weekday"></span>
-<span id="weatherNow">☀️ 오늘의 날씨</span>
-</div>
+<section class="daily-board">
+<h1 class="daily-heading">오늘의 날짜를 함께 알아봐요!</h1>
+
+<div class="daily-top">
+  <div class="daily-box">
+    <div class="daily-label">📅 오늘은</div>
+    <span class="daily-value" id="date"></span>
+    <div class="daily-sub" id="weekday"></div>
+  </div>
+
+  <div class="daily-box">
+    <div class="daily-label">🕒 지금 시간은</div>
+    <span class="daily-value clock-value" id="clock">--:--:--</span>
+    <div class="daily-sub" id="timePeriod">현재 시간</div>
+  </div>
+
+  <div class="daily-box">
+    <div class="daily-label">🌤️ 오늘의 날씨</div>
+    <select class="weather-select" id="weather" onchange="saveWeather()">
+      <option>☀️ 맑아요</option>
+      <option>🌤️ 구름 조금</option>
+      <option>☁️ 흐려요</option>
+      <option>🌧️ 비가 와요</option>
+      <option>❄️ 눈이 와요</option>
+      <option>🌬️ 바람이 불어요</option>
+    </select>
+    <div class="daily-sub">우리 반 날씨</div>
+  </div>
 </div>
 
-<div class="hero-art">
-<div>
-<div class="castle">🏰</div>
-<div class="stars">⭐ 🌷 🦋 ☁️</div>
+<div class="calendar-wrap">
+  <div class="calendar-title" id="calendarTitle"></div>
+  <div class="calendar-grid" id="calendarGrid" aria-label="이번 달 달력"></div>
 </div>
-</div>
+
+<button class="enter-class" onclick="goToCourses()">🚪 교실 입장하기</button>
 </section>
 
-<section class="section">
+<section class="section" id="courses">
 <h2>✨ 어떤 교실로 놀러 갈까요?</h2>
+
 <div class="courses">
 
 <button class="course read" onclick="openRead()">
@@ -382,30 +424,6 @@ footer{
 <span class="tag">하하하 체육놀이</span>
 </button>
 
-</div>
-</section>
-
-<section class="section info">
-<div class="panel">
-<h3>🌤️ 오늘 우리 반 날씨</h3>
-<p>창밖을 살펴보고 오늘의 날씨를 골라보세요.</p>
-<select id="weather" onchange="saveWeather()">
-<option>☀️ 맑아요</option>
-<option>🌤️ 구름 조금</option>
-<option>☁️ 흐려요</option>
-<option>🌧️ 비가 와요</option>
-<option>❄️ 눈이 와요</option>
-<option>🌬️ 바람이 불어요</option>
-</select>
-<p id="weatherMessage">오늘 날씨를 선택해 주세요.</p>
-</div>
-
-<div class="panel">
-<h3>🌱 오늘의 배움 약속</h3>
-<p>작은 실천 하나가 우리를 한 뼘 더 자라게 해요.</p>
-<p>💗 서로의 이야기를 들어요</p>
-<p>🌷 천천히 생각해요</p>
-<p>🌱 함께 도전해요</p>
 </div>
 </section>
 </main>
@@ -474,37 +492,114 @@ Read · Art · Sports<br>
 </div>
 
 <script>
-/* 날짜와 요일 */
-const now=new Date();
-document.getElementById("date").textContent=
-"📅 "+now.toLocaleDateString("ko-KR",{year:"numeric",month:"long",day:"numeric"});
-document.getElementById("weekday").textContent=
-"🗓️ "+now.toLocaleDateString("ko-KR",{weekday:"long"});
+/* 오늘 날짜, 요일, 실시간 시계, 이번 달 달력 */
+function updateDateTime(){
+  const now=new Date();
+
+  document.getElementById("date").textContent=
+    now.toLocaleDateString("ko-KR",{month:"long",day:"numeric"});
+
+  document.getElementById("weekday").textContent=
+    now.toLocaleDateString("ko-KR",{weekday:"long"});
+
+  document.getElementById("clock").textContent=
+    now.toLocaleTimeString("ko-KR",{
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit",
+      hour12:false
+    });
+
+  document.getElementById("timePeriod").textContent=
+    now.getHours()<12 ? "오전이에요" : "오후예요";
+
+  renderCalendar(now);
+}
+
+function renderCalendar(now){
+  const year=now.getFullYear();
+  const month=now.getMonth();
+  const today=now.getDate();
+
+  document.getElementById("calendarTitle").textContent=
+    year+"년 "+(month+1)+"월";
+
+  const grid=document.getElementById("calendarGrid");
+  grid.innerHTML="";
+
+  ["일","월","화","수","목","금","토"].forEach((day,index)=>{
+    const el=document.createElement("div");
+    el.className="calendar-day"+
+      (index===0?" sun":index===6?" sat":"");
+    el.textContent=day;
+    grid.appendChild(el);
+  });
+
+  const firstDay=new Date(year,month,1).getDay();
+  const lastDate=new Date(year,month+1,0).getDate();
+
+  for(let i=0;i<firstDay;i++){
+    const blank=document.createElement("div");
+    grid.appendChild(blank);
+  }
+
+  for(let day=1;day<=lastDate;day++){
+    const cell=document.createElement("div");
+    cell.className="calendar-date"+(day===today?" today":"");
+    cell.textContent=day;
+
+    if(day===today){
+      cell.setAttribute("aria-label","오늘 "+day+"일");
+    }
+
+    grid.appendChild(cell);
+  }
+}
+
+updateDateTime();
+setInterval(updateDateTime,1000);
+
+/* 교실 입장 버튼은 과목 카드로 이동 */
+function goToCourses(){
+  document.getElementById("courses").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
 
 /* 화면 이동 */
 function showPage(id){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-window.scrollTo(0,0);
-}
-function home(){showPage("homePage")}
-function openRead(){showPage("readPage");dailyProverb()}
-function coming(){showPage("artPage")}
-function sports(){
-window.open("https://hahaha.qpfpahffo.workers.dev/","_blank","noopener");
+  document.querySelectorAll(".page").forEach(p=>
+    p.classList.remove("active")
+  );
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
 }
 
-/* 날씨 */
-function saveWeather(){
-const w=document.getElementById("weather").value;
-document.getElementById("weatherMessage").textContent="오늘은 "+w+" 우리 반 날씨예요!";
-document.getElementById("weatherNow").textContent=w;
-localStorage.setItem("rasWeather",w);
+function home(){showPage("homePage")}
+function openRead(){
+  showPage("readPage");
+  dailyProverb();
 }
+function coming(){showPage("artPage")}
+
+function sports(){
+  window.open(
+    "https://hahaha.qpfpahffo.workers.dev/",
+    "_blank",
+    "noopener"
+  );
+}
+
+/* 날씨 선택: 교실에서 아이들과 함께 고르는 날씨 */
+function saveWeather(){
+  const w=document.getElementById("weather").value;
+  localStorage.setItem("rasWeather",w);
+}
+
 const saved=localStorage.getItem("rasWeather");
 if(saved){
-document.getElementById("weather").value=saved;
-saveWeather();
+  document.getElementById("weather").value=saved;
 }
 
 /* 속담 데이터 */
@@ -564,60 +659,78 @@ let topic="전체";
 
 /* 오늘의 속담 */
 function dailyProverb(){
-let key=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
-let hash=0;
-for(let c of key)hash=(hash*31+c.charCodeAt(0))>>>0;
-current=hash%proverbs.length;
-topic="전체";
-document.querySelectorAll("#topics button").forEach(b=>{
-b.classList.toggle("selected",b.dataset.topic==="전체");
-});
-showProverb();
+  const today=new Date();
+  let key=today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+  let hash=0;
+
+  for(let c of key){
+    hash=(hash*31+c.charCodeAt(0))>>>0;
+  }
+
+  current=hash%proverbs.length;
+  topic="전체";
+
+  document.querySelectorAll("#topics button").forEach(b=>{
+    b.classList.toggle("selected",b.dataset.topic==="전체");
+  });
+
+  showProverb();
 }
 
 function showProverb(){
-const p=proverbs[current];
-document.getElementById("scene").textContent=p.scene;
-document.getElementById("title").textContent=p.title;
-document.getElementById("meaning").textContent=p.meaning;
-document.getElementById("question").textContent=p.question;
-document.getElementById("practice").textContent=p.practice;
-document.getElementById("answer").classList.remove("show");
+  const p=proverbs[current];
+
+  document.getElementById("scene").textContent=p.scene;
+  document.getElementById("title").textContent=p.title;
+  document.getElementById("meaning").textContent=p.meaning;
+  document.getElementById("question").textContent=p.question;
+  document.getElementById("practice").textContent=p.practice;
+  document.getElementById("answer").classList.remove("show");
 }
 
 function reveal(){
-document.getElementById("answer").classList.add("show");
+  document.getElementById("answer").classList.add("show");
 }
 
 function randomProverb(){
-const list=topic==="전체"?proverbs:proverbs.filter(p=>p.topic===topic);
-const selected=list[Math.floor(Math.random()*list.length)];
-current=proverbs.indexOf(selected);
-showProverb();
+  const list=topic==="전체"
+    ?proverbs
+    :proverbs.filter(p=>p.topic===topic);
+
+  const selected=list[Math.floor(Math.random()*list.length)];
+  current=proverbs.indexOf(selected);
+  showProverb();
 }
 
 /* 주제 선택 */
 document.getElementById("topics").addEventListener("click",e=>{
-const b=e.target.closest("button[data-topic]");
-if(!b)return;
-topic=b.dataset.topic;
-document.querySelectorAll("#topics button").forEach(x=>{
-x.classList.toggle("selected",x===b);
-});
-const list=topic==="전체"?proverbs:proverbs.filter(p=>p.topic===topic);
-if(list.length){
-current=proverbs.indexOf(list[0]);
-showProverb();
-}
+  const b=e.target.closest("button[data-topic]");
+  if(!b)return;
+
+  topic=b.dataset.topic;
+
+  document.querySelectorAll("#topics button").forEach(x=>{
+    x.classList.toggle("selected",x===b);
+  });
+
+  const list=topic==="전체"
+    ?proverbs
+    :proverbs.filter(p=>p.topic===topic);
+
+  if(list.length){
+    current=proverbs.indexOf(list[0]);
+    showProverb();
+  }
 });
 
 /* 그림 클릭 */
 document.getElementById("picture").addEventListener("click",reveal);
+
 document.getElementById("picture").addEventListener("keydown",e=>{
-if(e.key==="Enter"||e.key===" "){
-e.preventDefault();
-reveal();
-}
+  if(e.key==="Enter"||e.key===" "){
+    e.preventDefault();
+    reveal();
+  }
 });
 </script>
 </body>
