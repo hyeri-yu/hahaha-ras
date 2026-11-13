@@ -1,538 +1,514 @@
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>꿈꾸며 나아가는 RAS 꿈나라 교실</title>
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap');
+
 :root {
-  --purple: #70577F;
-  --pink: #E58B9D;
-  --mint: #83B99B;
-  --yellow: #E9B65F;
-  --lavender: #F2EAF7;
-  --cream: #FFFAF2;
+  --purple:#70577F;
+  --pink:#E58B9D;
+  --mint:#83B99B;
+  --yellow:#E9B65F;
+  --lavender:#F2EAF7;
+  --cream:#FFF9F0;
 }
-
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#FCF8F5;
+  color:#665674;
+  font-family:'Gowun Dodum',sans-serif;
+  line-height:1.7;
 }
+button,select{font:inherit}
+button{cursor:pointer}
+.shell{width:min(1160px,94%);margin:auto}
 
-body {
-  margin: 0;
-  font-family: "Malgun Gothic", sans-serif;
-  background: linear-gradient(180deg, #FBF7FC, #FFFAF3);
-  color: var(--purple);
+/* 공식 RAS 로고 */
+header{
+  padding:25px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
 }
-
-/* 로고 */
-
-header {
-  text-align: center;
-  padding: 30px 15px 15px;
+.brand{
+  text-decoration:none;
+  line-height:1.35;
+  letter-spacing:-1px;
 }
-
-.logo {
-  font-size: clamp(23px, 4vw, 38px);
-  font-weight: 900;
-  line-height: 1.5;
-  letter-spacing: -2px;
+.brand-line{
+  display:block;
+  font-family:'Jua',sans-serif;
+  font-size:clamp(23px,3vw,34px);
 }
-
-.pink { color: var(--pink); }
-.mint { color: var(--mint); }
-.yellow { color: var(--yellow); }
-.purple { color: var(--purple); }
-
-.subtitle {
-  color: #A58EAD;
-  font-size: 15px;
-  letter-spacing: 3px;
-  margin-top: 10px;
+.dream{color:var(--pink)}
+.na{color:var(--mint)}
+.agana{color:var(--purple)}
+.ras{color:var(--yellow)}
+.brand-sub{
+  color:#A48EAA;
+  font-size:11px;
+  letter-spacing:3px;
+  margin-top:7px;
 }
-
-/* 메인 소개 */
-
-.hero {
-  margin: 20px auto;
-  max-width: 1100px;
-  width: 92%;
-  padding: 45px 20px;
-  text-align: center;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #F2EAF7, #FFF0E8, #EAF6EF);
-  box-shadow: 0 10px 30px #70577F15;
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav button,nav a{
+  border:0;
+  background:transparent;
+  color:var(--purple);
+  text-decoration:none;
+  padding:9px 13px;
+  border-radius:30px;
 }
+nav button:hover,nav a:hover{background:var(--lavender)}
+.nav-main{background:var(--purple);color:white}
 
-.hero h1 {
-  font-size: clamp(24px, 4vw, 36px);
-  margin: 10px 0;
+/* 동화나라 메인 */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:25px;
+  padding:45px;
+  min-height:390px;
+  border-radius:35px;
+  background:linear-gradient(125deg,#F3EAF7,#FFF2EB,#EAF4EB);
+  box-shadow:0 18px 45px #70577F18;
+  overflow:hidden;
 }
-
-.hero p {
-  color: #887B91;
+.kicker{
+  color:#A48CAE;
+  font-size:12px;
+  letter-spacing:3px;
+  font-weight:bold;
 }
-
-.hero-picture {
-  font-size: 65px;
-  margin: 25px 0;
+.hero h1{
+  font-family:'Jua',sans-serif;
+  font-size:clamp(30px,4vw,47px);
+  color:var(--purple);
+  line-height:1.3;
 }
-
-.today {
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
+.hero p{color:#84768B}
+.hero-art{
+  min-height:260px;
+  display:grid;
+  place-items:center;
 }
-
-.today span {
-  background: white;
-  border-radius: 30px;
-  padding: 10px 16px;
-  font-size: 14px;
+.castle{
+  width:300px;
+  height:250px;
+  border-radius:48% 52% 45% 55%;
+  background:linear-gradient(145deg,#FFF9ED,#F6E8F1,#E5F2E6);
+  display:grid;
+  place-items:center;
+  font-size:115px;
+  box-shadow:inset 0 0 0 9px #ffffff80,0 15px 35px #9d83a522;
+}
+.stars{font-size:30px;text-align:center;margin-top:10px}
+.btn{
+  border:0;
+  border-radius:30px;
+  padding:12px 20px;
+  font-weight:bold;
+  margin:5px;
+}
+.primary{background:var(--purple);color:white}
+.soft{background:white;color:var(--purple)}
+.today{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+.today span{
+  background:#ffffffc9;
+  padding:8px 13px;
+  border-radius:25px;
+  font-size:13px;
 }
 
 /* 과목 카드 */
-
-.section {
-  max-width: 1100px;
-  width: 92%;
-  margin: 35px auto;
+.section{margin:42px 0}
+.section h2{
+  font-family:'Jua',sans-serif;
+  color:var(--purple);
+  font-size:27px;
+}
+.courses{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.course{
+  border:1px solid white;
+  border-radius:28px;
+  padding:23px;
+  min-height:260px;
+  text-align:left;
+  color:var(--purple);
+  transition:.2s;
+  box-shadow:0 12px 30px #70577F12;
+}
+.course:hover{transform:translateY(-6px)}
+.read{background:linear-gradient(145deg,#FBE9ED,#FFF7F0)}
+.art{background:linear-gradient(145deg,#FFF0D8,#FFF9EE)}
+.sports{background:linear-gradient(145deg,#E5F2E8,#F4F8EE)}
+.icon{
+  font-size:48px;
+  background:#ffffffb8;
+  border-radius:20px;
+  display:inline-block;
+  padding:8px 15px;
+}
+.course h3{
+  font-family:'Jua',sans-serif;
+  font-size:22px;
+  margin-bottom:5px;
+}
+.course p{font-size:14px;color:#83768A}
+.tag{
+  display:inline-block;
+  background:#ffffffb9;
+  border-radius:25px;
+  padding:7px 12px;
+  font-size:12px;
 }
 
-.section h2 {
-  text-align: center;
-  font-size: 25px;
+/* 날씨와 안내 */
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.panel{
+  background:white;
+  border-radius:25px;
+  padding:23px;
+  box-shadow:0 10px 25px #70577F12;
+}
+.panel h3{font-family:'Jua',sans-serif;color:var(--purple)}
+select{
+  padding:10px;
+  border:1px solid #E9DDED;
+  border-radius:13px;
+  color:var(--purple);
+  background:white;
 }
 
-.subjects {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+/* 학습 페이지 */
+.page{display:none;padding:20px 0 50px}
+.page.active{display:block}
+.back{
+  border:0;
+  background:var(--lavender);
+  color:var(--purple);
+  padding:11px 18px;
+  border-radius:25px;
 }
-
-.subject {
-  border: none;
-  border-radius: 25px;
-  padding: 25px 18px;
-  min-height: 235px;
-  cursor: pointer;
-  transition: 0.2s;
-  color: var(--purple);
-  text-align: center;
+.page-title{text-align:center;margin:20px 0}
+.page-title h2{
+  font-family:'Jua',sans-serif;
+  color:var(--purple);
+  font-size:32px;
 }
-
-.subject:hover {
-  transform: translateY(-6px);
+.topics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:20px 0;
 }
-
-.read { background: #FCE9EF; }
-.art { background: #FFF0D9; }
-.sports { background: #DFF1E8; }
-
-.subject .emoji {
-  font-size: 55px;
+.topics button{
+  background:white;
+  border:1px solid #E9DDED;
+  color:var(--purple);
+  padding:9px 14px;
+  border-radius:25px;
 }
-
-.subject h3 {
-  font-size: 21px;
+.topics button.selected{
+  background:var(--purple);
+  color:white;
 }
-
-.subject p {
-  font-size: 14px;
-  line-height: 1.7;
+.learning{
+  background:white;
+  border-radius:30px;
+  padding:25px;
+  box-shadow:0 15px 35px #70577F15;
 }
-
-.tag {
-  display: inline-block;
-  background: #FFFFFFB8;
-  padding: 7px 15px;
-  border-radius: 30px;
-  margin-top: 10px;
-  font-size: 12px;
+.picture{
+  min-height:290px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#EEF6ED,#F9EAF0,#FFF4DF);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
+  cursor:pointer;
 }
-
-/* 날씨 */
-
-.weather-box {
-  max-width: 1100px;
-  width: 92%;
-  margin: 25px auto;
-  padding: 22px;
-  border-radius: 22px;
-  background: white;
-  text-align: center;
-  box-shadow: 0 8px 25px #70577F10;
+.scene{font-size:100px}
+.hint-title{
+  font-family:'Jua',sans-serif;
+  font-size:21px;
+  color:#80658E;
 }
-
-select {
-  padding: 10px 15px;
-  border: 1px solid #E9DDED;
-  border-radius: 15px;
-  color: var(--purple);
-  background: white;
-  font-size: 15px;
+.hint-copy{font-size:14px;color:#93859A}
+.answer{
+  display:none;
+  background:#FFF8ED;
+  padding:23px;
+  margin-top:18px;
+  border-radius:20px;
+  text-align:center;
 }
-
-/* 속담 학습 화면 */
-
-.page {
-  display: none;
-  max-width: 900px;
-  width: 92%;
-  margin: 20px auto 50px;
+.answer.show{display:block}
+.answer h3{
+  font-family:'Jua',sans-serif;
+  color:#A87891;
+  font-size:28px;
 }
-
-.page.active {
-  display: block;
+.meaning{font-size:17px}
+.teacher{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+  text-align:left;
 }
-
-.back {
-  border: none;
-  background: var(--lavender);
-  color: var(--purple);
-  border-radius: 25px;
-  padding: 12px 20px;
-  cursor: pointer;
-  margin-bottom: 20px;
+.teacher div{
+  background:#EDF5ED;
+  padding:15px;
+  border-radius:16px;
 }
-
-.proverb-card {
-  background: white;
-  padding: 25px;
-  border-radius: 25px;
-  box-shadow: 0 10px 30px #70577F12;
+.teacher div:last-child{background:#F3EDF7}
+.teacher p{font-size:14px}
+footer{
+  text-align:center;
+  padding:35px 10px;
+  color:#A394A8;
+  font-size:13px;
+  border-top:1px solid #eee5ed;
 }
-
-.topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.topics button {
-  border: 1px solid #E9DDED;
-  background: white;
-  padding: 9px 15px;
-  border-radius: 25px;
-  color: var(--purple);
-  cursor: pointer;
-}
-
-.topics button.selected {
-  background: var(--purple);
-  color: white;
-}
-
-.picture {
-  min-height: 250px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #E9F5ED, #F8E9EF, #FFF2D9);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  cursor: pointer;
-  padding: 20px;
-}
-
-.picture .scene {
-  font-size: 90px;
-}
-
-.picture p {
-  color: #88798E;
-}
-
-.result {
-  display: none;
-  background: #FFF7EB;
-  padding: 22px;
-  border-radius: 20px;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.result.show {
-  display: block;
-}
-
-.result h2 {
-  color: #A67D91;
-}
-
-.teacher {
-  background: #EFF6EF;
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 15px;
-  text-align: left;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.action {
-  border: none;
-  border-radius: 30px;
-  padding: 12px 20px;
-  background: var(--purple);
-  color: white;
-  cursor: pointer;
-}
-
-.action.secondary {
-  background: var(--lavender);
-  color: var(--purple);
-}
-
-footer {
-  text-align: center;
-  padding: 30px 15px;
-  color: #A58EAD;
-  font-size: 13px;
-}
-
-@media(max-width:700px) {
-  .subjects {
-    grid-template-columns: 1fr;
-  }
-
-  .subject {
-    min-height: 190px;
-  }
-
-  .hero {
-    padding: 30px 15px;
-  }
-
-  .logo {
-    letter-spacing: -1px;
-  }
+@media(max-width:750px){
+  header{flex-direction:column;align-items:flex-start}
+  .hero{grid-template-columns:1fr;padding:25px;text-align:center}
+  .hero-art{grid-row:1;min-height:210px}
+  .castle{width:240px;height:200px;font-size:90px}
+  .today{justify-content:center}
+  .courses{grid-template-columns:1fr}
+  .info{grid-template-columns:1fr}
+  .teacher{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
+<div class="shell">
 
 <header>
-  <div class="logo">
-    <div>
-      <span class="pink">꿈</span><span class="purple">꾸며 </span><span class="mint">나</span><span class="purple">아가는 </span><span class="yellow">RAS</span>
-    </div>
-    <div>
-      <span class="pink">꿈</span><span class="mint">나</span><span class="yellow">라</span><span class="purple"> 교실</span>
-    </div>
-  </div>
+<a href="#" class="brand" onclick="home();return false">
+  <span class="brand-line">
+    <span class="dream">꿈</span>꾸며
+    <span class="na">나</span><span class="agana">아가는 </span>
+    <span class="ras">RAS</span>
+  </span>
+  <span class="brand-line">
+    <span class="dream">꿈</span><span class="na">나</span><span class="dream" style="color:var(--yellow)">라</span><span class="agana"> 교실</span>
+  </span>
+  <span class="brand-sub">READ · ART · SPORTS</span>
+</a>
 
-  <div class="subtitle">READ · ART · SPORTS</div>
+<nav>
+<button onclick="home()">홈</button>
+<button onclick="openRead()">READ</button>
+<button onclick="coming()">ART</button>
+<a href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">SPORTS ↗</a>
+</nav>
 </header>
 
-<!-- 메인 화면 -->
+<!-- 메인 홈페이지 -->
+<main id="homePage" class="page active">
 
-<main id="home" class="page active">
+<section class="hero">
+<div>
+<div class="kicker">MY LITTLE LEARNING WORLD</div>
+<h1>오늘도 반짝이는<br>배움의 모험을 시작해요!</h1>
+<p>읽고, 표현하고, 움직이며 성장하는 아이들.<br>작은 호기심이 커다란 배움이 되는 우리 반 꿈나라.</p>
+<button class="btn primary" onclick="openRead()">오늘의 속담 만나기 ✨</button>
+<a class="btn soft" href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">체육 놀이 가기</a>
+<div class="today">
+<span id="date"></span>
+<span id="weekday"></span>
+<span id="weatherNow">☀️ 오늘의 날씨</span>
+</div>
+</div>
 
-  <section class="hero">
-    <h1>🌷 오늘은 무엇을 배우며 놀까요?</h1>
-    <p>읽고, 표현하고, 움직이며 성장하는 아이들</p>
-
-    <div class="hero-picture">🌈 📚 🎨 ⚽</div>
-
-    <div class="today">
-      <span id="date"></span>
-      <span id="weekday"></span>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2>✨ 배움의 문을 열어 볼까요?</h2>
-
-    <div class="subjects">
-
-      <button class="subject read" onclick="openPage('read')">
-        <div class="emoji">📖</div>
-        <h3>READ</h3>
-        <p>읽고 생각하기</p>
-        <p>하루에 하나씩 하는 속담풀이</p>
-        <span class="tag">속담 풀이 시작하기</span>
-      </button>
-
-      <button class="subject art" onclick="openPage('art')">
-        <div class="emoji">🎨</div>
-        <h3>ART</h3>
-        <p>표현하고 창조하기</p>
-        <p>미술 · 만들기 · 음악 놀이</p>
-        <span class="tag">준비 중</span>
-      </button>
-
-      <button class="subject sports" onclick="openSports()">
-        <div class="emoji">⚽</div>
-        <h3>SPORTS</h3>
-        <p>움직이며 성장하기</p>
-        <p>하하하 체육놀이</p>
-        <span class="tag">체육 사이트 바로가기 ↗</span>
-      </button>
-
-    </div>
-  </section>
-
-  <section class="weather-box">
-    <h3>🌤️ 오늘 우리 반 날씨</h3>
-    <select id="weather" onchange="saveWeather()">
-      <option>☀️ 맑아요</option>
-      <option>🌤️ 구름 조금</option>
-      <option>☁️ 흐려요</option>
-      <option>🌧️ 비가 와요</option>
-      <option>❄️ 눈이 와요</option>
-      <option>🌬️ 바람이 불어요</option>
-    </select>
-    <p id="weatherText">오늘 날씨를 선택해 주세요.</p>
-  </section>
-
-</main>
-
-<!-- 속담 풀이 -->
-
-<section id="read" class="page">
-
-  <button class="back" onclick="openPage('home')">
-    ← RAS 메인으로
-  </button>
-
-  <h1 style="text-align:center">🌸 하루에 하나씩 하는 속담풀이</h1>
-  <p style="text-align:center">그림을 먼저 보고 이야기해 보세요!</p>
-
-  <div class="topics" id="topics">
-    <button class="selected" onclick="chooseTopic('전체',this)">오늘의 속담</button>
-    <button onclick="chooseTopic('친구와 협동',this)">친구와 협동</button>
-    <button onclick="chooseTopic('노력과 끈기',this)">노력과 끈기</button>
-    <button onclick="chooseTopic('말과 예절',this)">말과 예절</button>
-    <button onclick="chooseTopic('배려와 나눔',this)">배려와 나눔</button>
-    <button onclick="chooseTopic('지혜와 안전',this)">지혜와 안전</button>
-  </div>
-
-  <div class="proverb-card">
-
-    <div class="picture" onclick="reveal()">
-      <div class="scene" id="scene">🧒🏻 🤝 🧒🏻</div>
-      <p>그림힌트! 그림을 클릭하면 오늘의 속담을 만날 수 있어요!</p>
-    </div>
-
-    <div class="result" id="result">
-      <h2 id="title"></h2>
-      <p id="meaning"></p>
-
-      <div class="teacher">
-        <strong>👩‍🏫 선생님 질문</strong>
-        <p id="question"></p>
-      </div>
-
-      <div class="teacher">
-        <strong>🌷 오늘의 실천 약속</strong>
-        <p id="practice"></p>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="action" onclick="reveal()">속담과 뜻 보기</button>
-      <button class="action secondary" onclick="randomProverb()">🎰 다른 속담 뽑기</button>
-    </div>
-
-  </div>
+<div class="hero-art">
+<div>
+<div class="castle">🏰</div>
+<div class="stars">⭐ 🌷 🦋 ☁️</div>
+</div>
+</div>
 </section>
 
-<!-- ART 준비 화면 -->
+<section class="section">
+<h2>✨ 어떤 교실로 놀러 갈까요?</h2>
+<div class="courses">
 
-<section id="art" class="page">
-  <button class="back" onclick="openPage('home')">← RAS 메인으로</button>
-  <div class="proverb-card" style="text-align:center;padding:60px 20px">
-    <div style="font-size:65px">🎨</div>
-    <h2>ART · 표현하고 창조하기</h2>
-    <p>새로운 미술과 창의 놀이가 준비되고 있어요!</p>
-  </div>
+<button class="course read" onclick="openRead()">
+<span class="icon">📖</span>
+<h3>읽고 생각하는 교실</h3>
+<p>속담과 이야기 속에서 지혜를 만나고 나의 생각을 말로 표현해요.</p>
+<span class="tag">오늘의 속담 · 그림 힌트</span>
+</button>
+
+<button class="course art" onclick="coming()">
+<span class="icon">🎨</span>
+<h3>표현하고 창조하는 교실</h3>
+<p>색칠하고 만들고 상상하며 나만의 작품을 완성해요.</p>
+<span class="tag">미술 · 만들기 · 음악</span>
+</button>
+
+<button class="course sports" onclick="sports()">
+<span class="icon">⚽</span>
+<h3>움직이며 자라는 교실</h3>
+<p>몸으로 신나게 놀이하고 친구와 함께 도전해요.</p>
+<span class="tag">하하하 체육놀이</span>
+</button>
+
+</div>
+</section>
+
+<section class="section info">
+<div class="panel">
+<h3>🌤️ 오늘 우리 반 날씨</h3>
+<p>창밖을 살펴보고 오늘의 날씨를 골라보세요.</p>
+<select id="weather" onchange="saveWeather()">
+<option>☀️ 맑아요</option>
+<option>🌤️ 구름 조금</option>
+<option>☁️ 흐려요</option>
+<option>🌧️ 비가 와요</option>
+<option>❄️ 눈이 와요</option>
+<option>🌬️ 바람이 불어요</option>
+</select>
+<p id="weatherMessage">오늘 날씨를 선택해 주세요.</p>
+</div>
+
+<div class="panel">
+<h3>🌱 오늘의 배움 약속</h3>
+<p>작은 실천 하나가 우리를 한 뼘 더 자라게 해요.</p>
+<p>💗 서로의 이야기를 들어요</p>
+<p>🌷 천천히 생각해요</p>
+<p>🌱 함께 도전해요</p>
+</div>
+</section>
+</main>
+
+<!-- READ 속담 풀이 -->
+<section id="readPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+
+<div class="page-title">
+<p>READ · THINK · SHARE</p>
+<h2>하루에 하나씩 하는 속담풀이</h2>
+<p>그림을 자세히 살펴보고 어떤 이야기가 숨어 있는지 생각해 보세요.</p>
+</div>
+
+<div class="topics" id="topics">
+<button class="selected" data-topic="전체">오늘의 속담</button>
+<button data-topic="친구와 협동">친구와 협동</button>
+<button data-topic="노력과 끈기">노력과 끈기</button>
+<button data-topic="말과 예절">말과 예절</button>
+<button data-topic="배려와 나눔">배려와 나눔</button>
+<button data-topic="지혜와 안전">지혜와 안전</button>
+</div>
+
+<div class="learning">
+<div class="picture" id="picture" role="button" tabindex="0">
+<div class="scene" id="scene">🧒🏻 🤝 🧒🏻</div>
+<div class="hint-title">🌷 그림 힌트</div>
+<div class="hint-copy">그림을 보고 어떤 일이 일어나는지 이야기해 보세요.</div>
+</div>
+
+<div class="answer" id="answer">
+<h3 id="title"></h3>
+<p class="meaning" id="meaning"></p>
+<div class="teacher">
+<div>
+<strong>👩‍🏫 선생님 질문</strong>
+<p id="question"></p>
+</div>
+<div>
+<strong>🌱 오늘의 작은 실천</strong>
+<p id="practice"></p>
+</div>
+</div>
+</div>
+
+<button class="btn primary" onclick="reveal()">속담과 뜻 만나기</button>
+<button class="btn soft" onclick="randomProverb()">🎲 다른 속담 뽑기</button>
+</div>
+<p style="text-align:center;color:#A394A8;font-size:13px">그림 관찰 → 생각 나누기 → 속담 확인하기</p>
+</section>
+
+<section id="artPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+<div class="learning" style="text-align:center;padding:60px 20px">
+<div style="font-size:70px">🎨</div>
+<h2>ART · 표현하고 창조하는 교실</h2>
+<p>새로운 미술과 창의 놀이가 준비되고 있어요!</p>
+</div>
 </section>
 
 <footer>
-  꿈꾸며 나아가는 RAS 꿈나라 교실<br>
-  Read · Art · Sports<br>
-  읽고, 표현하고, 움직이며 성장하는 아이들
+꿈꾸며 나아가는 RAS 꿈나라 교실<br>
+Read · Art · Sports<br>
+읽고, 표현하고, 움직이며 성장하는 아이들
 </footer>
+</div>
 
 <script>
+/* 날짜와 요일 */
+const now=new Date();
+document.getElementById("date").textContent=
+"📅 "+now.toLocaleDateString("ko-KR",{year:"numeric",month:"long",day:"numeric"});
+document.getElementById("weekday").textContent=
+"🗓️ "+now.toLocaleDateString("ko-KR",{weekday:"long"});
 
-/* 날짜와 요일 자동 표시 */
-
-const today = new Date();
-
-document.getElementById("date").textContent =
-  today.toLocaleDateString("ko-KR", {
-    year:"numeric",
-    month:"long",
-    day:"numeric"
-  });
-
-document.getElementById("weekday").textContent =
-  today.toLocaleDateString("ko-KR", {
-    weekday:"long"
-  });
-
-/* 페이지 이동 */
-
-function openPage(page) {
-  document.querySelectorAll(".page").forEach(p => {
-    p.classList.remove("active");
-  });
-
-  document.getElementById(page).classList.add("active");
-  window.scrollTo(0,0);
-
-  if(page === "read") {
-    dailyProverb();
-  }
+/* 화면 이동 */
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+window.scrollTo(0,0);
+}
+function home(){showPage("homePage")}
+function openRead(){showPage("readPage");dailyProverb()}
+function coming(){showPage("artPage")}
+function sports(){
+window.open("https://hahaha.qpfpahffo.workers.dev/","_blank","noopener");
 }
 
-/* 기존 체육 사이트 연결 */
-
-function openSports() {
-  window.open(
-    "https://hahaha.qpfpahffo.workers.dev/",
-    "_blank",
-    "noopener,noreferrer"
-  );
+/* 날씨 */
+function saveWeather(){
+const w=document.getElementById("weather").value;
+document.getElementById("weatherMessage").textContent="오늘은 "+w+" 우리 반 날씨예요!";
+document.getElementById("weatherNow").textContent=w;
+localStorage.setItem("rasWeather",w);
 }
-
-/* 날씨 선택 저장 */
-
-function saveWeather() {
-  const weather = document.getElementById("weather").value;
-
-  document.getElementById("weatherText").textContent =
-    "오늘은 " + weather + " 우리 반 날씨예요!";
-
-  localStorage.setItem("rasWeather",weather);
-}
-
-const savedWeather = localStorage.getItem("rasWeather");
-
-if(savedWeather) {
-  document.getElementById("weather").value = savedWeather;
-  saveWeather();
+const saved=localStorage.getItem("rasWeather");
+if(saved){
+document.getElementById("weather").value=saved;
+saveWeather();
 }
 
 /* 속담 데이터 */
-
-const proverbs = [
-
+const proverbs=[
 {
 topic:"친구와 협동",
 scene:"🧒🏻 🤝 🧒🏻",
@@ -541,7 +517,6 @@ meaning:"작은 일도 함께 힘을 모으면 더 쉽고 즐겁게 할 수 있�
 question:"친구와 함께해서 더 쉬웠던 일이 있었나요?",
 practice:"오늘 친구와 장난감이나 교구를 함께 정리해요."
 },
-
 {
 topic:"노력과 끈기",
 scene:"🌱 ☀️ 🌼",
@@ -550,7 +525,6 @@ meaning:"큰일도 작은 일부터 하나씩 시작하면 해낼 수 있어요.
 question:"새로운 일을 할 때 첫 번째로 무엇을 해볼까요?",
 practice:"오늘 내가 해보고 싶은 일을 한 가지 시작해요."
 },
-
 {
 topic:"말과 예절",
 scene:"😊 💬 💗",
@@ -559,7 +533,6 @@ meaning:"내가 다정하게 말하면 다른 사람도 다정하게 대답해 �
 question:"친구의 마음을 기분 좋게 하는 말은 무엇일까요?",
 practice:"오늘 친구에게 고운 말 한마디를 건네요."
 },
-
 {
 topic:"배려와 나눔",
 scene:"🍎 🧒🏻 🧒🏻",
@@ -568,16 +541,14 @@ meaning:"아주 작은 것도 다른 사람과 나누면 기쁨이 커져요.",
 question:"친구와 나누고 싶은 것이 있나요?",
 practice:"놀이 도구나 재료를 친구와 사이좋게 나눠 써요."
 },
-
 {
 topic:"지혜와 안전",
 scene:"🚶‍♀️ 🌉 👀",
-title:"돌다리도 두들겨 보고 건너라",
-meaning:"잘 알고 있는 일도 한 번 더 살펴보면 더 안전해요.",
-question:"길을 건너기 전에 무엇을 살펴봐야 할까요?",
-practice:"이동할 때 멈추고 주변을 살펴본 뒤 천천히 움직여요."
+title:"아는 길도 물어 가라",
+meaning:"잘 알고 있는 길도 한 번 더 확인하면 실수를 줄일 수 있어요.",
+question:"길을 모르면 어떻게 하면 좋을까요?",
+practice:"모르는 것이 있으면 믿을 수 있는 어른에게 물어봐요."
 },
-
 {
 topic:"노력과 끈기",
 scene:"🐜 🌾 🏡",
@@ -586,89 +557,68 @@ meaning:"작은 것을 조금씩 모으면 나중에 큰 것이 될 수 있어�
 question:"우리 반에서 조금씩 모으면 좋은 것은 무엇일까요?",
 practice:"장난감과 책을 제자리에 하나씩 정리해요."
 }
-
 ];
 
-let currentProverb = 0;
-let currentTopic = "전체";
+let current=0;
+let topic="전체";
 
-/* 오늘의 속담 고정 */
-
-function dailyProverb() {
-  const date = new Date();
-  const key = date.getFullYear() + "-" +
-              (date.getMonth()+1) + "-" +
-              date.getDate();
-
-  let hash = 0;
-
-  for(let i=0;i<key.length;i++) {
-    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
-  }
-
-  currentProverb = hash % proverbs.length;
-  showProverb();
+/* 오늘의 속담 */
+function dailyProverb(){
+let key=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
+let hash=0;
+for(let c of key)hash=(hash*31+c.charCodeAt(0))>>>0;
+current=hash%proverbs.length;
+topic="전체";
+document.querySelectorAll("#topics button").forEach(b=>{
+b.classList.toggle("selected",b.dataset.topic==="전체");
+});
+showProverb();
 }
 
-/* 속담 표시 */
-
-function showProverb() {
-  const p = proverbs[currentProverb];
-
-  document.getElementById("scene").textContent = p.scene;
-  document.getElementById("title").textContent = p.title;
-  document.getElementById("meaning").textContent = p.meaning;
-  document.getElementById("question").textContent = p.question;
-  document.getElementById("practice").textContent = p.practice;
-
-  document.getElementById("result").classList.remove("show");
+function showProverb(){
+const p=proverbs[current];
+document.getElementById("scene").textContent=p.scene;
+document.getElementById("title").textContent=p.title;
+document.getElementById("meaning").textContent=p.meaning;
+document.getElementById("question").textContent=p.question;
+document.getElementById("practice").textContent=p.practice;
+document.getElementById("answer").classList.remove("show");
 }
 
-/* 뜻 공개 */
+function reveal(){
+document.getElementById("answer").classList.add("show");
+}
 
-function reveal() {
-  document.getElementById("result").classList.add("show");
+function randomProverb(){
+const list=topic==="전체"?proverbs:proverbs.filter(p=>p.topic===topic);
+const selected=list[Math.floor(Math.random()*list.length)];
+current=proverbs.indexOf(selected);
+showProverb();
 }
 
 /* 주제 선택 */
-
-function chooseTopic(topic,button) {
-  currentTopic = topic;
-
-  document.querySelectorAll(".topics button").forEach(b => {
-    b.classList.remove("selected");
-  });
-
-  button.classList.add("selected");
-
-  const list = topic === "전체"
-    ? proverbs
-    : proverbs.filter(p => p.topic === topic);
-
-  if(list.length > 0) {
-    currentProverb = proverbs.indexOf(list[0]);
-    showProverb();
-  }
+document.getElementById("topics").addEventListener("click",e=>{
+const b=e.target.closest("button[data-topic]");
+if(!b)return;
+topic=b.dataset.topic;
+document.querySelectorAll("#topics button").forEach(x=>{
+x.classList.toggle("selected",x===b);
+});
+const list=topic==="전체"?proverbs:proverbs.filter(p=>p.topic===topic);
+if(list.length){
+current=proverbs.indexOf(list[0]);
+showProverb();
 }
+});
 
-/* 랜덤 속담 뽑기 */
-
-function randomProverb() {
-  const list = currentTopic === "전체"
-    ? proverbs
-    : proverbs.filter(p => p.topic === currentTopic);
-
-  if(!list.length) return;
-
-  const selected = list[
-    Math.floor(Math.random() * list.length)
-  ];
-
-  currentProverb = proverbs.indexOf(selected);
-  showProverb();
+/* 그림 클릭 */
+document.getElementById("picture").addEventListener("click",reveal);
+document.getElementById("picture").addEventListener("keydown",e=>{
+if(e.key==="Enter"||e.key===" "){
+e.preventDefault();
+reveal();
 }
-
+});
 </script>
-
 </body>
 </html>
