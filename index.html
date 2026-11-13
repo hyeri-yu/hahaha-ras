@@ -776,16 +776,6 @@ footer{
 </div>
 </section>
 
-<!-- 명화감상 -->
-<section id="artPage" class="page">
-<button class="back" onclick="home()">← 꿈나라 교실로</button>
-<div class="learning" style="text-align:center;padding:60px 20px">
-<div style="font-size:70px">🎨</div>
-<h2>하하하 명화감상</h2>
-<p>새로운 명화와 감상 활동이 준비되고 있어요!</p>
-</div>
-</section>
-
 <!-- 나침반 안전교육 -->
 <section id="safetyPage" class="page">
 <button class="back" onclick="home()">← 꿈나라 교실로</button>
@@ -1115,7 +1105,12 @@ function openRead(){
   showPage("readPage");
   dailyProverb();
 }
-function coming(){showPage("artPage")}
+
+/* 명화감상 교실 연결 */
+function coming(){
+  window.location.href="https://hyeri-yu.github.io/art-index.html/";
+}
+
 function openSafety(){showPage("safetyPage")}
 
 function sports(){
