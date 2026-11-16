@@ -122,7 +122,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 }
 
 .daily-sub{
-  font-size: 
+  font-size:19px;
   font-weight:800;
   color:var(--purple);
 }
@@ -162,7 +162,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   transition:transform .15s ease, background .15s ease;
 }
 .calendar-toggle-button:hover{
-  background: ;
+  background:#EEDFF3;
   transform:translateY(-1px);
 }
 .calendar-content[hidden]{display:none !important;}
@@ -387,6 +387,10 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   margin-bottom:20px;
 }
 
+.courses{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
 }
 
 .course{
@@ -638,6 +642,40 @@ footer{
   .memo-panel{padding:15px}
   .safety-topics{grid-template-columns:1fr}
 }
+
+/* 홈 교실 카드 배치 보정 */
+.courses{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  align-items:stretch;
+  gap:18px;
+}
+.courses > .course{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  width:100%;
+  min-width:0;
+  min-height:220px;
+  height:100%;
+  margin:0;
+  padding:24px 18px;
+  border:1px solid rgba(112,87,127,.12);
+  border-radius:22px;
+  box-sizing:border-box;
+  text-align:center;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.courses > .course h3{margin:15px 0 7px}
+.courses > .course p{margin:0 0 10px}
+.courses > .course .tag{margin-top:auto}
+@media(max-width:750px){
+  .courses{grid-template-columns:1fr !important;gap:14px}
+  .courses > .course{min-height:190px}
+}
+
 </style>
 </head>
 
@@ -766,7 +804,9 @@ footer{
 </button>
 
 <button class="course safety" onclick="openSafety()">
-<span class="icon">🧭</span> 
+<span class="icon">🧭</span>
+<h3>나침반 안전교육</h3>
+<p>생활 속 위험을 알아보고 안전하게 행동하는 방법을 배워요.</p>
 <span class="tag">생활안전 · 교통안전 · 재난안전</span>
 </button>
 
@@ -1296,7 +1336,9 @@ document.getElementById("topics").addEventListener("click",e=>{
     current=proverbs.indexOf(list[0]);
     showProverb();
   }
-}); 
+});
+
+/* 그림 클릭 */
 document.getElementById("picture").addEventListener("click",reveal);
 
 document.getElementById("picture").addEventListener("keydown",e=>{
