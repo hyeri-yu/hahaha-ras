@@ -122,7 +122,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 }
 
 .daily-sub{
-  font-size:19px;
+  font-size: 
   font-weight:800;
   color:var(--purple);
 }
@@ -162,7 +162,7 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   transition:transform .15s ease, background .15s ease;
 }
 .calendar-toggle-button:hover{
-  background:#EEDFF3;
+  background: ;
   transform:translateY(-1px);
 }
 .calendar-content[hidden]{display:none !important;}
@@ -387,10 +387,6 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   margin-bottom:20px;
 }
 
-.courses{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:18px;
 }
 
 .course{
@@ -770,9 +766,7 @@ footer{
 </button>
 
 <button class="course safety" onclick="openSafety()">
-<span class="icon">🧭</span>
-<h3>나침반 안전교육</h3>
-<p>생활 속 위험을 알아보고 안전하게 행동하는 방법을 배워요.</p>
+<span class="icon">🧭</span> 
 <span class="tag">생활안전 · 교통안전 · 재난안전</span>
 </button>
 
@@ -1302,9 +1296,7 @@ document.getElementById("topics").addEventListener("click",e=>{
     current=proverbs.indexOf(list[0]);
     showProverb();
   }
-});
-
-/* 그림 클릭 */
+}); 
 document.getElementById("picture").addEventListener("click",reveal);
 
 document.getElementById("picture").addEventListener("keydown",e=>{
