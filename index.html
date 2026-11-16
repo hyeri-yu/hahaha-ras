@@ -142,6 +142,34 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   background:white;
 }
 
+
+.calendar-toggle-row{
+  display:flex;
+  justify-content:center;
+  margin:22px 0 0;
+}
+.calendar-toggle-button{
+  border:1px solid #E5D8EA;
+  border-radius:999px;
+  padding:12px 24px;
+  background:#F4EAF7;
+  color:var(--purple);
+  font:inherit;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(117,87,127,.08);
+  transition:transform .15s ease, background .15s ease;
+}
+.calendar-toggle-button:hover{
+  background:#EEDFF3;
+  transform:translateY(-1px);
+}
+.calendar-content[hidden]{display:none !important;}
+.calendar-content{
+  margin-top:14px;
+}
+
 .calendar-wrap{
   margin:18px 0 0;
   width:100%;
@@ -675,6 +703,18 @@ footer{
   </div>
 </div>
 
+<div class="calendar-toggle-row">
+  <button
+    type="button"
+    class="calendar-toggle-button"
+    id="calendarToggleButton"
+    aria-expanded="false"
+    aria-controls="calendarContent"
+    onclick="toggleCalendar()"
+  >📅 달력 펴기</button>
+</div>
+
+<div class="calendar-content" id="calendarContent" hidden>
 <div class="calendar-wrap">
   <div class="calendar-title" id="calendarTitle"></div>
   <div class="calendar-grid" id="calendarGrid"></div>
@@ -698,6 +738,7 @@ footer{
 
   <div class="memo-list" id="memoList"></div>
   <p class="calendar-help">이 메모는 현재 컴퓨터의 이 브라우저에만 저장됩니다.</p>
+</div>
 </div>
 </section>
 
@@ -866,6 +907,16 @@ function updateDateTime(){
     now.getHours()<12?"오전이에요":"오후예요";
 
   renderCalendar(now);
+}
+
+/* 달력과 일정 메모 접기/펴기 */
+function toggleCalendar(){
+  const content=document.getElementById("calendarContent");
+  const button=document.getElementById("calendarToggleButton");
+  const isOpening=content.hidden;
+  content.hidden=!isOpening;
+  button.setAttribute("aria-expanded",String(isOpening));
+  button.textContent=isOpening?"📅 달력 접기":"📅 달력 펴기";
 }
 
 /* 날짜 키 */
