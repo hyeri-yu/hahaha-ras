@@ -3178,6 +3178,180 @@ async function openLibrary() {
 }
 </script>
 
+
+<style>
+#libraryPage .library-cover-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 16px;padding:14px 4px 20px}
+#libraryPage .library-cover-card{width:100%;min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:7px;padding:9px;border:2px solid #eadfe8;border-radius:18px;background:#fffaf5;box-shadow:0 4px 12px #8a718014;text-align:left}
+#libraryPage .library-card-cover{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:3/4;overflow:hidden;border-radius:12px;background:#f4f0e9}
+#libraryPage .library-card-cover img{width:100%;height:100%;object-fit:contain}
+#libraryPage .library-card-title{min-height:2.7em;text-align:center;font-size:14px;font-weight:800;line-height:1.35;color:#5e6e5b;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#libraryPage .library-card-rating{display:flex;justify-content:center;gap:2px;color:#d9d2d0;font-size:19px;line-height:1.1}
+#libraryPage .library-card-rating .filled{color:#f2be4f}
+#libraryPage .library-add-card{min-height:190px;align-items:center;justify-content:center;border-style:dashed;text-align:center}
+@media(max-width:700px){#libraryPage .library-cover-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px 9px}#libraryPage .library-card-title{font-size:12px}}
+@media(max-width:420px){#libraryPage .library-cover-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script>
+/* 독서 카드와 기록 버튼 동작을 마지막에 명확히 지정해 기존 중복 함수의 덮어쓰기를 방지합니다. */
+function renderLibrary(){
+  const count = Array.isArray(libraryBooks) ? libraryBooks.length : 0;
+  const countEl = document.getElementById("libraryCount");
+  if(countEl) countEl.textContent = count;
+  const fill = document.getElementById("libraryProgressFill");
+  if(fill) fill.style.width = Math.min(100, count / LIBRARY_TARGET * 100) + "%";
+  const progressText = document.getElementById("libraryProgressText");
+  if(progressText) progressText.textContent = count >= LIBRARY_TARGET ? "🎉 100권 목표를 달성했어요!" : count === 0 ? "첫 번째 책을 기다리고 있어요!" : "목표까지 " + (LIBRARY_TARGET-count) + "권 남았어요. 차근차근 읽어봐요!";
+  const caption = document.getElementById("libraryShelfCaption");
+  if(caption) caption.textContent = "지금까지 " + count + "권을 책장에 꽂았어요.";
+  const grid = document.getElementById("libraryShelves");
+  if(!grid) return;
+  grid.innerHTML = "";
+  grid.className = "library-cover-grid";
+  libraryBooks.forEach(book => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "library-cover-card";
+    card.addEventListener("click", () => openLibraryBook(book.id));
+    const frame = document.createElement("span");
+    frame.className = "library-card-cover";
+    if(book.cover){
+      const img = document.createElement("img");
+      img.src = String(book.cover).replace(/^http:/, "https:");
+      img.alt = (book.title || "책") + " 표지";
+      img.loading = "lazy";
+      img.onerror = () => { frame.textContent = "📚"; };
+      frame.appendChild(img);
+    } else {
+      frame.textContent = "📚";
+    }
+    const title = document.createElement("span");
+    title.className = "library-card-title";
+    title.textContent = book.title || "제목 없는 책";
+    const rating = document.createElement("span");
+    rating.className = "library-card-rating";
+    const score = Math.max(0, Math.min(5, Number(book.childrenRating) || 0));
+    for(let i=1;i<=5;i++){
+      const star = document.createElement("span");
+      star.className = i<=score ? "filled" : "";
+      star.textContent = "★";
+      rating.appendChild(star);
+    }
+    card.append(frame,title,rating);
+    grid.appendChild(card);
+  });
+  if(sharedCanEdit){
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "library-cover-card library-add-card";
+    add.innerHTML = '<span class="library-add-icon">＋</span><strong>새 책 꽂기</strong><span class="library-add-caption">책을 추가해 보세요</span>';
+    add.addEventListener("click", openBookEditor);
+    grid.appendChild(add);
+  }
+}
+function closeLibraryDetail(){
+  const panel = document.getElementById("libraryDetail");
+  if(panel) panel.classList.remove("show");
+  activeLibraryBookId = null;
+}
+async function saveLibraryDetail(){
+  const book = libraryBooks.find(item => String(item.id) === String(activeLibraryBookId));
+  if(!book){ alert("저장할 책을 찾지 못했어요. 책을 다시 열어 주세요."); return; }
+  if(!sharedRoom || !sharedCanEdit || !sharedEditPassword){
+    alert("이 반의 편집 비밀번호로 먼저 도서관에 입장해 주세요."); return;
+  }
+  book.category = document.getElementById("libraryCategory").value;
+  book.thoughts = document.getElementById("libraryThoughts").value.trim();
+  const childStars = document.querySelectorAll("#childrenStars .library-star.active").length;
+  const teacherStars = document.querySelectorAll("#teacherStars .library-star.active").length;
+  book.childrenRating = childStars;
+  book.teacherRating = teacherStars;
+  const ok = await saveSharedBook(book);
+  if(ok){
+    await loadSharedBooks();
+    closeLibraryDetail();
+    alert("독서 기록을 저장했어요! 📚");
+  }
+}
+async function deleteLibraryBook(){
+  if(!activeLibraryBookId) return;
+  if(!sharedRoom || !sharedCanEdit || !sharedEditPassword){
+    alert("이 반의 편집 비밀번호로 먼저 도서관에 입장해 주세요."); return;
+  }
+  if(!confirm("이 책과 독서 기록을 삭제할까요? 삭제하면 되돌릴 수 없어요.")) return;
+  try{
+    await sharedApi("/rest/v1/rpc/delete_book", {
+      method:"POST",
+      body:JSON.stringify({p_room_id:sharedRoom.id,p_password:sharedEditPassword,p_book_id:activeLibraryBookId})
+    });
+    closeLibraryDetail();
+    await loadSharedBooks();
+    alert("책을 삭제했어요.");
+  }catch(error){
+    alert("책을 삭제하지 못했어요: " + (error.message || error));
+  }
+}
+function openLibraryBook(id){
+  const book = libraryBooks.find(item => String(item.id) === String(id));
+  if(!book) return;
+  activeLibraryBookId = id;
+  document.getElementById("libraryEditor").classList.remove("show");
+  const panel = document.getElementById("libraryDetail");
+  panel.classList.add("show");
+  document.getElementById("libraryDetailTitle").textContent = book.title || "";
+  document.getElementById("libraryDetailAuthor").textContent = book.author ? "글쓴이: " + book.author : "";
+  document.getElementById("libraryDetailYear").textContent = book.year ? book.year + "년 출판" : "";
+  const coverArea = document.getElementById("libraryCoverArea");
+  coverArea.innerHTML = "";
+  if(book.cover){
+    const img = document.createElement("img");
+    img.className = "library-cover";
+    img.src = String(book.cover).replace(/^http:/,"https:");
+    img.alt = (book.title || "책") + " 표지";
+    coverArea.className = "";
+    coverArea.appendChild(img);
+  } else {
+    coverArea.className = "library-cover-placeholder";
+    coverArea.textContent = "📕";
+  }
+  document.getElementById("libraryCategory").value = book.category || "그림책";
+  document.getElementById("libraryThoughts").value = book.thoughts || "";
+  renderLibraryStars("childrenStars","children",Number(book.childrenRating)||0);
+  renderLibraryStars("teacherStars","teacher",Number(book.teacherRating)||0);
+  const buttons = panel.querySelectorAll(".library-actions button");
+  buttons.forEach(button => {
+    const isWriteAction = button.textContent.includes("기록 저장") || button.textContent.includes("책 삭제");
+    button.style.display = (!sharedCanEdit && isWriteAction) ? "none" : "";
+    button.disabled = !sharedCanEdit && isWriteAction;
+  });
+}
+function renderLibraryStars(containerId,type,rating){
+  const box = document.getElementById(containerId);
+  if(!box) return;
+  box.innerHTML = "";
+  for(let i=1;i<=5;i++){
+    const star = document.createElement("button");
+    star.type = "button";
+    star.className = "library-star" + (i<=rating ? " active" : "");
+    star.textContent = "★";
+    star.setAttribute("aria-label",i+"점");
+    star.disabled = !sharedCanEdit;
+    star.addEventListener("click",()=>{
+      if(!sharedCanEdit) return;
+      const book = libraryBooks.find(item => String(item.id) === String(activeLibraryBookId));
+      if(!book) return;
+      const field = type === "children" ? "childrenRating" : "teacherRating";
+      book[field] = i;
+      renderLibraryStars(containerId,type,i);
+      const label = document.getElementById(type==="children" ? "childrenRatingText" : "teacherRatingText");
+      if(label) label.textContent = i + "점 / 5점";
+    });
+    box.appendChild(star);
+  }
+  const label = document.getElementById(type==="children" ? "childrenRatingText" : "teacherRatingText");
+  if(label) label.textContent = rating ? rating + "점 / 5점" : "아직 별점 없음";
+}
+</script>
+
 </body>
 </html>!DOCTYPE html>
 <html lang="ko">
