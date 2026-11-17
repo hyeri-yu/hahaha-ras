@@ -1376,6 +1376,3021 @@ footer{
     </div>
     <div id="myRoomManageControls" class="shared-room-controls">
       <button class="library-btn secondary" onclick="renameCurrentRoom()">이 도서관 이름 바꾸기</button>
+    </div>
+  </div>
+</div>
+
+<div class="library-progress" id="libraryProgress">
+  <div class="library-progress-top">
+    <span>🌱 나의 독서 나무</span>
+    <span><strong id="libraryCount">0</strong> / 100권</span>
+  </div>
+  <div class="library-progress-track"><div class="library-progress-fill" id="libraryProgressFill"></div></div>
+  <div class="library-small-note" id="libraryProgressText">첫 번째 책을 기다리고 있어요!</div>
+</div>
+
+<div class="library-actions">
+  <button class="library-btn" onclick="openBookEditor()">＋ 책 추가하기</button>
+  <button class="library-btn secondary" onclick="toggleBookOrganization()">📊 책 정리</button>
+</div>
+
+<div class="bookshelf-wrap" id="currentClassBookshelf">
+  <h3 class="bookshelf-heading" id="currentBookshelfHeading">우리 반 책장이 여기에 펼쳐져요 📚</h3>
+  <div id="libraryShelves"></div>
+  <div class="library-book-count" id="libraryShelfCaption">우리 반 도서관을 만들면 책장이 바로 나타나요.</div>
+</div>
+
+<div class="library-editor" id="libraryEditor">
+  <h3>📖 새 책을 책장에 꽂아요</h3>
+  <div class="library-field">
+    <label for="libraryTitleInput">책 제목을 입력해 주세요</label>
+    <input id="libraryTitleInput" type="text" placeholder="예: 강아지똥" maxlength="100">
+  </div>
+  <div class="library-actions" style="justify-content:flex-start;margin:8px 0">
+    <button class="library-btn" onclick="searchLibraryBook()">도서관에서 표지 찾기</button>
+    <button class="library-btn secondary" onclick="addManualLibraryBook()">표지 없이 직접 등록</button>
+  </div>
+  <div class="library-small-note">책 제목으로 Open Library를 검색합니다. 검색 결과가 없으면 직접 등록할 수 있어요.</div>
+  <div class="library-search-results" id="librarySearchResults"></div>
+  <button class="library-btn secondary" onclick="closeBookEditor()">닫기</button>
+</div>
+
+<div class="library-editor" id="libraryDetail">
+  <h3>💗 나의 독서 기록</h3>
+  <div class="library-detail-top">
+    <div id="libraryCoverArea" class="library-cover-placeholder">📕</div>
+    <div class="library-book-meta">
+      <h3 id="libraryDetailTitle">책 제목</h3>
+      <p id="libraryDetailAuthor"></p>
+      <p id="libraryDetailYear"></p>
+      <div class="library-field">
+        <label for="libraryCategory">책 종류</label>
+        <select id="libraryCategory">
+          <option>창작동화</option><option>전래동화</option><option>명작동화</option>
+          <option>그림책</option><option>자연·과학</option><option>인성·사회</option>
+          <option>위인·역사</option><option>동시·동요</option><option>기타</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:15px">
+    <div class="library-rating-row">
+      <span class="library-rating-label">👧🏻 아이들의 평점</span>
+      <div class="library-stars" id="childrenStars"></div>
+      <span class="library-small-note" id="childrenRatingText">아직 별점 없음</span>
+    </div>
+    <div class="library-rating-row">
+      <span class="library-rating-label">👩🏻‍🏫 선생님의 평점</span>
+      <div class="library-stars" id="teacherStars"></div>
+      <span class="library-small-note" id="teacherRatingText">아직 별점 없음</span>
+    </div>
+  </div>
+  <div class="library-field">
+    <label for="libraryThoughts">💬 아이들의 생각</label>
+    <textarea id="libraryThoughts" placeholder="이 책을 읽고 어떤 생각이 들었나요? 기억에 남는 장면이나 재미있었던 점을 적어 보세요."></textarea>
+  </div>
+  <div class="library-actions">
+    <button class="library-btn" onclick="saveLibraryDetail()">기록 저장</button>
+    <button class="library-btn secondary" onclick="closeLibraryDetail()">닫기</button>
+    <button class="library-btn gold" onclick="deleteLibraryBook()">책 삭제</button>
+  </div>
+</div>
+
+<div class="library-organize" id="libraryOrganization">
+  <h3 style="color:#70577F;margin:0 0 5px">📊 우리가 읽은 책 정리</h3>
+  <p class="library-small-note">어떤 종류의 책을 많이 읽었는지 한눈에 살펴봐요.</p>
+  <div id="libraryCategoryStats"></div>
+  <h3 style="color:#70577F;margin:20px 0 8px">📚 읽은 책 목록</h3>
+  <div class="library-list" id="libraryBookList"></div>
+</div>
+
+<div class="other-rooms-section" id="otherRoomsSection">
+  <div class="other-rooms-heading">
+    <span class="other-rooms-sparkle">✦</span>
+    <div>
+      <h3>🌈 다른 반 도서관 구경하기</h3>
+      <p>아래 동화 속 집을 누르면 친구들 반의 책장으로 놀러 갈 수 있어요.</p>
+    </div>
+  </div>
+  <div id="sharedRoomList" class="shared-room-list"></div>
+</div>
+</section>
+
+<!-- 나침반 안전교육 -->
+<section id="safetyPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+
+<div class="page-title">
+<p>SAFETY · CARE · PRACTICE</p>
+<h2>🧭 나침반 안전교육</h2>
+<p>안전한 생활을 위한 나만의 방향을 찾아봐요.</p>
+</div>
+
+<div class="safety-intro">
+<div class="big-icon">🧭</div>
+<h3>안전한 길을 함께 찾아요!</h3>
+<p>위험한 상황을 알아차리고, 안전하게 행동하는 방법을 배워요.</p>
+</div>
+
+<div class="safety-topics">
+<div class="safety-topic">
+<div class="topic-icon">🏠</div>
+<h3>생활안전</h3>
+<p>교실과 집에서 안전하게 생활하는 방법을 알아봐요.</p>
+</div>
+
+<div class="safety-topic">
+<div class="topic-icon">🚦</div>
+<h3>교통안전</h3>
+<p>길을 건널 때와 자동차를 탈 때 지켜야 할 약속을 배워요.</p>
+</div>
+
+<div class="safety-topic">
+<div class="topic-icon">🔥</div>
+<h3>재난안전</h3>
+<p>화재나 재난이 발생했을 때 대피하는 방법을 알아봐요.</p>
+</div>
+</div>
+
+<div class="safety-message">
+안전 약속 하나! 모르는 상황이나 위험한 일이 생기면 혼자 해결하려 하지 말고 선생님이나 보호자에게 알려요.
+</div>
+
+<p style="text-align:center;color:#9A91A3;font-size:13px;margin-top:20px">
+안전교육 활동 자료는 계속 추가할 수 있어요.
+</p>
+</section>
+
+<footer>
+꿈꾸며 나아가는 RAS 꿈나라 교실<br>
+Read · Art · Sports<br>
+읽고, 표현하고, 움직이며 성장하는 아이들
+</footer>
+
+</div>
+<script>
+
+/* 매일 아침 긍정의 주문 200개 */
+const positivePhrases = [
+  "나는 사랑받는 소중한 아이예요.",
+  "나는 오늘도 씩씩하게 해낼 수 있어요.",
+  "나는 나만의 멋진 장점이 있어요.",
+  "실수해도 괜찮아요. 다시 해보면 돼요.",
+  "나는 새로운 것을 배우는 게 즐거워요.",
+  "내 마음은 반짝반짝 빛나요.",
+  "나는 친구에게 따뜻한 말을 건넬 수 있어요.",
+  "오늘은 좋은 일이 가득할 거예요.",
+  "나는 천천히 해도 괜찮아요.",
+  "나는 무엇이든 즐겁게 도전해요.",
+  "내 생각은 소중하고 특별해요.",
+  "나는 웃는 얼굴로 하루를 시작해요.",
+  "나는 작은 일도 스스로 해볼 수 있어요.",
+  "나는 도움을 주고받을 줄 아는 아이예요.",
+  "오늘의 나는 어제보다 한 뼘 자랐어요.",
+  "나는 내 마음을 다정하게 돌봐요.",
+  "나는 친구와 사이좋게 지낼 수 있어요.",
+  "모르는 것은 물어보면 돼요.",
+  "나는 끝까지 해보는 용기가 있어요.",
+  "나는 세상에 하나뿐인 멋진 아이예요.",
+  "내 목소리로 내 생각을 말할 수 있어요.",
+  "나는 잘할 수 있다고 나를 믿어요.",
+  "오늘도 신나는 모험이 기다리고 있어요.",
+  "나는 고마운 마음을 표현할 수 있어요.",
+  "나는 다른 사람의 마음도 소중히 여겨요.",
+  "조금씩 연습하면 점점 더 잘할 수 있어요.",
+  "나는 밝고 건강하게 자라고 있어요.",
+  "나는 나 자신을 아끼고 사랑해요.",
+  "친구와 함께하면 즐거움이 두 배가 돼요.",
+  "나는 오늘도 멋진 일을 하나씩 해낼 거예요.",
+  "나는 궁금한 것을 찾아보는 탐험가예요.",
+  "내 마음에는 용기가 가득해요.",
+  "나는 친절한 행동을 할 수 있어요.",
+  "천천히 생각하면 좋은 방법을 찾을 수 있어요.",
+  "나는 언제나 다시 시작할 수 있어요.",
+  "나는 나답게 빛나는 아이예요.",
+  "오늘은 새로운 것을 발견하는 날이에요.",
+  "나는 내 몸을 소중히 아껴요.",
+  "나는 친구의 이야기를 귀 기울여 들어요.",
+  "나는 작은 성공도 기쁘게 축하해요.",
+  "나는 씩씩하게 인사할 수 있어요.",
+  "내 마음을 말로 표현해도 괜찮아요.",
+  "나는 매일 조금씩 자라고 있어요.",
+  "나는 재미있게 놀고 즐겁게 배워요.",
+  "나는 주변을 따뜻하게 만드는 아이예요.",
+  "어려운 일도 한 걸음씩 해보면 돼요.",
+  "나는 나의 속도로 자라면 돼요.",
+  "나는 오늘도 행복을 찾아볼 거예요.",
+  "나는 소중한 꿈을 키우고 있어요.",
+  "나는 친구와 함께 웃을 수 있어요.",
+  "나는 새로운 친구에게 먼저 인사할 수 있어요.",
+  "내 마음속에는 멋진 생각이 가득해요.",
+  "나는 잘 쉬고 다시 힘을 낼 수 있어요.",
+  "나는 내 감정을 알아차릴 수 있어요.",
+  "속상할 때는 천천히 숨을 쉬어 봐요.",
+  "나는 도움을 요청할 줄 아는 용감한 아이예요.",
+  "나는 약속을 지키려고 노력해요.",
+  "나는 오늘도 최선을 다할 거예요.",
+  "나는 자연을 아끼고 사랑해요.",
+  "나는 작은 친절로 큰 기쁨을 만들어요.",
+  "나는 무엇을 좋아하는지 알아가고 있어요.",
+  "나는 나의 좋은 점을 하나씩 발견해요.",
+  "나는 친구와 차례를 지킬 수 있어요.",
+  "나는 고운 말을 사용하는 멋진 어린이예요.",
+  "나는 새로운 놀이에도 용감하게 참여해요.",
+  "나는 내 주변을 깨끗하게 정리할 수 있어요.",
+  "나는 오늘도 반짝이는 가능성을 가지고 있어요.",
+  "나는 마음껏 상상하고 표현할 수 있어요.",
+  "나는 그림과 놀이로 내 생각을 보여줄 수 있어요.",
+  "나는 넘어져도 다시 일어날 수 있어요.",
+  "나는 기다리는 시간도 잘 보낼 수 있어요.",
+  "나는 나와 다른 모습도 존중해요.",
+  "나는 친구와 함께 문제를 해결할 수 있어요.",
+  "나는 오늘도 즐거운 일을 만들어 갈 거예요.",
+  "나는 소중한 사람들에게 사랑을 전해요.",
+  "나는 나의 작은 목소리도 소중해요.",
+  "나는 씩씩하게 새로운 하루를 맞이해요.",
+  "나는 내가 할 수 있는 일을 찾아요.",
+  "나는 매일 새로운 것을 배울 수 있어요.",
+  "나는 따뜻한 마음을 나누는 아이예요.",
+  "나는 안전한 약속을 잘 지킬 수 있어요.",
+  "나는 내 몸과 마음의 신호를 잘 살펴요.",
+  "나는 천천히 해도 끝까지 해낼 수 있어요.",
+  "나는 오늘도 많이 웃을 거예요.",
+  "나는 나만의 멋진 색깔을 가지고 있어요.",
+  "나는 친구에게 양보할 수 있는 마음이 있어요.",
+  "나는 고마운 일을 잘 발견해요.",
+  "나는 작은 생명도 소중히 여겨요.",
+  "나는 궁금하면 질문하는 용기가 있어요.",
+  "나는 새로운 방법을 생각해 낼 수 있어요.",
+  "나는 잘한 일을 스스로 칭찬해요.",
+  "나는 나의 마음을 솔직하고 다정하게 말해요.",
+  "나는 오늘도 즐겁게 성장하고 있어요.",
+  "나는 혼자서도, 함께여도 소중해요.",
+  "나는 친구와 다르게 생각해도 괜찮아요.",
+  "나는 내 차례를 기다릴 수 있어요.",
+  "나는 나의 물건을 소중히 다뤄요.",
+  "나는 실수에서 새로운 것을 배워요.",
+  "나는 나에게 친절한 말을 해줄 거예요.",
+  "나는 밝은 에너지를 나누는 아이예요.",
+  "나는 오늘 할 수 있는 만큼 해볼 거예요.",
+  "나는 작은 용기를 낼 수 있어요.",
+  "나는 내 마음에 귀를 기울여요.",
+  "나는 친구의 기쁨을 함께 기뻐해요.",
+  "나는 속상한 마음도 잘 돌볼 수 있어요.",
+  "나는 나의 속도로 멋지게 자라고 있어요.",
+  "나는 새로운 하루가 기대돼요.",
+  "나는 사랑과 응원을 받고 있어요.",
+  "나는 다른 사람에게 도움을 줄 수 있어요.",
+  "나는 내가 만든 것을 자랑스러워해요.",
+  "나는 즐겁게 움직이고 건강하게 자라요.",
+  "나는 오늘도 고운 꿈을 키워요.",
+  "나는 작은 약속부터 실천해요.",
+  "나는 잘 듣고 천천히 생각해요.",
+  "나는 나의 장점을 친구와 나눌 수 있어요.",
+  "나는 밝은 인사로 하루를 열어요.",
+  "나는 도전하는 내 모습이 자랑스러워요.",
+  "나는 나를 믿고 한 번 더 해봐요.",
+  "나는 따뜻한 마음으로 친구를 대할 거예요.",
+  "나는 오늘도 행복할 자격이 있어요.",
+  "나는 내 마음을 안전하게 표현할 수 있어요.",
+  "나는 궁금한 세상을 탐험하는 어린이예요.",
+  "나는 작은 변화도 알아차릴 수 있어요.",
+  "나는 서로 도우며 함께 자라요.",
+  "나는 친구와 생각을 나눌 수 있어요.",
+  "나는 나의 하루를 소중하게 만들어요.",
+  "나는 오늘도 멋진 선택을 할 수 있어요.",
+  "나는 차근차근 배우는 것이 좋아요.",
+  "나는 나를 응원하는 가장 좋은 친구예요.",
+  "나는 밝고 씩씩한 마음을 가지고 있어요.",
+  "나는 힘들 때 잠깐 쉬어도 괜찮아요.",
+  "나는 다시 해보는 마음이 멋져요.",
+  "나는 내 주변에 감사할 일이 많아요.",
+  "나는 친구에게 먼저 손을 내밀 수 있어요.",
+  "나는 내 생각을 자유롭게 펼쳐요.",
+  "나는 오늘도 소중한 하루를 선물 받았어요.",
+  "나는 나의 웃음으로 주변을 환하게 해요.",
+  "나는 함께 정리하고 함께 즐거워해요.",
+  "나는 다정한 말로 마음을 전해요.",
+  "나는 내가 좋아하는 일을 찾아가요.",
+  "나는 천천히 깊게 숨 쉬며 마음을 편안하게 해요.",
+  "나는 내 몸을 움직이는 것이 즐거워요.",
+  "나는 새롭게 시작할 힘이 있어요.",
+  "나는 작은 씨앗처럼 매일 자라고 있어요.",
+  "나는 내 마음과 친구의 마음을 모두 소중히 해요.",
+  "나는 오늘도 배울 준비가 되어 있어요.",
+  "나는 해보지 않은 일에도 도전할 수 있어요.",
+  "나는 나의 노력을 칭찬해요.",
+  "나는 친구와 사이좋게 놀이할 수 있어요.",
+  "나는 고마워요, 미안해요를 말할 수 있어요.",
+  "나는 나에게 꼭 필요한 휴식을 줄 수 있어요.",
+  "나는 나의 속상함을 말해도 괜찮아요.",
+  "나는 웃음과 친절을 나누는 아이예요.",
+  "나는 오늘도 한 가지씩 해낼 거예요.",
+  "나는 내 안의 반짝이는 힘을 믿어요.",
+  "나는 자연 속에서 즐겁게 배워요.",
+  "나는 서로의 다름을 재미있게 알아가요.",
+  "나는 안전하게 행동하는 똑똑한 어린이예요.",
+  "나는 어려울 때 어른에게 도움을 청해요.",
+  "나는 나의 작은 손으로 좋은 일을 해요.",
+  "나는 오늘 만날 친구들이 반가워요.",
+  "나는 즐겁게 생각하고 자유롭게 표현해요.",
+  "나는 나에게도 친구에게도 다정해요.",
+  "나는 매일 새로운 기회를 만나요.",
+  "나는 내 마음의 주인이에요.",
+  "나는 해낼 수 있는 만큼 도전하면 돼요.",
+  "나는 소중한 하루를 기쁘게 시작해요.",
+  "나는 친구의 좋은 점을 찾아 말해줄 수 있어요.",
+  "나는 오늘도 씩씩하게 한 걸음 나아가요.",
+  "나는 실수해도 사랑받는 아이예요.",
+  "나는 나의 꿈을 조금씩 키워가요.",
+  "나는 서로 도우면 더 큰 힘이 생겨요.",
+  "나는 내 주변을 아름답게 가꿀 수 있어요.",
+  "나는 즐겁게 놀고 신나게 배워요.",
+  "나는 오늘도 내 마음을 환하게 밝혀요.",
+  "나는 나의 작은 도전을 응원해요.",
+  "나는 다른 사람의 말을 존중하며 들어요.",
+  "나는 좋은 생각을 행동으로 옮길 수 있어요.",
+  "나는 내일도 기대되는 멋진 어린이예요.",
+  "나는 지금 이대로도 충분히 소중해요.",
+  "나는 언제든 도움을 받을 수 있어요.",
+  "나는 나의 속도대로 앞으로 나아가요.",
+  "나는 오늘도 사랑을 나누고 사랑을 받아요.",
+  "나는 친구와 함께라서 더 즐거워요.",
+  "나는 해보는 과정도 즐길 수 있어요.",
+  "나는 내 마음에 희망을 심어요.",
+  "나는 세상을 호기심 가득한 눈으로 바라봐요.",
+  "나는 작은 친절을 실천하는 어린이예요.",
+  "나는 오늘도 멋진 나를 만날 거예요.",
+  "나는 나의 하루를 스스로 만들어 가요.",
+  "나는 충분히 잘하고 있어요.",
+  "나는 언제나 소중하고 특별해요.",
+  "나는 나의 좋은 마음을 믿어요.",
+  "나는 오늘도 기분 좋은 추억을 만들어요.",
+  "나는 친구와 함께 힘을 모을 수 있어요.",
+  "나는 새로운 하루를 반갑게 맞이해요.",
+  "나는 나의 작은 발걸음을 응원해요.",
+  "나는 사랑과 웃음이 가득한 아이예요.",
+  "나는 오늘도 나답게 반짝일 거예요.",
+  "나는 한 번 더 해보는 멋진 용기를 가졌어요."
+];
+
+/* 날짜별로 한 문장을 기억해 같은 날에는 바뀌지 않게 해요. */
+function showDailyPositivePhrase(){
+  const today=new Date();
+  const dateKey=today.getFullYear()+"-"+
+    String(today.getMonth()+1).padStart(2,"0")+"-"+
+    String(today.getDate()).padStart(2,"0");
+  const storageKey="rasDailyPositivePhrase";
+  let saved=null;
+  try{saved=JSON.parse(localStorage.getItem(storageKey)||"null");}
+  catch(error){saved=null;}
+
+  let index;
+  if(saved && saved.date===dateKey &&
+     Number.isInteger(saved.index) &&
+     saved.index>=0 && saved.index<positivePhrases.length){
+    index=saved.index;
+  }else{
+    const previousIndex=saved && Number.isInteger(saved.index)?saved.index:-1;
+    const choices=positivePhrases.map((phrase,i)=>i).filter(i=>i!==previousIndex);
+    index=choices[Math.floor(Math.random()*choices.length)];
+    try{localStorage.setItem(storageKey,JSON.stringify({date:dateKey,index:index}));}
+    catch(error){/* 저장이 제한된 환경에서도 오늘 문장은 표시돼요. */}
+  }
+
+  const phraseBox=document.getElementById("positivePhrase");
+  if(phraseBox)phraseBox.textContent=positivePhrases[index];
+}
+
+/* 날짜와 시간 */
+function updateDateTime(){
+  const now=new Date();
+
+  document.getElementById("date").textContent=
+    now.toLocaleDateString("ko-KR",{
+      month:"long",
+      day:"numeric"
+    });
+
+  document.getElementById("weekday").textContent=
+    now.toLocaleDateString("ko-KR",{
+      weekday:"long"
+    });
+
+  document.getElementById("clock").textContent=
+    now.toLocaleTimeString("ko-KR",{
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit",
+      hour12:false
+    });
+
+  document.getElementById("timePeriod").textContent=
+    now.getHours()<12?"오전이에요":"오후예요";
+
+  renderCalendar(now);
+}
+
+/* 우리 동네 미세먼지 자동 표시 */
+function loadAirQuality(){
+  const box=document.getElementById("airQuality");
+
+  if(!navigator.geolocation){
+    box.textContent="이 기기에서는 위치 확인을 지원하지 않아요.";
+    return;
+  }
+
+  box.textContent="위치 정보를 확인하고 있어요.";
+  box.className="air-quality loading";
+
+  navigator.geolocation.getCurrentPosition(
+    async position=>{
+      const lat=position.coords.latitude;
+      const lon=position.coords.longitude;
+
+      try{
+        const url=
+          "https://air-quality-api.open-meteo.com/v1/air-quality"+
+          "?latitude="+lat+
+          "&longitude="+lon+
+          "&current=us_aqi,pm2_5,pm10"+
+          "&timezone=Asia%2FSeoul";
+
+        const response=await fetch(url);
+
+        if(!response.ok){
+          throw new Error("미세먼지 정보를 가져오지 못했어요.");
+        }
+
+        const data=await response.json();
+        const air=data.current;
+
+        if(!air){
+          throw new Error("현재 미세먼지 정보가 없어요.");
+        }
+
+        const aqi=air.us_aqi;
+        const pm25=air.pm2_5;
+        const pm10=air.pm10;
+
+        let status="좋음";
+        let className="air-quality";
+
+        if(aqi<=50){
+          status="좋음 😊";
+        }else if(aqi<=100){
+          status="보통 🙂";
+        }else if(aqi<=150){
+          status="민감군 주의";
+          className+=" warning";
+        }else if(aqi<=200){
+          status="나쁨";
+          className+=" warning";
+        }else{
+          status="매우 나쁨";
+          className+=" bad";
+        }
+
+        box.className=className;
+        box.innerHTML=
+          "🍃 우리 동네 공기 "+status+
+          "<small>초미세먼지 "+pm25+" · 미세먼지 "+pm10+
+          "<br>미국 AQI "+aqi+" 기준 · 예측 자료</small>";
+
+      }catch(error){
+        box.className="air-quality warning";
+        box.textContent="미세먼지 정보를 불러오지 못했어요.";
+      }
+    },
+    error=>{
+      box.className="air-quality loading";
+
+      if(error.code===error.PERMISSION_DENIED){
+        box.textContent="위치 권한을 허용하면 우리 동네 미세먼지를 볼 수 있어요.";
+      }else{
+        box.textContent="현재 위치를 확인할 수 없어요.";
+      }
+    },
+    {
+      enableHighAccuracy:false,
+      timeout:10000,
+      maximumAge:600000
+    }
+  );
+}
+
+/* 달력과 일정 메모 접기/펴기 */
+function toggleCalendar(){
+  const content=document.getElementById("calendarContent");
+  const button=document.getElementById("calendarToggleButton");
+  const isOpening=content.hidden;
+
+  content.hidden=!isOpening;
+  button.setAttribute("aria-expanded",String(isOpening));
+  button.textContent=isOpening?"📅 달력 접기":"📅 달력 펴기";
+}
+
+/* 날짜 키 */
+function dateKey(year,month,day){
+  return year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
+}
+
+let selectedDateKey="";
+
+/* 메모 불러오기 */
+function loadAllMemos(){
+  try{
+    return JSON.parse(localStorage.getItem("rasPersonalCalendar")||"{}");
+  }catch(error){
+    return {};
+  }
+}
+
+/* 달력 그리기 */
+function renderCalendar(now){
+  const year=now.getFullYear();
+  const month=now.getMonth();
+  const today=now.getDate();
+
+  document.getElementById("calendarTitle").textContent=
+    year+"년 "+(month+1)+"월";
+
+  const grid=document.getElementById("calendarGrid");
+  grid.innerHTML="";
+
+  const notes=loadAllMemos();
+
+  ["일","월","화","수","목","금","토"].forEach((day,index)=>{
+    const el=document.createElement("div");
+    el.className="calendar-day"+
+      (index===0?" sun":index===6?" sat":"");
+    el.textContent=day;
+    grid.appendChild(el);
+  });
+
+  const firstDay=new Date(year,month,1).getDay();
+  const lastDate=new Date(year,month+1,0).getDate();
+
+  for(let i=0;i<firstDay;i++){
+    grid.appendChild(document.createElement("div"));
+  }
+
+  for(let day=1;day<=lastDate;day++){
+    const key=dateKey(year,month,day);
+    const cell=document.createElement("button");
+    cell.type="button";
+    cell.className="calendar-date";
+
+    if(day===today)cell.classList.add("today");
+    if(key===selectedDateKey)cell.classList.add("selected");
+
+    const number=document.createElement("span");
+    number.className="calendar-number";
+    number.textContent=day;
+    cell.appendChild(number);
+
+    const dayMemos=notes[key]||[];
+
+    dayMemos.slice(0,2).forEach(memo=>{
+      const note=document.createElement("span");
+      note.className="calendar-note";
+      note.textContent=memo.text.split("\n")[0];
+      note.title=memo.text;
+      cell.appendChild(note);
+    });
+
+    if(dayMemos.length>2){
+      const more=document.createElement("span");
+      more.className="calendar-more";
+      more.textContent="+"+(dayMemos.length-2);
+      cell.appendChild(more);
+    }
+
+    cell.addEventListener("click",()=>selectDate(key));
+    grid.appendChild(cell);
+  }
+}
+
+/* 날짜 선택 */
+function selectDate(key){
+  selectedDateKey=key;
+  renderCalendar(new Date());
+
+  const parts=key.split("-").map(Number);
+  const selected=new Date(parts[0],parts[1]-1,parts[2]);
+
+  document.getElementById("memoDate").textContent=
+    selected.toLocaleDateString("ko-KR",{
+      year:"numeric",
+      month:"long",
+      day:"numeric",
+      weekday:"long"
+    });
+
+  document.getElementById("memoInput").value="";
+  showMemos();
+}
+
+/* 메모 저장 */
+function saveMemo(){
+  const input=document.getElementById("memoInput");
+  const text=input.value.trim();
+
+  if(!selectedDateKey){
+    alert("먼저 달력에서 날짜를 선택해 주세요.");
+    return;
+  }
+
+  if(!text){
+    alert("메모 내용을 입력해 주세요.");
+    return;
+  }
+
+  const data=loadAllMemos();
+
+  if(!data[selectedDateKey]){
+    data[selectedDateKey]=[];
+  }
+
+  data[selectedDateKey].push({
+    id:Date.now(),
+    text:text
+  });
+
+  saveAllMemos(data);
+  input.value="";
+  showMemos();
+  renderCalendar(new Date());
+}
+
+function saveAllMemos(data){
+  localStorage.setItem("rasPersonalCalendar",JSON.stringify(data));
+}
+
+/* 선택 날짜 메모 표시 */
+function showMemos(){
+  const list=document.getElementById("memoList");
+  list.innerHTML="";
+
+  if(!selectedDateKey)return;
+
+  const data=loadAllMemos();
+  const memos=data[selectedDateKey]||[];
+
+  if(memos.length===0){
+    const empty=document.createElement("div");
+    empty.className="memo-empty";
+    empty.textContent="아직 저장된 일정이 없어요.";
+    list.appendChild(empty);
+    return;
+  }
+
+  memos.forEach(memo=>{
+    const item=document.createElement("div");
+    item.className="memo-item";
+
+    const text=document.createElement("div");
+    text.className="memo-item-text";
+    text.textContent=memo.text;
+
+    const actions=document.createElement("div");
+    actions.className="memo-item-actions";
+
+    const edit=document.createElement("button");
+    edit.textContent="수정";
+    edit.addEventListener("click",()=>{
+      document.getElementById("memoInput").value=memo.text;
+      removeMemo(memo.id);
+      document.getElementById("memoInput").focus();
+    });
+
+    const del=document.createElement("button");
+    del.textContent="삭제";
+    del.addEventListener("click",()=>{
+      if(confirm("이 일정을 삭제할까요?")){
+        removeMemo(memo.id);
+      }
+    });
+
+    actions.appendChild(edit);
+    actions.appendChild(del);
+    item.appendChild(text);
+    item.appendChild(actions);
+    list.appendChild(item);
+  });
+}
+
+function removeMemo(id){
+  const data=loadAllMemos();
+
+  data[selectedDateKey]=(data[selectedDateKey]||[])
+    .filter(memo=>memo.id!==id);
+
+  if(data[selectedDateKey].length===0){
+    delete data[selectedDateKey];
+  }
+
+  saveAllMemos(data);
+  showMemos();
+  renderCalendar(new Date());
+}
+
+function clearMemoInput(){
+  document.getElementById("memoInput").value="";
+}
+
+/* 최초 실행 */
+showDailyPositivePhrase();
+updateDateTime();
+
+const initialDate=new Date();
+selectDate(dateKey(
+  initialDate.getFullYear(),
+  initialDate.getMonth(),
+  initialDate.getDate()
+));
+
+setInterval(updateDateTime,1000);
+
+/* 미세먼지 정보 실행 */
+loadAirQuality();
+
+/* 날씨 저장 */
+function saveWeather(){
+  const w=document.getElementById("weather").value;
+  localStorage.setItem("rasWeather",w);
+}
+
+const savedWeather=localStorage.getItem("rasWeather");
+if(savedWeather){
+  document.getElementById("weather").value=savedWeather;
+}
+
+
+/* 하하하 도서관 - 책장과 독서 기록 */
+const LIBRARY_STORAGE_KEY="rasHahahaLibraryBooks";
+const LIBRARY_TARGET=100;
+const LIBRARY_COLORS=["#EBC9B9","#E7D7A9","#C9DCCB","#D8C8E6","#E9B9C5","#C7D8E8","#E8D7C5","#D9C9B7","#E7C9A9","#D2DCC7"];
+let libraryBooks=[];
+let activeLibraryBookId=null;
+let libraryDraftSearchTitle="";
+
+function loadLibraryBooks(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(LIBRARY_STORAGE_KEY)||"[]");
+    libraryBooks=Array.isArray(parsed)?parsed:[];
+  }catch(error){libraryBooks=[];}
+}
+function persistLibraryBooks(){
+  localStorage.setItem(LIBRARY_STORAGE_KEY,JSON.stringify(libraryBooks));
+}
+function openLibrary(){
+  loadLibraryBooks();
+  showPage("libraryPage");
+  renderLibrary();
+}
+function renderLibrary(){
+  const count=libraryBooks.length;
+  const countEl=document.getElementById("libraryCount");
+  if(!countEl)return;
+  countEl.textContent=count;
+  document.getElementById("libraryProgressFill").style.width=Math.min(100,count/LIBRARY_TARGET*100)+"%";
+  document.getElementById("libraryProgressText").textContent=
+    count>=LIBRARY_TARGET?"🎉 100권 목표를 달성했어요! 정말 멋져요!":
+    count===0?"첫 번째 책을 기다리고 있어요!":
+    "목표까지 "+(LIBRARY_TARGET-count)+"권 남았어요. 차근차근 읽어봐요!";
+  document.getElementById("libraryShelfCaption").textContent=
+    "지금까지 "+count+"권을 책장에 꽂았어요.";
+  const shelves=document.getElementById("libraryShelves");
+  shelves.innerHTML="";
+  for(let row=0;row<5;row++){
+    const shelf=document.createElement("div");
+    shelf.className="bookshelf-row";
+    for(let col=0;col<20;col++){
+      const index=row*20+col;
+      const book=libraryBooks[index];
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="library-book"+(book?"":" empty");
+      button.style.setProperty("--book-height",(92+(index*17%47))+"px");
+      if(book){
+        button.style.setProperty("--book-color",book.color||LIBRARY_COLORS[index%LIBRARY_COLORS.length]);
+        button.title=book.title;
+        const title=document.createElement("span");
+        title.className="library-book-title";
+        title.textContent=book.title;
+        button.appendChild(title);
+        button.addEventListener("click",()=>openLibraryBook(book.id));
+      }else{
+        const plus=document.createElement("span");
+        plus.className="library-book-title";
+        plus.textContent="+";
+        button.appendChild(plus);
+        button.title="책 추가하기";
+        if (typeof sharedRoom !== "undefined" && sharedRoom && !sharedCanEdit) {
+          button.disabled = true;
+          button.title = "편집 비밀번호를 확인하면 책을 추가할 수 있어요.";
+        } else {
+          button.addEventListener("click",openBookEditor);
+        }
+      }
+      shelf.appendChild(button);
+
+      /* 책장마다 다른 위치와 모양으로 작은 초록 장식을 놓아 자연스럽게 꾸며요. */
+      const shelfDecor=[
+        [{at:2,leaf:"🌿",pot:"round",height:88,tilt:"-7deg"},
+         {at:12,leaf:"🌼",pot:"soft",height:70,tilt:"5deg"},
+         {at:18,leaf:"🍃",pot:"tall",height:96,tilt:"-3deg"}],
+        [{at:6,leaf:"🪴",pot:"round",height:105,tilt:"4deg"},
+         {at:16,leaf:"🌱",pot:"soft",height:73,tilt:"-5deg"}],
+        [{at:1,leaf:"🌸",pot:"soft",height:78,tilt:"-4deg"},
+         {at:9,leaf:"🌿",pot:"tall",height:100,tilt:"6deg"},
+         {at:17,leaf:"🍀",pot:"round",height:83,tilt:"-6deg"}],
+        [{at:4,leaf:"🌱",pot:"round",height:74,tilt:"5deg"},
+         {at:13,leaf:"🌼",pot:"tall",height:92,tilt:"-4deg"}],
+        [{at:7,leaf:"🍃",pot:"soft",height:84,tilt:"-6deg"},
+         {at:15,leaf:"🪴",pot:"round",height:102,tilt:"4deg"}]
+      ];
+      const decorations=shelfDecor[row]||[];
+      const decoration=decorations.find(item=>item.at===col);
+      if(decoration){
+        const plant=document.createElement("div");
+        plant.className="library-plant";
+        plant.classList.add("plant-"+decoration.pot);
+        plant.style.setProperty("--plant-height",decoration.height+"px");
+        plant.style.setProperty("--plant-tilt",decoration.tilt);
+        plant.style.setProperty("--pot-hue",((row*31+col*17)%28)+"deg");
+        const leaves=document.createElement("span");
+        leaves.className="library-plant-leaves";
+        leaves.textContent=decoration.leaf;
+        const pot=document.createElement("span");
+        pot.className="library-plant-pot";
+        plant.append(leaves,pot);
+        shelf.appendChild(plant);
+      }
+    }
+    shelves.appendChild(shelf);
+  }
+}
+function openBookEditor(){
+  if (typeof sharedRoom !== "undefined" && sharedRoom && !sharedCanEdit) {
+    alert("이 반의 편집 비밀번호를 먼저 확인해 주세요.");
+    return;
+  }
+  const editor = document.getElementById("libraryEditor");
+  editor.style.display = "block";
+  editor.style.visibility = "visible";
+  editor.style.pointerEvents = "auto";
+  editor.style.position = "relative";
+  editor.style.zIndex = "20";
+  editor.classList.add("show");
+  document.getElementById("libraryDetail").classList.remove("show");
+  document.getElementById("libraryTitleInput").focus();
+  document.getElementById("librarySearchResults").innerHTML="";
+}
+function closeBookEditor(){document.getElementById("libraryEditor").classList.remove("show");}
+async function searchLibraryBook(){
+  const title = document.getElementById("libraryTitleInput").value.trim();
+  const results = document.getElementById("librarySearchResults");
+  if (!title) { alert("책 제목을 먼저 입력해 주세요."); return; }
+  libraryDraftSearchTitle = title;
+  results.innerHTML = '<div class="library-empty">📚 Google 도서와 Open Library를 함께 검색하고 있어요...</div>';
+  const found = [];
+  const seen = new Set();
+  const errors = [];
+
+  const googleTask = (async () => {
+    const url = "https://www.googleapis.com/books/v1/volumes?q=" +
+      encodeURIComponent("intitle:" + title) + "&maxResults=12&printType=books";
+    const response = await fetch(url, {headers:{"Accept":"application/json"}});
+    if (!response.ok) throw new Error("Google Books HTTP " + response.status);
+    const data = await response.json();
+    (data.items || []).forEach(item => {
+      const info = item.volumeInfo || {};
+      const key = (info.title || "").toLowerCase() + "|" + (info.authors || []).join(",");
+      if (seen.has(key)) return;
+      seen.add(key);
+      const links = info.imageLinks || {};
+      const cover = (links.thumbnail || links.smallThumbnail ||
+        (item.id ? "https://books.google.com/books/content?id=" + encodeURIComponent(item.id) + "&printsec=frontcover&img=1&zoom=2" : ""))
+        .replace(/^http:/,"https:").replace("&edge=curl","");
+      found.push({title:info.title || title, author_name:info.authors || [],
+        first_publish_year:info.publishedDate ? String(info.publishedDate).slice(0,4) : "",
+        cover_url:cover, source:"Google Books", subject:info.categories || []});
+    });
+    if (!(data.items || []).length) errors.push("Google Books 검색 결과 없음");
+  })();
+
+  const openTask = (async () => {
+    const url = "https://openlibrary.org/search.json?title=" + encodeURIComponent(title) + "&limit=12";
+    const response = await fetch(url, {headers:{"Accept":"application/json"}});
+    if (!response.ok) throw new Error("Open Library HTTP " + response.status);
+    const data = await response.json();
+    (data.docs || []).forEach(doc => {
+      const key = (doc.title || "").toLowerCase() + "|" + (doc.author_name || []).join(",");
+      if (seen.has(key)) return;
+      seen.add(key);
+      found.push({title:doc.title || title, author_name:doc.author_name || [],
+        first_publish_year:doc.first_publish_year || "",
+        cover_url:doc.cover_i ? "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-M.jpg" : "",
+        cover_i:doc.cover_i || null, source:"Open Library", subject:doc.subject || []});
+    });
+    if (!(data.docs || []).length) errors.push("Open Library 검색 결과 없음");
+  })();
+
+  const settled = await Promise.allSettled([googleTask, openTask]);
+  settled.forEach((result,index) => {
+    if (result.status === "rejected") errors.push((index===0 ? "Google Books: " : "Open Library: ") + (result.reason && result.reason.message || "연결 실패"));
+  });
+  results.innerHTML = "";
+  if (!found.length) {
+    const detail = errors.length ? errors.join(" / ") : "두 검색 사이트에서 일치하는 책을 찾지 못했어요.";
+    results.innerHTML = '<div class="library-empty">검색 결과가 없어요.<br><small>' + detail.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])) + '</small><br>제목의 핵심 단어만 입력해 다시 검색해 보세요. 직접 등록도 할 수 있어요.</div>';
+    return;
+  }
+  found.slice(0,16).forEach(doc => {
+    const item = document.createElement("button");
+    item.type = "button"; item.className = "library-result";
+    const img = document.createElement("img");
+    img.alt = ""; img.loading = "lazy";
+    if (doc.cover_url) img.src = doc.cover_url;
+    else img.style.display = "none";
+    img.onerror = () => { img.style.display = "none"; };
+    const info = document.createElement("span");
+    const strong = document.createElement("strong"); strong.textContent = doc.title || title;
+    const author = document.createElement("small"); author.textContent = (doc.author_name || ["작가 정보 없음"]).slice(0,2).join(", ");
+    const year = document.createElement("small"); year.textContent = doc.first_publish_year ? " · " + doc.first_publish_year + "년" : "";
+    const source = document.createElement("small"); source.textContent = " · " + doc.source;
+    info.append(strong,author,year,source); item.append(img,info);
+    item.addEventListener("click", () => addLibraryBookFromSearch(doc));
+    results.appendChild(item);
+  });
+  if (errors.length) {
+    const note = document.createElement("div");
+    note.className = "library-small-note";
+    note.textContent = "일부 검색처는 응답하지 않았어요: " + errors.join(" / ");
+    results.appendChild(note);
+  }
+}
+
+function addLibraryBookFromSearch(doc){
+  const book={
+    id:"book-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
+    title:doc.title||libraryDraftSearchTitle,
+    author:(doc.author_name||[]).slice(0,3).join(", "),
+    year:doc.first_publish_year||"",
+    cover:doc.cover_url?(doc.cover_url.includes("-M.")?doc.cover_url.replace("-M.","-L."):doc.cover_url):doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-L.jpg":"",
+    category:guessLibraryCategory(doc.subject||[]),
+    childrenRating:0,teacherRating:0,thoughts:"",
+    color:LIBRARY_COLORS[libraryBooks.length%LIBRARY_COLORS.length],
+    addedAt:new Date().toISOString()
+  };
+  saveNewLibraryBook(book);
+}
+function guessLibraryCategory(subjects){
+  const text=subjects.join(" ").toLowerCase();
+  if(/science|nature|animal|plant|과학|자연/.test(text))return "자연·과학";
+  if(/history|biography|historical|역사|위인/.test(text))return "위인·역사";
+  if(/poetry|poem|시집|동시/.test(text))return "동시·동요";
+  if(/folklore|fairy tales|folk tales|전래|옛이야기/.test(text))return "전래동화";
+  return "그림책";
+}
+function addManualLibraryBook(){
+  const title=document.getElementById("libraryTitleInput").value.trim();
+  if(!title){alert("책 제목을 입력해 주세요.");return;}
+  saveNewLibraryBook({
+    id:"book-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
+    title,author:"",year:"",cover:"",category:"그림책",
+    childrenRating:0,teacherRating:0,thoughts:"",
+    color:LIBRARY_COLORS[libraryBooks.length%LIBRARY_COLORS.length],
+    addedAt:new Date().toISOString()
+  });
+}
+function saveNewLibraryBook(book){
+  if(libraryBooks.length>=LIBRARY_TARGET){
+    if(!confirm("100권 목표를 달성했어요! 책을 더 추가할까요?"))return;
+  }
+  libraryBooks.push(book);
+  persistLibraryBooks();
+  closeBookEditor();
+  document.getElementById("libraryTitleInput").value="";
+  renderLibrary();
+  openLibraryBook(book.id);
+}
+function openLibraryBook(id){
+  const book=libraryBooks.find(item=>item.id===id);
+  if(!book)return;
+  activeLibraryBookId=id;
+  document.getElementById("libraryEditor").classList.remove("show");
+  document.getElementById("libraryDetail").classList.add("show");
+  document.querySelectorAll("#libraryDetail .library-actions button").forEach(button => {
+    button.style.display = (!sharedCanEdit && (button.textContent.includes("기록 저장") || button.textContent.includes("책 삭제"))) ? "none" : "";
+  });
+  document.getElementById("libraryDetailTitle").textContent=book.title;
+  document.getElementById("libraryDetailAuthor").textContent=book.author?"글쓴이: "+book.author:"";
+  document.getElementById("libraryDetailYear").textContent=book.year?book.year+"년 출판":"";
+  const coverArea=document.getElementById("libraryCoverArea");
+  coverArea.innerHTML="";
+  if(book.cover){
+    const img=document.createElement("img");
+    img.className="library-cover";img.src=book.cover.startsWith("http://")?book.cover.replace("http://","https://"):book.cover;img.alt=book.title+" 표지";
+    img.onerror=()=>{coverArea.innerHTML="📕";coverArea.className="library-cover-placeholder";};
+    coverArea.className="";coverArea.appendChild(img);
+  }else{
+    coverArea.className="library-cover-placeholder";coverArea.textContent="📕";
+  }
+  document.getElementById("libraryCategory").value=book.category||"그림책";
+  document.getElementById("libraryThoughts").value=book.thoughts||"";
+  renderLibraryStars("childrenStars","children",book.childrenRating||0);
+  renderLibraryStars("teacherStars","teacher",book.teacherRating||0);
+}
+function renderLibraryStars(containerId,type,rating){
+  const box=document.getElementById(containerId);box.innerHTML="";
+  for(let i=1;i<=5;i++){
+    const star=document.createElement("button");
+    star.type="button";star.className="library-star"+(i<=rating?" active":"");
+    star.dataset.rating=String(i);
+    star.textContent="★";star.setAttribute("aria-label",i+"점");
+    star.disabled = (typeof sharedCanEdit !== "undefined" && !sharedCanEdit);
+    star.addEventListener("click",()=>{
+      if (typeof sharedCanEdit !== "undefined" && !sharedCanEdit) return;
+      const book=libraryBooks.find(item=>item.id===activeLibraryBookId);
+      if(!book)return;
+      book[type==="children"?"childrenRating":"teacherRating"]=i;
+      renderLibraryStars(containerId,type,i);
+      document.getElementById(type==="children"?"childrenRatingText":"teacherRatingText").textContent=i+"점 / 5점";
+    });
+    box.appendChild(star);
+  }
+  document.getElementById(type==="children"?"childrenRatingText":"teacherRatingText").textContent=
+    rating?rating+"점 / 5점":"아직 별점 없음";
+}
+function saveLibraryDetail(){
+  const book=libraryBooks.find(item=>item.id===activeLibraryBookId);
+  if(!book)return;
+  book.category=document.getElementById("libraryCategory").value;
+  book.thoughts=document.getElementById("libraryThoughts").value.trim();
+  persistLibraryBooks();renderLibrary();
+  alert("독서 기록을 저장했어요! 📚");
+}
+function closeLibraryDetail(){
+  document.getElementById("libraryDetail").classList.remove("show");
+  activeLibraryBookId=null;
+}
+function deleteLibraryBook(){
+  if(!activeLibraryBookId)return;
+  if(!confirm("이 책의 독서 기록을 삭제할까요?"))return;
+  libraryBooks=libraryBooks.filter(book=>book.id!==activeLibraryBookId);
+  persistLibraryBooks();closeLibraryDetail();renderLibrary();
+}
+function toggleBookOrganization(){
+  const panel=document.getElementById("libraryOrganization");
+  panel.classList.toggle("show");
+  if(panel.classList.contains("show"))renderLibraryOrganization();
+}
+function renderLibraryOrganization(){
+  const stats=document.getElementById("libraryCategoryStats");
+  const list=document.getElementById("libraryBookList");
+  stats.innerHTML="";list.innerHTML="";
+  if(!libraryBooks.length){
+    stats.innerHTML='<div class="library-empty">아직 기록한 책이 없어요. 첫 책을 읽고 책장에 꽂아봐요!</div>';
+    return;
+  }
+  const categories=["창작동화","전래동화","명작동화","그림책","자연·과학","인성·사회","위인·역사","동시·동요","기타"];
+  const counts={};
+  categories.forEach(category=>counts[category]=0);
+  libraryBooks.forEach(book=>counts[book.category||"그림책"]=(counts[book.category||"그림책"]||0)+1);
+  categories.filter(category=>counts[category]>0).sort((a,b)=>counts[b]-counts[a]).forEach(category=>{
+    const row=document.createElement("div");row.className="library-stat-row";
+    const label=document.createElement("strong");label.textContent=category;
+    const track=document.createElement("div");track.className="library-stat-track";
+    const bar=document.createElement("div");bar.className="library-stat-bar";
+    bar.style.width=(counts[category]/libraryBooks.length*100)+"%";track.appendChild(bar);
+    const value=document.createElement("span");value.textContent=counts[category]+"권";
+    row.append(label,track,value);stats.appendChild(row);
+  });
+  libraryBooks.forEach((book,index)=>{
+    const item=document.createElement("div");item.className="library-list-item";
+    const text=document.createElement("span");
+    const strong=document.createElement("strong");strong.textContent=(index+1)+". "+book.title;
+    const small=document.createElement("small");small.textContent=" · "+(book.category||"그림책");
+    text.append(strong,small);
+    const open=document.createElement("button");open.type="button";open.className="library-btn secondary";open.style.padding="7px 12px";open.textContent="기록 보기";
+    open.addEventListener("click",()=>openLibraryBook(book.id));
+    item.append(text,open);list.appendChild(item);
+  });
+}
+/* 기존 홈 이동 함수와 독립적으로 도서관 페이지 진입 */
+
+/* 화면 이동 */
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>
+    p.classList.remove("active")
+  );
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function home(){showPage("homePage")}
+function openRead(){
+  showPage("readPage");
+  dailyProverb();
+}
+
+/* 명화감상 교실 연결 */
+function coming(){
+  window.location.href="https://hyeri-yu.github.io/art-index.html/";
+}
+
+function openSafety(){
+  window.location.href="https://hyeri-yu.github.io/safety-education/";
+}
+
+function sports(){
+  window.open(
+    "https://hahaha.qpfpahffo.workers.dev/",
+    "_blank",
+    "noopener"
+  );
+}
+
+/* 속담 데이터 */
+const proverbs=[
+{
+topic:"친구와 협동",
+scene:"🧒🏻 🤝 🧒🏻",
+title:"백지장도 맞들면 낫다",
+meaning:"작은 일도 함께 힘을 모으면 더 쉽고 즐겁게 할 수 있어요.",
+question:"친구와 함께해서 더 쉬웠던 일이 있었나요?",
+practice:"오늘 친구와 장난감이나 교구를 함께 정리해요."
+},
+{
+topic:"노력과 끈기",
+scene:"🌱 ☀️ 🌼",
+title:"천 리 길도 한 걸음부터",
+meaning:"큰일도 작은 일부터 하나씩 시작하면 해낼 수 있어요.",
+question:"새로운 일을 할 때 첫 번째로 무엇을 해볼까요?",
+practice:"오늘 내가 해보고 싶은 일을 한 가지 시작해요."
+},
+{
+topic:"말과 예절",
+scene:"😊 💬 💗",
+title:"가는 말이 고와야 오는 말이 곱다",
+meaning:"내가 다정하게 말하면 다른 사람도 다정하게 대답해 줄 수 있어요.",
+question:"친구의 마음을 기분 좋게 하는 말은 무엇일까요?",
+practice:"오늘 친구에게 고운 말 한마디를 건네요."
+},
+{
+topic:"배려와 나눔",
+scene:"🍎 🧒🏻 🧒🏻",
+title:"콩 한 쪽도 나누어 먹는다",
+meaning:"아주 작은 것도 다른 사람과 나누면 기쁨이 커져요.",
+question:"친구와 나누고 싶은 것이 있나요?",
+practice:"놀이 도구나 재료를 친구와 사이좋게 나눠 써요."
+},
+{
+topic:"지혜와 안전",
+scene:"🚶‍♀️ 🌉 👀",
+title:"아는 길도 물어 가라",
+meaning:"잘 알고 있는 길도 한 번 더 확인하면 실수를 줄일 수 있어요.",
+question:"길을 모르면 어떻게 하면 좋을까요?",
+practice:"모르는 것이 있으면 믿을 수 있는 어른에게 물어봐요."
+},
+{
+topic:"노력과 끈기",
+scene:"🐜 🌾 🏡",
+title:"티끌 모아 태산",
+meaning:"작은 것을 조금씩 모으면 나중에 큰 것이 될 수 있어요.",
+question:"우리 반에서 조금씩 모으면 좋은 것은 무엇일까요?",
+practice:"장난감과 책을 제자리에 하나씩 정리해요."
+}
+];
+
+let current=0;
+let topic="전체";
+
+/* 오늘의 속담 */
+function dailyProverb(){
+  const today=new Date();
+  let key=today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+  let hash=0;
+
+  for(let c of key){
+    hash=(hash*31+c.charCodeAt(0))>>>0;
+  }
+
+  current=hash%proverbs.length;
+  topic="전체";
+
+  document.querySelectorAll("#topics button").forEach(b=>{
+    b.classList.toggle("selected",b.dataset.topic==="전체");
+  });
+
+  showProverb();
+}
+
+function showProverb(){
+  const p=proverbs[current];
+
+  document.getElementById("scene").textContent=p.scene;
+  document.getElementById("title").textContent=p.title;
+  document.getElementById("meaning").textContent=p.meaning;
+  document.getElementById("question").textContent=p.question;
+  document.getElementById("practice").textContent=p.practice;
+  document.getElementById("answer").classList.remove("show");
+}
+
+function reveal(){
+  document.getElementById("answer").classList.add("show");
+}
+
+function randomProverb(){
+  const list=topic==="전체"
+    ?proverbs
+    :proverbs.filter(p=>p.topic===topic);
+
+  const selected=list[Math.floor(Math.random()*list.length)];
+  current=proverbs.indexOf(selected);
+  showProverb();
+}
+
+/* 속담 주제 선택 */
+document.getElementById("topics").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-topic]");
+  if(!b)return;
+
+  topic=b.dataset.topic;
+
+  document.querySelectorAll("#topics button").forEach(x=>{
+    x.classList.toggle("selected",x===b);
+  });
+
+  const list=topic==="전체"
+    ?proverbs
+    :proverbs.filter(p=>p.topic===topic);
+
+  if(list.length){
+    current=proverbs.indexOf(list[0]);
+    showProverb();
+  }
+});
+
+/* 그림 클릭 */
+document.getElementById("picture").addEventListener("click",reveal);
+
+document.getElementById("picture").addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===" "){
+    e.preventDefault();
+    reveal();
+  }
+});
+</script>
+
+<div style="text-align:center; margin:30px 0 20px;
+color:#e3ca8c; font-weight:800; font-size:14px;">
+  Created by @yutti_.t
+</div>
+
+
+<script>
+/* 하하하 우리들의 도서관 - Supabase 공유 연결 */
+const SHARED_SUPABASE_URL = "https://aehbpbxuvkjlsdehgzxg.supabase.co";
+const SHARED_SUPABASE_KEY = "sb_publishable_hbpSXzCmHJvczwTMuPqaxw_GFXi4rxv";
+let sharedRoom = null;
+let sharedEditPassword = "";
+let sharedCanEdit = false;
+let mySharedRoom = null;
+let mySharedRoomPassword = "";
+
+async function sharedApi(path, options={}) {
+  const response = await fetch(SHARED_SUPABASE_URL + path, {
+    ...options,
+    headers: {
+      "apikey": SHARED_SUPABASE_KEY,
+      "Authorization": "Bearer " + SHARED_SUPABASE_KEY,
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+  const raw = await response.text();
+  let data = null;
+  try { data = raw ? JSON.parse(raw) : null; } catch (_) { data = raw; }
+  if (!response.ok) {
+    const message = data && (data.message || data.error || data.details) || "서버 요청에 실패했어요.";
+    throw new Error(message);
+  }
+  return data;
+}
+
+async function refreshSharedRooms() {
+  const status = document.getElementById("sharedRoomStatus");
+  const list = document.getElementById("sharedRoomList");
+  if (!status || !list) return;
+  status.textContent = "공개된 학급 도서관을 불러오고 있어요...";
+  list.innerHTML = "";
+  try {
+    const rooms = await sharedApi("/rest/v1/rooms?select=id,name,created_at&order=created_at.desc");
+    status.textContent = rooms.length ? "원하는 반의 문을 눌러 책장을 구경해 보세요." : "아직 만들어진 반이 없어요. 첫 번째 도서관을 열어 주세요!";
+    rooms.forEach(room => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "shared-room-card fairy-house";
+      card.setAttribute("aria-label", room.name + " 도서관에 들어가기");
+      const scene = document.createElement("span");
+      scene.className = "fairy-house-scene";
+      const nameSign = document.createElement("span");
+      nameSign.className = "fairy-name-sign";
+      nameSign.textContent = room.name;
+      const chimney = document.createElement("span");
+      chimney.className = "fairy-chimney";
+      const roof = document.createElement("span");
+      roof.className = "fairy-roof";
+      const facade = document.createElement("span");
+      facade.className = "fairy-facade";
+      const window = document.createElement("span");
+      window.className = "fairy-window";
+      const strong = document.createElement("strong");
+      strong.textContent = "✿";
+      strong.setAttribute("aria-hidden", "true");
+      const glow = document.createElement("span");
+      glow.className = "fairy-window-glow";
+      window.append(strong, glow);
+      const door = document.createElement("span");
+      door.className = "fairy-door";
+      const flowerbed = document.createElement("span");
+      flowerbed.className = "fairy-flowerbed";
+      flowerbed.textContent = "✿　❀　✿";
+      facade.append(window, door);
+      scene.append(nameSign, chimney, roof, facade, flowerbed);
+      const caption = document.createElement("span");
+      caption.className = "fairy-house-caption";
+      const small = document.createElement("small");
+      small.textContent = "우리 반 책장 놀러 가기";
+      const arrow = document.createElement("span");
+      arrow.className = "fairy-enter";
+      arrow.textContent = "문 열기　↗";
+      caption.append(small, arrow);
+      card.append(scene, caption);
+      card.addEventListener("click", async () => {
+        card.disabled = true;
+        status.textContent = room.name + " 책장을 펼치고 있어요...";
+        try {
+          await openSharedRoom(room, false);
+        } catch (error) {
+          status.textContent = room.name + " 책장을 열지 못했어요: " + (error.message || error);
+        } finally {
+          card.disabled = false;
+        }
+      });
+
+      list.appendChild(card);
+    });
+  } catch (error) {
+    status.textContent = "도서관 목록을 불러오지 못했어요: " + error.message;
+  }
+}
+
+async function createSharedRoom() {
+  const name = document.getElementById("sharedRoomName").value.trim();
+  const password = document.getElementById("sharedRoomPassword").value;
+  const status = document.getElementById("sharedRoomStatus");
+  if (name.length < 2) { alert("학급 이름을 두 글자 이상 입력해 주세요."); return; }
+  if (password.length < 4) { alert("편집 비밀번호를 네 글자 이상 입력해 주세요."); return; }
+  try {
+    const id = await sharedApi("/rest/v1/rpc/create_room", {
+      method: "POST",
+      body: JSON.stringify({p_name:name, p_password:password})
+    });
+    document.getElementById("sharedRoomName").value = "";
+    document.getElementById("sharedRoomPassword").value = "";
+    status.textContent = "우리 반 도서관을 만들었어요!";
+    mySharedRoom = {id, name};
+    mySharedRoomPassword = password;
+    try { localStorage.setItem("hahaha_my_room", JSON.stringify({id, name})); } catch(e) {}
+    await refreshSharedRooms();
+    await openSharedRoom({id, name}, true, password);
+  } catch (error) {
+    status.textContent = "도서관을 만들지 못했어요: " + error.message + " (오류 문구를 알려주시면 데이터베이스 권한도 확인할게요.)";
+  }
+}
+
+async function openSharedRoom(room, edit=false, password="") {
+  sharedRoom = room;
+  sharedCanEdit = !!edit;
+  sharedEditPassword = edit ? password : "";
+  document.getElementById("sharedRoomCurrent").style.display = "block";
+  document.getElementById("sharedRoomCurrentName").textContent = "📚 " + room.name + " 책장";
+  const isMine = !!(mySharedRoom && mySharedRoom.id === room.id);
+  document.getElementById("sharedRoomModeLabel").textContent =
+    isMine ? (sharedCanEdit ? "우리 반 · 편집 가능" : "우리 반 · 열람 중") : (edit ? "편집 가능" : "구경 중 · 읽기 전용");
+  const manageControls = document.getElementById("myRoomManageControls");
+  if (manageControls) manageControls.style.display = "flex";
+  const ownerDeleteButton = manageControls && manageControls.querySelector('button[onclick="deleteMyRoom()"]');
+  if (ownerDeleteButton) ownerDeleteButton.style.display = isMine ? "" : "none";
+  document.getElementById("currentBookshelfHeading").textContent = room.name + "의 책장이에요 📚";
+  document.getElementById("libraryProgress").style.display = "block";
+  document.getElementById("sharedRoomEditPassword").value = "";
+  document.getElementById("libraryEditor").classList.remove("show");
+  document.getElementById("libraryDetail").classList.remove("show");
+  document.getElementById("libraryOrganization").classList.remove("show");
+  await loadSharedBooks();
+  renderLibrary();
+  // 다른 반 집은 도서관 페이지 아래쪽에 있으므로, 입장하면 위쪽 책장으로 화면을 이동합니다.
+  const bookshelf = document.getElementById("currentClassBookshelf");
+  if (bookshelf) {
+    window.setTimeout(() => bookshelf.scrollIntoView({behavior:"smooth", block:"start"}), 80);
+  }
+  const detailActions = document.querySelectorAll("#libraryDetail .library-actions button");
+  detailActions.forEach(button => {
+    button.disabled = !sharedCanEdit;
+    button.style.display = (!sharedCanEdit && (button.textContent.includes("기록 저장") || button.textContent.includes("책 삭제"))) ? "none" : "";
+  });
+}
+
+async function loadSharedBooks() {
+  if (!sharedRoom) return;
+  try {
+    const rows = await sharedApi("/rest/v1/books?select=*&room_id=eq." + encodeURIComponent(sharedRoom.id) + "&order=created_at.asc");
+    libraryBooks = rows.map(row => ({
+      id: row.id, title: row.title, author: row.author || "",
+      year: row.published_year || "", cover: row.cover_url || "",
+      category: row.category || "그림책",
+      childrenRating: row.children_rating || 0,
+      teacherRating: row.teacher_rating || 0,
+      thoughts: row.thoughts || "", color: LIBRARY_COLORS[0]
+    }));
+    renderLibrary();
+    document.querySelector(".library-actions").style.display = sharedCanEdit ? "flex" : "none";
+    document.getElementById("libraryProgress").style.display = "block";
+    let note = document.getElementById("sharedReadOnlyNote");
+    if (!note) {
+      note = document.createElement("div");
+      note.id = "sharedReadOnlyNote";
+      note.className = "library-readonly-note";
+      document.querySelector(".library-progress").after(note);
+    }
+    note.textContent = sharedCanEdit ? "🔓 이 반의 도서 기록을 편집할 수 있어요." : "👀 공개 열람 중이에요. 편집하려면 이 반의 비밀번호를 입력해 주세요.";
+  } catch (error) {
+    alert("책 목록을 불러오지 못했어요: " + error.message);
+  }
+}
+
+async function unlockSharedRoom() {
+  if (!sharedRoom) return;
+  const password = document.getElementById("sharedRoomEditPassword").value;
+  if (!password) { alert("학급 편집 비밀번호를 입력해 주세요."); return; }
+  try {
+    // 비밀번호 검증은 실제 저장 RPC 호출 시 서버에서 수행합니다.
+    // 임의 데이터 변경 없이 존재하지 않는 책 수정 요청을 보내 인증 여부만 확인합니다.
+    await sharedApi("/rest/v1/rpc/save_book", {
+      method:"POST",
+      body:JSON.stringify({
+        p_room_id:sharedRoom.id, p_password:password,
+        p_book_id:"00000000-0000-0000-0000-000000000000",
+        p_title:"인증 확인", p_author:null, p_year:null, p_category:"기타",
+        p_cover_url:null, p_children_rating:null, p_teacher_rating:null, p_thoughts:null
+      })
+    });
+  } catch (error) {
+    if ((error.message || "").includes("수정할 도서를 찾을 수 없습니다.")) {
+      sharedCanEdit = true;
+      sharedEditPassword = password;
+      if (mySharedRoom && sharedRoom && mySharedRoom.id === sharedRoom.id) mySharedRoomPassword = password;
+      document.getElementById("sharedRoomModeLabel").textContent = "편집 가능";
+      document.querySelector(".library-actions").style.display = "flex";
+      const note = document.getElementById("sharedReadOnlyNote");
+      if (note) note.textContent = "🔓 이 반의 도서 기록을 편집할 수 있어요.";
+      alert("비밀번호가 확인되었어요. 이제 도서 기록을 수정할 수 있습니다!");
+      return;
+    }
+    alert("비밀번호를 확인하지 못했어요. " + error.message);
+    return;
+  }
+  // 극히 예외적으로 해당 UUID가 존재하는 경우는 저장이 이루어질 수 없도록 사용하지 않는 UUID 사용.
+}
+
+async function renameCurrentRoom() {
+  if (!sharedRoom) { alert("먼저 이름을 바꿀 도서관을 열어 주세요."); return; }
+  const password = prompt("이 도서관을 만든 선생님의 편집 비밀번호를 입력해 주세요.");
+  if (password === null || !password) return;
+  const newName = prompt("새로운 도서관 이름을 입력해 주세요.", sharedRoom.name);
+  if (!newName || newName.trim().length < 2) return;
+  try {
+    await sharedApi("/rest/v1/rpc/rename_room", {
+      method:"POST",
+      body:JSON.stringify({p_room_id:sharedRoom.id,p_password:password,p_new_name:newName.trim()})
+    });
+    const updated = {id:sharedRoom.id, name:newName.trim()};
+    if (mySharedRoom && mySharedRoom.id === sharedRoom.id) {
+      mySharedRoom = updated;
+      mySharedRoomPassword = password;
+      try { localStorage.setItem("hahaha_my_room", JSON.stringify(updated)); } catch(e) {}
+    }
+    await refreshSharedRooms();
+    await openSharedRoom(updated, true, password);
+    alert("도서관 이름을 변경했어요.");
+  } catch(error) {
+    alert("이름을 바꾸지 못했어요: " + error.message);
+  }
+}
+
+
+
+async function returnToMyRoom() {
+  if (mySharedRoom) {
+    await openSharedRoom(mySharedRoom, true, mySharedRoomPassword);
+    return;
+  }
+  sharedRoom = null;
+  sharedEditPassword = "";
+  sharedCanEdit = false;
+  libraryBooks = [];
+  document.getElementById("sharedRoomCurrent").style.display = "none";
+  const actions = document.querySelector("#libraryPage .library-actions");
+  if (actions) actions.style.display = "none";
+  renderLibrary();
+  document.getElementById("libraryProgress").style.display = "none";
+  document.getElementById("libraryShelfCaption").textContent =
+    "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
+  document.getElementById("currentBookshelfHeading").textContent =
+    "우리 반 책장이 여기에 펼쳐져요 📚";
+  const note = document.getElementById("sharedReadOnlyNote");
+  if (note) note.remove();
+}
+
+async function saveSharedBook(book) {
+  if (!sharedRoom || !sharedCanEdit) { alert("먼저 해당 반의 편집 비밀번호를 확인해 주세요."); return false; }
+  try {
+    await sharedApi("/rest/v1/rpc/save_book", {
+      method:"POST",
+      body:JSON.stringify({
+        p_room_id:sharedRoom.id, p_password:sharedEditPassword,
+        p_book_id:book.id && /^[0-9a-f-]{36}$/i.test(book.id) ? book.id : null,
+        p_title:book.title, p_author:book.author || null,
+        p_year:book.year ? Number.parseInt(book.year,10) || null : null,
+        p_category:book.category || "그림책", p_cover_url:book.cover || null,
+        p_children_rating:book.childrenRating || null,
+        p_teacher_rating:book.teacherRating || null, p_thoughts:book.thoughts || null
+      })
+    });
+    await loadSharedBooks();
+    return true;
+  } catch (error) {
+    alert("저장하지 못했어요: " + error.message);
+    return false;
+  }
+}
+
+async function saveNewLibraryBook(book) {
+  if (!sharedCanEdit) { alert("학급 편집 비밀번호를 먼저 확인해 주세요."); return; }
+  if (libraryBooks.length >= LIBRARY_TARGET && !confirm("100권 목표를 달성했어요! 책을 더 추가할까요?")) return;
+  const ok = await saveSharedBook(book);
+  if (!ok) return;
+  closeBookEditor();
+  document.getElementById("libraryTitleInput").value = "";
+  const newest = libraryBooks[libraryBooks.length - 1];
+  if (newest) openLibraryBook(newest.id);
+}
+
+async function saveLibraryDetail() {
+  const book = libraryBooks.find(item => item.id === activeLibraryBookId);
+  if (!book) return;
+  book.category = document.getElementById("libraryCategory").value;
+  book.thoughts = document.getElementById("libraryThoughts").value.trim();
+  const childActive = document.querySelectorAll("#childrenStars .library-star.active");
+  const teacherActive = document.querySelectorAll("#teacherStars .library-star.active");
+  book.childrenRating = childActive.length || book.childrenRating || 0;
+  book.teacherRating = teacherActive.length || book.teacherRating || 0;
+  const ok = await saveSharedBook(book);
+  if (ok) { alert("독서 기록을 공유 도서관에 저장했어요! 📚"); closeLibraryDetail(); }
+}
+
+async function deleteLibraryBook() {
+  if (!activeLibraryBookId || !sharedRoom || !sharedCanEdit) return;
+  if (!confirm("이 책의 독서 기록을 삭제할까요?")) return;
+  try {
+    await sharedApi("/rest/v1/rpc/delete_book", {
+      method:"POST",
+      body:JSON.stringify({p_room_id:sharedRoom.id,p_password:sharedEditPassword,p_book_id:activeLibraryBookId})
+    });
+    closeLibraryDetail();
+    await loadSharedBooks();
+  } catch (error) { alert("삭제하지 못했어요: " + error.message); }
+}
+
+async function openLibrary() {
+  showPage("libraryPage");
+  document.getElementById("libraryEditor").classList.remove("show");
+  document.getElementById("libraryDetail").classList.remove("show");
+  document.getElementById("libraryOrganization").classList.remove("show");
+
+  if (!mySharedRoom) {
+    try {
+      const saved = JSON.parse(localStorage.getItem("hahaha_my_room") || "null");
+      if (saved && saved.id && saved.name) mySharedRoom = saved;
+    } catch(e) {}
+  }
+
+  if (mySharedRoom) {
+    await openSharedRoom(mySharedRoom, !!mySharedRoomPassword, mySharedRoomPassword);
+    const status = document.getElementById("sharedRoomStatus");
+    if (status) status.textContent = "우리 반 책장이 먼저 펼쳐져요. 다른 반 도서관은 아래에서 구경할 수 있어요.";
+  } else {
+    sharedRoom = null;
+    sharedCanEdit = false;
+    sharedEditPassword = "";
+    libraryBooks = [];
+    renderLibrary();
+    document.getElementById("libraryProgress").style.display = "none";
+    document.getElementById("sharedRoomCurrent").style.display = "none";
+    document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
+    document.getElementById("libraryShelfCaption").textContent = "먼저 우리 반 도서관을 만들어 주세요.";
+    const actions = document.querySelector("#libraryPage .library-actions");
+    if (actions) actions.style.display = "none";
+  }
+  await refreshSharedRooms();
+}
+</script>
+
+</body>
+</html>!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>꿈꾸며 나아가는 RAS 꿈나라 교실</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
+
+:root {
+  --purple:#70577F;
+  --pink:#E58B9D;
+  --mint:#83B99B;
+  --yellow:#E9B65F;
+  --lavender:#F2EAF7;
+  --text:#5F526A;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#fff;
+  color:var(--text);
+  font-family:'Nanum Square Round',sans-serif;
+  line-height:1.7;
+}
+
+button,select,textarea{font:inherit}
+button{cursor:pointer}
+.shell{width:min(1160px,94%);margin:auto}
+
+header{
+  padding:24px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.brand{
+  text-decoration:none;
+  line-height:1.35;
+  letter-spacing:-1px;
+}
+
+.brand-line{
+  display:block;
+  font-size:clamp(23px,3vw,34px);
+  font-weight:800;
+}
+
+.dream{color:var(--pink)}
+.na{color:var(--mint)}
+.agana{color:var(--purple)}
+.ras{color:var(--yellow)}
+
+.brand-sub{
+  color:#A48EAA;
+  font-size:11px;
+  letter-spacing:3px;
+  margin-top:7px;
+}
+
+nav{display:flex;gap:8px;flex-wrap:wrap}
+
+nav button,nav a{
+  border:0;
+  background:transparent;
+  color:var(--purple);
+  text-decoration:none;
+  padding:9px 13px;
+  border-radius:30px;
+  font-weight:700;
+}
+
+nav button:hover,nav a:hover{background:var(--lavender)}
+
+
+/* 하하하 도서관 */
+.library-page-intro{
+  background:linear-gradient(135deg,#FFF4E9,#F8EEF5 55%,#EEF5EF);
+  border:1px solid #EDE0D5;border-radius:22px;padding:22px 18px;text-align:center;margin:18px 0;
+}
+.library-page-intro h2{color:#70577F;font-size:30px;margin:5px 0 8px;font-weight:800}
+.library-page-intro p{color:#8E7F91;margin:4px 0}
+.library-progress{
+  background:#fff;border:1px solid #F0E7E8;border-radius:18px;padding:17px;margin:18px 0;
+}
+.library-progress-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;color:#70577F;font-weight:800}
+.library-progress-track{height:14px;background:#F2EAF1;border-radius:99px;overflow:hidden;margin:12px 0 6px}
+.library-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#E58B9D,#E9B65F,#83B99B);border-radius:99px;transition:width .25s}
+.library-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:16px 0}
+.library-btn{border:0;border-radius:999px;padding:11px 19px;font-weight:800;background:#70577F;color:#fff}
+.library-btn.secondary{background:#F2EAF7;color:#70577F}
+.library-btn.gold{background:#F8E9CE;color:#896A39}
+.bookshelf-wrap{
+  background:#FBF7F1;border:1px solid #E9DED1;border-radius:20px;padding:18px 12px 22px;margin:16px 0;
+}
+.bookshelf-heading{text-align:center;color:#80658E;font-size:20px;font-weight:800;margin:0 0 14px}
+.bookshelf-row{
+  min-height:160px;display:flex;align-items:flex-end;gap:5px;padding:10px 10px 0;
+  border-bottom:13px solid #B98C66;border-radius:0 0 5px 5px;
+  box-shadow:0 5px 0 #8F694E;margin:0 0 22px;overflow-x:auto;
+}
+.bookshelf-row:last-child{margin-bottom:5px}
+.library-book{
+  flex:0 0 38px;height:var(--book-height,128px);min-width:32px;max-width:54px;
+  border:1.5px solid rgba(85,67,65,.55);border-bottom:0;border-radius:7px 7px 2px 2px;
+  background:var(--book-color,#EBC9B9);color:#5D4B4C;position:relative;
+  display:flex;align-items:center;justify-content:center;padding:8px 4px 7px;
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.35),inset -3px 0 0 rgba(80,50,40,.06);
+  cursor:pointer;overflow:hidden;transition:transform .15s;
+}
+.library-book:hover{transform:translateY(-5px)}
+.library-book-title{
+  writing-mode:vertical-rl;text-orientation:mixed;font-size:12px;line-height:1.2;
+  font-weight:800;max-height:100%;overflow:hidden;word-break:keep-all;
+}
+.library-book.empty{
+  background:rgba(255,255,255,.58);border:1.5px dashed #CDBEBD;color:#B3A5A4;
+  box-shadow:none;
+}
+.library-book.empty .library-book-title{font-size:19px;writing-mode:horizontal-tb}
+.library-book-count{font-size:12px;color:#998A92;text-align:center;margin-top:4px}
+.library-editor{
+  display:none;background:#FFFCF8;border:1px solid #EADFE7;border-radius:22px;padding:20px;margin:20px 0;
+}
+.library-editor.show{display:block}
+.library-editor h3{color:#70577F;font-size:23px;margin:0 0 13px}
+.library-field{display:grid;gap:6px;margin:12px 0}
+.library-field label{font-weight:800;color:#786782;font-size:14px}
+.library-field input,.library-field select,.library-field textarea{
+  width:100%;border:1px solid #E5D9E8;border-radius:12px;padding:11px 12px;
+  background:#fff;color:#5F526A;font:inherit;outline-color:#E58B9D;
+}
+.library-field textarea{min-height:100px;resize:vertical}
+.library-search-results{display:grid;gap:8px;margin:10px 0}
+.library-result{
+  display:flex;gap:12px;align-items:center;text-align:left;width:100%;
+  border:1px solid #E9DFE8;border-radius:13px;padding:9px;background:#fff;color:#5F526A;
+}
+.library-result img{width:48px;height:66px;object-fit:cover;border-radius:5px;background:#F2EDF1}
+.library-result strong{display:block;color:#70577F}
+.library-detail-top{display:grid;grid-template-columns:minmax(130px,220px) 1fr;gap:18px;align-items:start}
+.library-cover{
+  width:100%;height:245px;object-fit:cover;object-position:top center;
+  border-radius:12px;background:#F1EAF0;border:1px solid #E9DFE8;
+}
+.library-cover-placeholder{
+  height:245px;border-radius:12px;background:#F5EEF3;display:grid;place-items:center;
+  color:#A28EA3;font-size:50px;border:1px solid #E9DFE8;
+}
+.library-book-meta h3{font-size:22px;color:#70577F;margin:0 0 7px;line-height:1.4}
+.library-book-meta p{font-size:14px;color:#918396;margin:4px 0}
+.library-rating-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+.library-rating-label{min-width:105px;font-size:14px;font-weight:800;color:#786782}
+.library-stars{display:inline-flex;gap:2px}
+.library-star{border:0;background:transparent;padding:0 2px;color:#D8CDD8;font-size:27px;line-height:1;cursor:pointer}
+.library-star.active{color:#E9B65F}
+.library-small-note{font-size:12px;color:#A195A8}
+.library-organize{display:none;margin:18px 0;padding:18px;background:#FAF7FB;border:1px solid #EEE5F0;border-radius:18px}
+.library-organize.show{display:block}
+.library-stat-row{display:grid;grid-template-columns:105px 1fr 35px;gap:9px;align-items:center;margin:10px 0;font-size:13px;color:#786782}
+.library-stat-track{height:12px;border-radius:99px;background:#EEE8F0;overflow:hidden}
+.library-stat-bar{height:100%;background:linear-gradient(90deg,#E58B9D,#E9B65F);border-radius:99px}
+.library-list{display:grid;gap:8px;margin-top:15px}
+.library-list-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 12px;background:#fff;border:1px solid #EEE7F0;border-radius:12px}
+.library-list-item strong{color:#70577F}
+.library-empty{text-align:center;padding:22px;color:#A195A8;background:#fff;border-radius:13px}
+@media(max-width:600px){
+ .bookshelf-wrap{padding:13px 7px}
+ .bookshelf-row{min-height:130px;padding-left:5px;padding-right:5px;gap:3px}
+ .library-book{flex-basis:30px;min-width:27px}
+ .library-book-title{font-size:10px}
+ .library-detail-top{grid-template-columns:112px 1fr;gap:12px}
+ .library-cover,.library-cover-placeholder{height:185px}
+ .library-book-meta h3{font-size:18px}
+ .library-stat-row{grid-template-columns:82px 1fr 25px}
+}
+
+/* 방문자 카운터 */
+.visitor-counter{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:7px;
+  width:100%;
+  margin-top:-5px;
+  color:#8B7E91;
+  font-size:12px;
+  font-weight:800;
+}
+.visitor-counter img{
+  height:22px;
+  max-width:190px;
+  object-fit:contain;
+}
+
+/* 오늘의 날짜·시간·날씨 */
+.daily-board{
+  margin:8px 0 38px;
+  padding:22px 0;
+}
+
+.daily-heading{
+  text-align:center;
+  color:var(--purple);
+  font-size:27px;
+  font-weight:800;
+  margin:0 0 20px;
+}
+
+.daily-top{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:14px;
+}
+
+.daily-box{
+  background:#FAF8FB;
+  border:1px solid #F0EBF2;
+  border-radius:18px;
+  padding:18px 12px;
+  text-align:center;
+}
+
+.daily-label{
+  font-size:21px;
+  font-weight:800;
+  color:#817389;
+}
+
+.daily-value{
+  display:block;
+  color:var(--purple);
+  font-size:clamp(27px,4vw,38px);
+  line-height:1.4;
+  margin-top:5px;
+  font-weight:800;
+}
+
+.daily-sub{
+  font-size:23px;
+  font-weight:800;
+  color:var(--purple);
+}
+
+.clock-value{font-variant-numeric:tabular-nums}
+
+.weather-select{
+  margin-top:8px;
+  width:100%;
+  max-width:190px;
+  font-size:16px;
+  font-weight:700;
+  padding:10px;
+  border:1px solid #E9DDED;
+  border-radius:12px;
+  color:var(--purple);
+  background:white;
+}
+
+
+/* 매일 아침 긍정의 주문 */
+.positive-card{
+  position:relative; overflow:hidden; margin:20px 0 8px; padding:23px 18px 20px;
+  border:1px solid #F0DDEB; border-radius:22px; text-align:center;
+  background:linear-gradient(135deg,#FFF4F6 0%,#F7F0FB 52%,#EFF8F2 100%);
+}
+.positive-card::before,.positive-card::after{content:"✦";position:absolute;color:#E8C779;font-size:24px;opacity:.75}
+.positive-card::before{top:12px;left:18px}
+.positive-card::after{right:20px;bottom:12px}
+.positive-heading{margin:0 0 8px;color:#80658E;font-size:23px;font-weight:800}
+.positive-sub{margin:0 0 13px;color:#A18DA8;font-size:13px;font-weight:700}
+.positive-phrase{min-height:58px;display:flex;align-items:center;justify-content:center;color:#70577F;font-size:clamp(20px,3vw,27px);line-height:1.55;font-weight:800;word-break:keep-all}
+.positive-foot{margin:10px 0 0;color:#9B8AA2;font-size:12px}
+@media(max-width:750px){.positive-card{padding:20px 13px}.positive-heading{font-size:21px}}
+
+/* 미세먼지 표시 */
+.air-quality{
+  margin:12px auto 0;
+  max-width:230px;
+  padding:9px 10px;
+  border-radius:12px;
+  background:#EFF6F0;
+  color:#557D68;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.5;
+}
+.air-quality small{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  color:#829487;
+}
+.air-quality.loading{background:#F3F0F6;color:#817389}
+.air-quality.warning{background:#FFF2DE;color:#A8783D}
+.air-quality.bad{background:#FBECEF;color:#B65F70}
+
+.calendar-toggle-row{
+  display:flex;
+  justify-content:center;
+  margin:22px 0 0;
+}
+.calendar-toggle-button{
+  border:1px solid #E5D8EA;
+  border-radius:999px;
+  padding:12px 24px;
+  background:#F4EAF7;
+  color:var(--purple);
+  font:inherit;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(117,87,127,.08);
+  transition:transform .15s ease, background .15s ease;
+}
+.calendar-toggle-button:hover{
+  background:#EEDFF3;
+  transform:translateY(-1px);
+}
+.calendar-content[hidden]{display:none !important;}
+.calendar-content{margin-top:14px}
+
+.calendar-wrap{
+  margin:18px 0 0;
+  width:100%;
+  padding:22px 24px;
+  border:1px solid #F0EBF2;
+  border-radius:20px;
+  background:#fff;
+}
+
+.calendar-title{
+  text-align:center;
+  color:var(--purple);
+  font-size:26px;
+  font-weight:800;
+  margin-bottom:15px;
+}
+
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:8px;
+  text-align:center;
+}
+
+.calendar-day{
+  padding:9px 2px;
+  font-size:17px;
+  font-weight:800;
+  color:var(--purple);
+}
+.calendar-day.sun{color:#D9788D}
+.calendar-day.sat{color:#668CC5}
+
+.calendar-date{
+  min-width:0;
+  min-height:96px;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  gap:4px;
+  border-radius:12px;
+  padding:7px 4px;
+  font-size:17px;
+  color:var(--text);
+  font-weight:700;
+  cursor:pointer;
+  border:1px solid #F0EBF2;
+  background:#fff;
+  overflow:hidden;
+}
+
+.calendar-date:hover{
+  background:#F8F2FA;
+  border-color:#E8DDEC;
+}
+.calendar-date.today{
+  background:#FCE8ED;
+  color:#C45F7A;
+  border:1px solid var(--pink);
+}
+.calendar-date.selected{
+  outline:2px solid var(--purple);
+  outline-offset:1px;
+}
+.calendar-number{
+  text-align:center;
+  font-weight:800;
+  flex-shrink:0;
+}
+.calendar-note{
+  display:block;
+  width:100%;
+  padding:3px 4px;
+  border-radius:5px;
+  background:#E5F2EA;
+  color:#557D68;
+  font-size:13px;
+  line-height:1.4;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:normal;
+  text-align:left;
+  overflow-wrap:anywhere;
+  max-height:2.8em;
+}
+.calendar-more{
+  font-size:12px;
+  color:#8B8091;
+  text-align:center;
+}
+.calendar-help{
+  text-align:center;
+  color:#94889A;
+  font-size:13px;
+  margin:13px 0 0;
+}
+
+.memo-panel{
+  margin-top:18px;
+  padding:22px;
+  background:#FAF8FB;
+  border:1px solid #F0EBF2;
+  border-radius:20px;
+}
+.memo-title{
+  font-size:21px;
+  font-weight:800;
+  color:var(--purple);
+  margin:0 0 4px;
+}
+.memo-date{
+  color:#8B7E91;
+  font-size:14px;
+  margin-bottom:13px;
+}
+.memo-input{
+  width:100%;
+  min-height:85px;
+  resize:vertical;
+  border:1px solid #E8DFEB;
+  border-radius:13px;
+  padding:13px;
+  background:#fff;
+  color:var(--text);
+  outline-color:var(--pink);
+}
+.memo-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.memo-button{
+  border:0;
+  border-radius:10px;
+  padding:10px 18px;
+  font-weight:800;
+}
+.memo-save{background:var(--purple);color:white}
+.memo-clear{background:#EEE8F1;color:var(--purple)}
+.memo-list{
+  margin-top:17px;
+  display:grid;
+  gap:8px;
+}
+.memo-item{
+  background:#fff;
+  border:1px solid #EEE7F0;
+  border-radius:12px;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+.memo-item-text{
+  font-size:17px;
+  line-height:1.65;
+  white-space:pre-wrap;
+  word-break:break-word;
+  flex:1;
+}
+.memo-item-actions{
+  display:flex;
+  gap:5px;
+  flex-shrink:0;
+}
+.memo-item button{
+  border:0;
+  background:#F8E9ED;
+  color:#A65D73;
+  border-radius:8px;
+  padding:6px 9px;
+  font-size:12px;
+}
+.memo-empty{color:#A195A8;font-size:14px}
+
+.section{margin:35px 0 45px}
+.section h2{
+  color:var(--purple);
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:20px;
+}
+
+.courses{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:18px;
+}
+.course{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  width:100%;
+  min-width:0;
+  min-height:220px;
+  height:100%;
+  margin:0;
+  padding:24px 18px;
+  border:1px solid rgba(112,87,127,.12);
+  border-radius:22px;
+  box-sizing:border-box;
+  text-align:center;
+  color:var(--purple);
+  transition:transform .2s;
+  box-shadow:none;
+}
+.course:hover{transform:translateY(-4px)}
+.read{background:#FBECEF}
+.art{background:#FFF2DE}
+.sports{background:#E5F2EA}
+.safety{background:#EAF0FA}
+.icon{
+  font-size:43px;
+  background:#FFFFFFC9;
+  border-radius:17px;
+  display:inline-block;
+  padding:8px 14px;
+}
+.course h3{
+  font-size:22px;
+  font-weight:800;
+  margin:15px 0 7px;
+  color:#5F526A;
+}
+.course p{
+  font-size:14px;
+  color:#817389;
+  line-height:1.8;
+  margin:0 0 10px;
+}
+.course .tag{margin-top:auto}
+.tag{
+  display:inline-block;
+  background:#FFFFFFD9;
+  border-radius:20px;
+  padding:6px 12px;
+  font-size:12px;
+  color:#786782;
+}
+
+.page{display:none;padding:20px 0 50px}
+.page.active{display:block}
+.back{
+  border:0;
+  background:var(--lavender);
+  color:var(--purple);
+  padding:11px 18px;
+  border-radius:25px;
+  font-weight:700;
+}
+.page-title{text-align:center;margin:20px 0}
+.page-title h2{
+  color:var(--purple);
+  font-size:30px;
+  font-weight:800;
+}
+.topics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:20px 0;
+}
+.topics button{
+  background:white;
+  border:1px solid #E9DDED;
+  color:var(--purple);
+  padding:9px 14px;
+  border-radius:25px;
+}
+.topics button.selected{
+  background:var(--purple);
+  color:white;
+}
+.learning{
+  background:white;
+  border:1px solid #F0EBF2;
+  border-radius:25px;
+  padding:25px;
+}
+.picture{
+  min-height:290px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#F4F8F2,#F9EDF1,#FFF5E6);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
+  cursor:pointer;
+}
+.scene{font-size:100px}
+.hint-title{
+  font-size:21px;
+  font-weight:800;
+  color:#80658E;
+}
+.hint-copy{font-size:14px;color:#93859A}
+.answer{
+  display:none;
+  background:#FFF8ED;
+  padding:23px;
+  margin-top:18px;
+  border-radius:20px;
+  text-align:center;
+}
+.answer.show{display:block}
+.answer h3{
+  color:#A87891;
+  font-size:27px;
+  font-weight:800;
+}
+.meaning{font-size:17px}
+.teacher{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+  text-align:left;
+}
+.teacher div{
+  background:#EDF5ED;
+  padding:15px;
+  border-radius:16px;
+}
+.teacher div:last-child{background:#F3EDF7}
+.teacher p{font-size:14px}
+.btn{
+  border:0;
+  border-radius:25px;
+  padding:12px 20px;
+  font-weight:800;
+  margin:5px;
+}
+.primary{background:var(--purple);color:white}
+.soft{background:var(--lavender);color:var(--purple)}
+
+/* 안전교육 교실 */
+.safety-intro{
+  background:#F1F5FC;
+  border-radius:22px;
+  padding:28px;
+  text-align:center;
+  margin:20px 0;
+}
+.safety-intro .big-icon{font-size:65px}
+.safety-intro h3{
+  color:#526C96;
+  font-size:24px;
+  margin:8px 0;
+}
+.safety-topics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:20px;
+}
+.safety-topic{
+  background:#F8FAFE;
+  border:1px solid #E5EAF4;
+  border-radius:18px;
+  padding:20px 14px;
+  text-align:center;
+}
+.safety-topic .topic-icon{font-size:42px}
+.safety-topic h3{
+  color:#526C96;
+  font-size:18px;
+  margin:8px 0;
+}
+.safety-topic p{
+  font-size:14px;
+  color:#7E8798;
+  margin:0;
+}
+.safety-message{
+  background:#FFF8E9;
+  padding:20px;
+  border-radius:16px;
+  margin-top:18px;
+  text-align:center;
+  color:#927343;
+  font-weight:700;
+}
+
+footer{
+  text-align:center;
+  padding:30px 10px;
+  color:#A394A8;
+  font-size:13px;
+  border-top:1px solid #F0EBF2;
+}
+
+@media(max-width:750px){
+  header{flex-direction:column;align-items:flex-start}
+  .visitor-counter{justify-content:center}
+  .daily-top{grid-template-columns:1fr}
+  .daily-board{padding:15px 0}
+  .calendar-wrap{padding:13px 7px}
+  .calendar-grid{gap:3px}
+  .calendar-date{min-height:86px;padding:5px 2px}
+  .calendar-day{font-size:14px}
+  .calendar-note{
+    font-size:11px;
+    line-height:1.3;
+    padding:3px 2px;
+    max-height:2.6em;
+  }
+  .calendar-more{font-size:11px}
+  .courses{grid-template-columns:1fr}
+  .courses > .course{min-height:190px}
+  .teacher{grid-template-columns:1fr}
+  .memo-panel{padding:15px}
+  .safety-topics{grid-template-columns:1fr}
+}
+
+
+/* 하하하 도서관 - 햇살 가득한 유치원 도서관 테마 */
+#libraryPage{
+  --sun-cream:#FFF9E9;
+  --butter:#FFE99A;
+  --butter-deep:#F7D66B;
+  --leaf:#79A982;
+  --leaf-dark:#527E5B;
+  --sky:#DFF1E7;
+  --ink:#526B55;
+}
+#libraryPage .library-page-intro{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#FFF4C9 0%,#FFFBEA 48%,#E8F5E8 100%);
+  border:2px solid #F5E4A8;border-radius:28px;padding:27px 18px 24px;
+  box-shadow:0 7px 0 rgba(232,207,126,.18);
+}
+#libraryPage .library-page-intro:before,
+#libraryPage .library-page-intro:after{
+  content:"";position:absolute;width:78px;height:78px;border-radius:50%;
+  background:rgba(255,255,255,.45);pointer-events:none;
+}
+#libraryPage .library-page-intro:before{top:-30px;left:-18px}
+#libraryPage .library-page-intro:after{right:-20px;bottom:-35px}
+#libraryPage .library-page-intro h2{color:#527E5B;font-size:31px;letter-spacing:-1px}
+#libraryPage .library-page-intro p{color:#7B8E69}
+#libraryPage .library-page-intro p strong{display:inline-block;background:#FFF;border-radius:99px;padding:7px 14px;color:#668B59}
+#libraryPage .library-progress{
+  background:#FFFDF5;border:2px solid #F5E8B8;border-radius:22px;padding:18px;
+  box-shadow:0 4px 0 rgba(238,218,157,.18);
+}
+#libraryPage .library-progress-top{color:#63865D}
+#libraryPage .library-progress-track{height:16px;background:#F5F0D8;border:2px solid #F1E8C6}
+#libraryPage .library-progress-fill{background:linear-gradient(90deg,#F7D76D,#A8CD8B,#78B58A)}
+#libraryPage .library-progress-text{color:#80966E}
+#libraryPage .library-btn{
+  background:#79A982;color:#fff;border-radius:16px;padding:12px 19px;
+  box-shadow:0 4px 0 #5F9069;transition:transform .15s,box-shadow .15s;
+}
+#libraryPage .library-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 #5F9069}
+#libraryPage .library-btn.secondary{background:#FFF0B8;color:#6E8157;box-shadow:0 4px 0 #EBD78F}
+#libraryPage .library-btn.gold{background:#F8D978;color:#77613A;box-shadow:0 4px 0 #E7C45F}
+#libraryPage .bookshelf-wrap{
+  position:relative;background:linear-gradient(180deg,#F1F9E9,#FFFDF4 62%);
+  border:2px solid #DCEBD6;border-radius:25px;padding:20px 12px 24px;
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.55);
+}
+#libraryPage .bookshelf-heading{color:#5E8B63;font-size:21px}
+#libraryPage .bookshelf-heading:before{content:"🌿 ";font-size:18px}
+#libraryPage .bookshelf-row{
+  min-height:160px;gap:5px;padding:12px 10px 0;
+  border-bottom:12px solid #E9C979;border-radius:0 0 12px 12px;
+  box-shadow:0 5px 0 #D8B65F,0 8px 12px rgba(147,128,74,.10);
+  margin:0 0 23px;
+}
+#libraryPage .library-book{
+  border:2px solid rgba(110,139,94,.38);border-bottom:0;
+  border-radius:10px 10px 4px 4px;
+  box-shadow:inset 4px 0 0 rgba(255,255,255,.52),inset -3px 0 0 rgba(80,120,75,.06),0 2px 3px rgba(100,120,80,.08);
+}
+#libraryPage .library-book-title{color:#536C55;font-size:12px}
+#libraryPage .library-book.empty{
+  background:rgba(255,255,255,.72);border:2px dashed #C9DCC4;color:#8AA88A;
+  border-radius:10px 10px 4px 4px;
+}
+#libraryPage .library-book.empty .library-book-title{font-size:22px;color:#91B18F}
+#libraryPage .library-book-count{color:#7D9B78}
+#libraryPage .library-editor{
+  background:#FFFEF8;border:2px solid #F2E6B9;border-radius:24px;
+  box-shadow:0 6px 18px rgba(165,150,93,.08);
+}
+#libraryPage .library-editor h3{color:#5D865F}
+#libraryPage .library-field label{color:#66845F}
+#libraryPage .library-field input,
+#libraryPage .library-field select,
+#libraryPage .library-field textarea{
+  border:2px solid #E4EEDC;border-radius:14px;background:#fffef9;color:#526B55;
+}
+#libraryPage .library-field input:focus,
+#libraryPage .library-field select:focus,
+#libraryPage .library-field textarea:focus{outline:3px solid #F8E8A9}
+#libraryPage .library-result{border:2px solid #E5EEDC;border-radius:16px;background:#FFF}
+#libraryPage .library-result strong{color:#5D865F}
+#libraryPage .library-cover{border:3px solid #FFF;border-radius:16px;box-shadow:0 4px 12px rgba(92,118,83,.12)}
+#libraryPage .library-cover-placeholder{
+  border:2px dashed #CFE0C9;border-radius:16px;background:#F1F8EC;color:#83A77D;
+}
+#libraryPage .library-book-meta h3{color:#527E5B}
+#libraryPage .library-book-meta p{color:#84977C}
+#libraryPage .library-rating-label{color:#66845F}
+#libraryPage .library-star.active{color:#F1C84E}
+#libraryPage .library-small-note{color:#91A187}
+#libraryPage .library-organize{
+  background:#F7FBF1;border:2px solid #DCEBD6;border-radius:22px;
+}
+#libraryPage .library-stat-row{color:#66845F}
+#libraryPage .library-stat-track{background:#E8F0DF}
+#libraryPage .library-stat-bar{background:linear-gradient(90deg,#F5D66F,#9CCB91)}
+#libraryPage .library-list-item{border:1px solid #E2ECD9;border-radius:14px}
+#libraryPage .library-list-item strong{color:#5D865F}
+#libraryPage .library-empty{background:#FFFDF5;color:#91A187;border:1px dashed #DCE8D4;border-radius:15px}
+@media(max-width:600px){
+  #libraryPage .bookshelf-wrap{padding:16px 6px 20px}
+  #libraryPage .bookshelf-row{min-height:132px;padding-left:4px;padding-right:4px;gap:3px}
+}
+
+
+/* 책장 사이사이의 귀여운 초록 화분 */
+.library-plant{
+  flex:0 0 37px;align-self:flex-end;height:var(--plant-height,112px);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  position:relative;margin:0 2px 1px;pointer-events:none;
+}
+.library-plant-leaves{
+  font-size:31px;line-height:1.05;filter:drop-shadow(0 2px 1px rgba(91,130,79,.10));
+  transform:rotate(var(--plant-tilt,0deg));
+}
+.library-plant-pot{
+  width:29px;height:23px;margin-top:1px;position:relative;
+  background:linear-gradient(90deg,#F5C98E,#FFE0AC 48%,#EFC28B);
+  border:1.5px solid #D8AC75;border-radius:4px 4px 10px 10px;
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.35);
+}
+.library-plant-pot:before{
+  content:"";position:absolute;left:-3px;right:-3px;top:-4px;height:6px;
+  border-radius:4px;background:#F8D9A8;border:1px solid #D8AC75;
+}
+#libraryPage .bookshelf-row{position:relative}
+@media(max-width:600px){
+  .library-plant{flex-basis:25px;margin:0}
+  .library-plant-leaves{font-size:24px}
+  .library-plant-pot{width:23px;height:19px}
+}
+
+
+/* 책장별로 조금씩 다른 화분 실루엣과 따뜻한 도자기 화분 */
+.library-plant{
+  flex-basis:34px;margin-left:1px;margin-right:1px;
+  filter:drop-shadow(0 2px 2px rgba(103,125,81,.08));
+}
+.library-plant-leaves{
+  font-size:29px;line-height:1.1;
+  transform:rotate(var(--plant-tilt,0deg));
+}
+.library-plant-pot{
+  background:linear-gradient(90deg,#EFC58D,#FFE4B8 52%,#EBC18B);
+  border-color:#D8B17D;
+}
+.library-plant-pot:before{background:#F8DDB5;border-color:#D8B17D}
+.library-plant.plant-soft .library-plant-pot{
+  width:25px;height:20px;border-radius:8px 8px 9px 9px;
+  background:linear-gradient(90deg,#E9B7A7,#F8D3C3 55%,#E9B7A7);
+  border-color:#D7A99B;
+}
+.library-plant.plant-soft .library-plant-pot:before{
+  background:#F7D8CC;border-color:#D7A99B;
+}
+.library-plant.plant-tall .library-plant-pot{
+  width:23px;height:29px;border-radius:3px 3px 8px 8px;
+  background:linear-gradient(90deg,#B9D0B0,#DDE8C8 55%,#B9D0B0);
+  border-color:#A7C09C;
+}
+.library-plant.plant-tall .library-plant-pot:before{
+  background:#D8E6CB;border-color:#A7C09C;
+}
+@media(max-width:600px){
+  .library-plant{flex-basis:25px}
+  .library-plant-leaves{font-size:23px}
+}
+
+
+/* 여러 선생님이 함께 쓰는 공개 학급 도서관 */
+.library-shared-panel{background:#fffdf5;border:1px solid #eadfbe;border-radius:22px;padding:22px;margin:22px 0;box-shadow:0 8px 22px rgba(120,100,60,.06)}
+.library-shared-panel h3{margin:0 0 6px;color:#6c8b63}
+.library-shared-panel p{margin:0 0 14px;color:#887d69;font-size:14px}
+.shared-room-create,.shared-room-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.shared-room-create input,.shared-room-controls input{flex:1;min-width:180px;border:1px solid #dfd5bd;border-radius:12px;padding:11px 13px;background:white;color:#5f526a}
+.shared-room-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+.shared-room-card{border:1px solid #e7ddc8;background:white;border-radius:15px;padding:13px;text-align:left;color:#625b4d;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.shared-room-card strong{display:block;color:#6b805c}
+.shared-room-card small{color:#9b927f}
+.shared-room-current{margin-top:14px;padding:13px;border-radius:14px;background:#f1f6e9}
+.shared-room-current>div:first-child{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#607b51}
+.shared-room-current span{font-size:12px;color:#8c927c}
+.shared-room-controls{margin-bottom:0}
+.shared-room-controls .library-btn{padding:9px 13px}
+.library-readonly-note{font-size:13px;color:#9b8661;margin:8px 0}
+@media(max-width:600px){.library-shared-panel{padding:16px}.shared-room-create .library-btn{width:100%}}
+
+
+/* 동화 속 파스텔 마을: 학급 도서관 집 */
+.library-shared-panel{
+  background:linear-gradient(180deg,#fffaf4 0%,#fffdf9 100%);
+  border:1px solid #f1dfd0;border-radius:28px;padding:25px 22px;
+  box-shadow:0 12px 28px rgba(194,157,145,.10);overflow:hidden;
+}
+.library-shared-panel h3{color:#8c789e;font-size:1.22rem;letter-spacing:.02em}
+.library-shared-panel>p{color:#a58d91}
+.shared-room-list{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:24px 18px;margin:22px 0 10px;align-items:end;
+}
+.shared-room-card.fairy-house{
+  --house-wall:#fff0d9;--house-roof:#eeb6bd;--house-trim:#d89da9;
+  position:relative;display:flex;flex-direction:column;align-items:stretch;
+  justify-content:flex-end;gap:0;min-height:224px;padding:0 12px 13px;
+  overflow:visible;border:0;border-radius:0;background:transparent;
+  color:#88778b;text-align:center;cursor:pointer;
+  transition:transform .22s ease,filter .22s ease;
+}
+.shared-room-card.fairy-house:nth-child(4n+2){--house-wall:#eaf3e4;--house-roof:#a9c8ae;--house-trim:#8eb49a}
+.shared-room-card.fairy-house:nth-child(4n+3){--house-wall:#eaf2fb;--house-roof:#a9c5e7;--house-trim:#8baed4}
+.shared-room-card.fairy-house:nth-child(4n){--house-wall:#f5eafa;--house-roof:#c9b0dc;--house-trim:#b398cb}
+.shared-room-card.fairy-house:hover{transform:translateY(-7px);filter:drop-shadow(0 9px 9px rgba(170,143,160,.16))}
+.fairy-house-scene{position:relative;display:block;height:174px;width:100%;max-width:230px;margin:0 auto}
+.fairy-chimney{position:absolute;z-index:0;right:25%;top:17px;width:22px;height:43px;
+  border:3px solid #fff8ef;border-bottom:0;border-radius:7px 7px 0 0;background:var(--house-trim)}
+.fairy-roof{position:absolute;z-index:2;left:5%;right:5%;top:26px;height:79px;
+  background:var(--house-roof);clip-path:polygon(50% 0,100% 88%,94% 100%,6% 100%,0 88%);
+  filter:drop-shadow(0 4px 0 rgba(255,255,255,.75))}
+.fairy-roof:after{content:"";position:absolute;left:13%;right:13%;bottom:10px;height:7px;
+  border-radius:50%;background:rgba(255,255,255,.45)}
+.fairy-facade{position:absolute;z-index:1;left:13%;right:13%;top:91px;height:73px;
+  background:var(--house-wall);border:4px solid #fffaf1;border-bottom:0;
+  border-radius:12px 12px 3px 3px;box-shadow:0 5px 0 rgba(205,178,159,.12)}
+.fairy-window{position:absolute;left:50%;top:10px;transform:translateX(-50%);
+  width:72%;height:43px;display:flex;align-items:center;justify-content:center;
+  padding:3px 7px;background:#fffdf5;border:3px solid var(--house-trim);
+  border-radius:12px 12px 9px 9px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.9),0 2px 5px rgba(120,100,110,.08)}
+.fairy-window:before,.fairy-window:after{content:"";position:absolute;background:var(--house-trim);opacity:.8}
+.fairy-window:before{width:2px;height:100%;left:50%;top:0}
+.fairy-window:after{height:2px;width:100%;left:0;top:50%}
+.fairy-window strong{position:relative;z-index:2;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  padding:2px 7px;border-radius:8px;background:rgba(255,253,245,.91);color:#796982;font-size:13px;font-weight:800}
+.fairy-window-glow{position:absolute;inset:3px;border-radius:8px;background:linear-gradient(135deg,rgba(255,255,255,.65),transparent 55%);pointer-events:none}
+.fairy-door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:27px;height:38px;
+  background:var(--house-trim);border:3px solid #fff8ef;border-bottom:0;border-radius:13px 13px 0 0}
+.fairy-door:after{content:"";position:absolute;right:4px;top:20px;width:4px;height:4px;border-radius:50%;background:#fff5cf}
+.fairy-flowerbed{position:absolute;z-index:3;bottom:-3px;left:0;right:0;color:#d89cab;font-size:17px;letter-spacing:4px;text-shadow:0 1px white}
+.fairy-house-caption{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:2px}
+.fairy-house-caption small{color:#a28e9b;font-size:12px}
+.fairy-enter{display:inline-flex;align-items:center;justify-content:center;padding:6px 15px;border-radius:999px;
+  background:#fff0c9;color:#987c72;font-size:12px;font-weight:800;box-shadow:0 3px 0 #efdcae}
+.fairy-house:nth-child(4n+2) .fairy-enter{background:#e8f1df;box-shadow:0 3px 0 #d2e3c9}
+.fairy-house:nth-child(4n+3) .fairy-enter{background:#e7effb;box-shadow:0 3px 0 #d1e0f2}
+.fairy-house:nth-child(4n) .fairy-enter{background:#f1e7f6;box-shadow:0 3px 0 #e1d2ed}
+.shared-room-card.fairy-house:focus-visible{outline:3px solid #b5a1d2;outline-offset:5px;border-radius:18px}
+@media(max-width:600px){
+  .shared-room-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 8px}
+  .shared-room-card.fairy-house{min-height:205px;padding-inline:2px}
+  .fairy-house-scene{height:158px}
+  .fairy-roof{top:22px;height:72px}
+  .fairy-facade{top:83px;height:68px}
+  .fairy-chimney{top:13px}
+  .fairy-window{height:39px}
+}
+
+
+/* 우리 반 책장이 먼저, 다른 반 마을은 아래에 */
+#libraryPage .library-shared-panel{margin-bottom:14px}
+#libraryPage .library-shared-panel h3{color:#7f8f70}
+#libraryPage #currentClassBookshelf{margin-top:18px}
+#libraryPage #currentBookshelfHeading{color:#7e8d70}
+#libraryPage .other-rooms-section{
+  margin:34px 0 18px;padding:24px 20px 20px;border-radius:28px;
+  border:1px solid #eadff0;background:linear-gradient(180deg,#fcf8ff 0%,#fffdfb 100%);
+  box-shadow:0 8px 22px rgba(174,151,190,.08)
+}
+#libraryPage .other-rooms-heading{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+#libraryPage .other-rooms-heading h3{margin:0;color:#9982ad;font-size:1.18rem}
+#libraryPage .other-rooms-heading p{margin:5px 0 0;color:#a594a7;font-size:13px}
+#libraryPage .other-rooms-sparkle{display:grid;place-items:center;width:43px;height:43px;border-radius:15px;background:#f1e8fa;color:#b69acb;font-size:24px}
+#libraryPage .other-rooms-section .shared-room-list{margin-top:16px}
+#libraryPage .shared-room-current{margin-top:14px}
+#libraryPage .library-progress{margin-top:18px}
+#libraryPage .library-actions{margin-top:14px}
+
+
+/* 학급 이름이 가려지지 않는 심플한 동화집 간판과 작은 문 아이콘 */
+.fairy-house-scene{height:190px}
+.fairy-name-sign{
+  position:absolute;z-index:5;left:50%;top:0;transform:translateX(-50%);
+  display:inline-flex;align-items:center;justify-content:center;
+  max-width:92%;min-width:104px;min-height:27px;padding:4px 13px;
+  border:2px solid rgba(255,255,255,.95);border-radius:999px;
+  background:var(--house-wall);color:#786b82;
+  box-shadow:0 3px 0 rgba(190,165,180,.18);
+  font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;
+}
+.fairy-roof{top:35px}
+.fairy-chimney{top:25px}
+.fairy-facade{top:99px}
+.fairy-window{top:9px;height:36px;width:55%;border-width:3px}
+.fairy-window:before,.fairy-window:after{display:none}
+.fairy-window strong{
+  width:22px;height:22px;padding:0;display:grid;place-items:center;
+  border-radius:50%;background:#fff0c9;color:#e5a4ad;font-size:13px;
+}
+.fairy-door{
+  width:20px;height:27px;bottom:0;border:2px solid #fffaf1;
+  border-bottom:0;border-radius:9px 9px 0 0;
+  background:linear-gradient(145deg,#f4c5cd 0 48%,#c7dfc6 49% 100%);
+}
+.fairy-door:after{right:3px;top:12px;width:3px;height:3px;background:#fffdf2}
+.fairy-flowerbed{bottom:-4px;font-size:14px;letter-spacing:2px}
+@media(max-width:600px){
+  .fairy-house-scene{height:174px}
+  .fairy-roof{top:31px}
+  .fairy-chimney{top:21px}
+  .fairy-facade{top:91px}
+  .fairy-name-sign{min-width:88px;min-height:25px;font-size:11px}
+}
+
+
+/* 입력창 클릭/키보드 입력 복구 */
+#libraryPage #libraryEditor,
+#libraryPage #libraryEditor.show{
+  position:relative;z-index:30;pointer-events:auto;visibility:visible;
+}
+#libraryPage #libraryTitleInput,
+#libraryPage #libraryEditor input,
+#libraryPage #libraryEditor textarea,
+#libraryPage #libraryEditor select{
+  position:relative;z-index:31;pointer-events:auto;user-select:text;
+  -webkit-user-select:text;touch-action:manipulation;
+}
+#libraryPage #libraryEditor label{pointer-events:auto}
+
+
+/* 다른 반 도서관: 집은 작게, 반 이름은 크게 */
+#libraryPage .other-rooms-section .shared-room-list{
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:14px 12px;
+}
+#libraryPage .other-rooms-section .shared-room-card.fairy-house{
+  min-height:174px;
+  padding:0 7px 9px;
+}
+#libraryPage .other-rooms-section .fairy-house-scene{
+  height:142px;
+  max-width:185px;
+}
+#libraryPage .other-rooms-section .fairy-name-sign{
+  min-width:118px;
+  min-height:34px;
+  padding:5px 12px;
+  font-size:17px;
+  line-height:1.15;
+}
+#libraryPage .other-rooms-section .fairy-roof{
+  top:29px;
+  height:59px;
+}
+#libraryPage .other-rooms-section .fairy-chimney{top:20px;width:18px;height:34px}
+#libraryPage .other-rooms-section .fairy-facade{
+  top:80px;
+  height:53px;
+}
+#libraryPage .other-rooms-section .fairy-window{
+  top:7px;
+  height:29px;
+}
+#libraryPage .other-rooms-section .fairy-door{width:17px;height:22px}
+#libraryPage .other-rooms-section .fairy-flowerbed{font-size:12px}
+#libraryPage .other-rooms-section .fairy-house-caption{gap:3px}
+#libraryPage .other-rooms-section .fairy-house-caption small{font-size:11px}
+#libraryPage .other-rooms-section .fairy-enter{font-size:11px;padding:5px 12px}
+@media(max-width:600px){
+  #libraryPage .other-rooms-section .shared-room-list{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px 7px;
+  }
+  #libraryPage .other-rooms-section .shared-room-card.fairy-house{min-height:164px}
+  #libraryPage .other-rooms-section .fairy-house-scene{height:132px}
+  #libraryPage .other-rooms-section .fairy-name-sign{
+    min-width:100px;min-height:31px;font-size:15px;padding:4px 9px;
+  }
+  #libraryPage .other-rooms-section .fairy-roof{top:27px;height:53px}
+  #libraryPage .other-rooms-section .fairy-chimney{top:18px}
+  #libraryPage .other-rooms-section .fairy-facade{top:73px;height:49px}
+  #libraryPage .other-rooms-section .fairy-window{top:6px;height:27px}
+}
+
+</style>
+</head>
+
+<body>
+<div class="shell">
+
+<header>
+<a href="#" class="brand" onclick="home();return false">
+  <span class="brand-line">
+    <span class="dream">꿈</span>꾸며
+    <span class="na">나</span><span class="agana">아가는 </span>
+    <span class="ras">RAS</span>
+  </span>
+  <span class="brand-line">
+    <span class="dream">꿈</span><span class="na">나</span><span style="color:var(--yellow)">라</span><span class="agana"> 교실</span>
+  </span>
+  <span class="brand-sub">READ · ART · SPORTS</span>
+</a>
+
+<nav>
+<button onclick="home()">홈</button>
+<button onclick="openRead()">속담풀이</button>
+<button onclick="coming()">명화감상</button>
+<button onclick="openSafety()">안전교육</button>
+<button onclick="openLibrary()">하하하 도서관</button>
+<a href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">놀이체육 ↗</a>
+</nav>
+
+<div class="visitor-counter">
+  <span>오늘 방문 · 전체 방문</span>
+  <a href="https://hits.sh/hyeri-yu.github.io/hahaha-ras/" target="_blank" rel="noopener">
+    <img
+      src="https://hits.sh/hyeri-yu.github.io/hahaha-ras.svg?view=today-total&style=flat-square&label=visits"
+      alt="오늘 및 전체 방문자 수"
+      loading="lazy"
+    >
+  </a>
+</div>
+</header>
+
+<!-- 메인 홈페이지 -->
+<main id="homePage" class="page active">
+
+<section class="daily-board">
+<h1 class="daily-heading">오늘의 날짜를 함께 알아봐요!</h1>
+
+<div class="daily-top">
+  <div class="daily-box">
+    <div class="daily-label">📅 오늘은</div>
+    <span class="daily-value" id="date"></span>
+    <div class="daily-sub" id="weekday"></div>
+  </div>
+
+  <div class="daily-box">
+    <div class="daily-label">🕒 지금 시간은</div>
+    <span class="daily-value clock-value" id="clock">--:--:--</span>
+    <div class="daily-sub" id="timePeriod">현재 시간</div>
+  </div>
+
+  <div class="daily-box">
+    <div class="daily-label">🌤️ 오늘의 날씨</div>
+    <select class="weather-select" id="weather" onchange="saveWeather()">
+      <option>☀️ 맑아요</option>
+      <option>🌤️ 구름 조금</option>
+      <option>☁️ 흐려요</option>
+      <option>🌧️ 비가 와요</option>
+      <option>❄️ 눈이 와요</option>
+      <option>🌬️ 바람이 불어요</option>
+    </select>
+    <div class="air-quality loading" id="airQuality">
+      우리 동네 미세먼지를 확인하고 있어요.
+    </div>
+  </div>
+</div>
+
+
+<!-- 매일 아침 긍정의 주문 -->
+<section class="positive-card" aria-live="polite">
+  <h2 class="positive-heading">🌈 하하하 긍정의 주문!</h2>
+  <p class="positive-sub">오늘도 나에게 다정한 말을 선물해요 💗</p>
+  <div class="positive-phrase" id="positivePhrase">나는 소중하고 멋진 아이예요!</div>
+  <p class="positive-foot">오늘의 나를 응원해요 ✨</p>
+</section>
+
+<div class="calendar-toggle-row">
+  <button
+    type="button"
+    class="calendar-toggle-button"
+    id="calendarToggleButton"
+    aria-expanded="false"
+    aria-controls="calendarContent"
+    onclick="toggleCalendar()"
+  >📅 달력 펴기</button>
+</div>
+
+<div class="calendar-content" id="calendarContent" hidden>
+<div class="calendar-wrap">
+  <div class="calendar-title" id="calendarTitle"></div>
+  <div class="calendar-grid" id="calendarGrid"></div>
+  <p class="calendar-help">날짜를 누르면 우리 반 일정을 기록할 수 있어요.</p>
+</div>
+
+<div class="memo-panel">
+  <h3 class="memo-title">📝 나만의 일정 메모</h3>
+  <div class="memo-date" id="memoDate"></div>
+
+  <textarea
+    class="memo-input"
+    id="memoInput"
+    placeholder="예: 민서 생일, 봄 소풍, 준비물 챙기기..."
+  ></textarea>
+
+  <div class="memo-actions">
+    <button class="memo-button memo-save" onclick="saveMemo()">메모 저장</button>
+    <button class="memo-button memo-clear" onclick="clearMemoInput()">입력 지우기</button>
+  </div>
+
+  <div class="memo-list" id="memoList"></div>
+  <p class="calendar-help">이 메모는 현재 컴퓨터의 이 브라우저에만 저장됩니다.</p>
+</div>
+</div>
+</section>
+
+<!-- 과목 카드 -->
+<section class="section">
+<h2>어떤 교실에서 배워볼까요?</h2>
+
+<div class="courses">
+
+<button class="course read" onclick="openRead()">
+<span class="icon">📖</span>
+<h3>하하하 속담풀이</h3>
+<p>그림을 살펴보고 속담의 뜻과 지혜를 배워요.</p>
+<span class="tag">속담 · 생각 나누기</span>
+</button>
+
+<button class="course art" onclick="coming()">
+<span class="icon">🎨</span>
+<h3>하하하 명화감상</h3>
+<p>아름다운 명화를 감상하고 나만의 생각을 표현해요.</p>
+<span class="tag">명화 · 미술 · 표현</span>
+</button>
+
+<button class="course sports" onclick="sports()">
+<span class="icon">⚽</span>
+<h3>하하하 놀이체육</h3>
+<p>몸을 움직이며 신나게 놀고 즐겁게 도전해요.</p>
+<span class="tag">체육 · 신체활동</span>
+</button>
+
+
+<button class="course" style="background:linear-gradient(135deg,#FFF4C9,#EAF5E8);border-color:#E6E8C8" onclick="openLibrary()">
+<span class="icon">📚</span>
+<h3>하하하 도서관</h3>
+<p>읽은 책을 책장에 꽂고, 나만의 생각과 별점을 기록해요.</p>
+<span class="tag">독서기록 · 책장 · 100권 도전</span>
+</button>
+
+<button class="course safety" onclick="openSafety()">
+<span class="icon">🧭</span>
+<h3>나침반 안전교육</h3>
+<p>생활 속 위험을 알아보고 안전하게 행동하는 방법을 배워요.</p>
+<span class="tag">생활안전 · 교통안전 · 재난안전</span>
+</button>
+
+</div>
+</section>
+</main>
+
+<!-- 속담풀이 -->
+<section id="readPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+
+<div class="page-title">
+<p>READ · THINK · SHARE</p>
+<h2>하하하 속담풀이</h2>
+<p>그림을 자세히 살펴보고 어떤 이야기가 숨어 있는지 생각해 보세요.</p>
+</div>
+
+<div class="topics" id="topics">
+<button class="selected" data-topic="전체">오늘의 속담</button>
+<button data-topic="친구와 협동">친구와 협동</button>
+<button data-topic="노력과 끈기">노력과 끈기</button>
+<button data-topic="말과 예절">말과 예절</button>
+<button data-topic="배려와 나눔">배려와 나눔</button>
+<button data-topic="지혜와 안전">지혜와 안전</button>
+</div>
+
+<div class="learning">
+<div class="picture" id="picture" role="button" tabindex="0">
+<div class="scene" id="scene">🧒🏻 🤝 🧒🏻</div>
+<div class="hint-title">그림 힌트</div>
+<div class="hint-copy">그림을 보고 어떤 일이 일어나는지 이야기해 보세요.</div>
+</div>
+
+<div class="answer" id="answer">
+<h3 id="title"></h3>
+<p class="meaning" id="meaning"></p>
+<div class="teacher">
+<div>
+<strong>선생님 질문</strong>
+<p id="question"></p>
+</div>
+<div>
+<strong>오늘의 작은 실천</strong>
+<p id="practice"></p>
+</div>
+</div>
+</div>
+
+<button class="btn primary" onclick="reveal()">속담과 뜻 만나기</button>
+<button class="btn soft" onclick="randomProverb()">다른 속담 뽑기</button>
+</div>
+</section>
+
+
+<!-- 하하하 도서관 -->
+<section id="libraryPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+<div class="library-page-intro">
+  <div style="font-size:48px">📚</div>
+  <h2>하하하 도서관</h2>
+  <p>한 권 한 권 읽을 때마다 나만의 책장이 자라나요.</p>
+  <p><strong>2027년, 우리 함께 책 100권 읽기에 도전해요!</strong></p>
+</div>
+
+<div id="sharedLibraryPanel" class="library-shared-panel">
+  <h3>🏡 우리 반 도서관</h3>
+  <p>먼저 우리 반 책장을 펼쳐 보세요. 다른 반 친구들의 책장은 아래에서 구경할 수 있어요.</p>
+  <div class="shared-room-create">
+    <input id="sharedRoomName" type="text" maxlength="60" placeholder="우리 반 이름 (예: 햇살반)">
+    <input id="sharedRoomPassword" type="password" maxlength="100" placeholder="편집 비밀번호 (4자 이상)">
+    <button class="library-btn" onclick="createSharedRoom()">우리 반 도서관 만들기</button>
+  </div>
+  <div id="sharedRoomStatus" class="library-small-note" role="status">우리 반 도서관을 만들거나 아래에서 반을 선택해 보세요.</div>
+  <div id="sharedRoomCurrent" class="shared-room-current" style="display:none">
+    <div><strong id="sharedRoomCurrentName"></strong><span id="sharedRoomModeLabel"></span></div>
+    <div class="shared-room-controls">
+      <input id="sharedRoomEditPassword" type="password" placeholder="이 반의 편집 비밀번호">
+      <button class="library-btn secondary" onclick="unlockSharedRoom()">편집하기</button>
+      <button class="library-btn secondary" onclick="returnToMyRoom()">우리 반으로 돌아가기</button>
+    </div>
+    <div id="myRoomManageControls" class="shared-room-controls">
+      <button class="library-btn secondary" onclick="renameCurrentRoom()">이 도서관 이름 바꾸기</button>
       <button class="library-btn secondary" style="background:#a94d4d;color:white" onclick="deleteMyRoom()">내 도서관 삭제</button>
       <button class="library-btn secondary" style="background:#7b3f8c;color:white" onclick="masterDeleteRoom()">마스터: 이 도서관 삭제</button>
     </div>
