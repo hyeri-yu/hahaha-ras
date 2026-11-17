@@ -1062,6 +1062,21 @@ footer{
   .fairy-name-sign{min-width:88px;min-height:25px;font-size:11px}
 }
 
+
+/* 입력창 클릭/키보드 입력 복구 */
+#libraryPage #libraryEditor,
+#libraryPage #libraryEditor.show{
+  position:relative;z-index:30;pointer-events:auto;visibility:visible;
+}
+#libraryPage #libraryTitleInput,
+#libraryPage #libraryEditor input,
+#libraryPage #libraryEditor textarea,
+#libraryPage #libraryEditor select{
+  position:relative;z-index:31;pointer-events:auto;user-select:text;
+  -webkit-user-select:text;touch-action:manipulation;
+}
+#libraryPage #libraryEditor label{pointer-events:auto}
+
 </style>
 </head>
 
@@ -2164,7 +2179,13 @@ function openBookEditor(){
     alert("이 반의 편집 비밀번호를 먼저 확인해 주세요.");
     return;
   }
-  document.getElementById("libraryEditor").classList.add("show");
+  const editor = document.getElementById("libraryEditor");
+  editor.style.display = "block";
+  editor.style.visibility = "visible";
+  editor.style.pointerEvents = "auto";
+  editor.style.position = "relative";
+  editor.style.zIndex = "20";
+  editor.classList.add("show");
   document.getElementById("libraryDetail").classList.remove("show");
   document.getElementById("libraryTitleInput").focus();
   document.getElementById("librarySearchResults").innerHTML="";
@@ -2846,7 +2867,8 @@ function openLibrary() {
   libraryBooks = [];
   renderLibrary();
   document.getElementById("libraryProgress").style.display = "none";
-  document.querySelector(".library-actions").style.display = "none";
+  const mainLibraryActions = document.querySelector("#libraryPage > .library-actions");
+  if (mainLibraryActions) mainLibraryActions.style.display = "flex";
   document.getElementById("libraryShelves").innerHTML = "";
   document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
   document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
