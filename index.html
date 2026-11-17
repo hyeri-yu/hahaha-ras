@@ -1319,6 +1319,11 @@ footer{
       <button class="library-btn secondary" onclick="unlockSharedRoom()">편집하기</button>
       <button class="library-btn secondary" onclick="returnToMyRoom()">우리 반으로 돌아가기</button>
     </div>
+    <div id="myRoomManageControls" class="shared-room-controls">
+      <button class="library-btn secondary" onclick="renameCurrentRoom()">이 도서관 이름 바꾸기</button>
+      <button class="library-btn secondary" style="background:#a94d4d;color:white" onclick="deleteMyRoom()">내 도서관 삭제</button>
+      <button class="library-btn secondary" style="background:#7b3f8c;color:white" onclick="masterDeleteRoom()">마스터: 이 도서관 삭제</button>
+    </div>
   </div>
 </div>
 
@@ -2192,92 +2197,89 @@ function openBookEditor(){
 }
 function closeBookEditor(){document.getElementById("libraryEditor").classList.remove("show");}
 async function searchLibraryBook(){
-  const title=document.getElementById("libraryTitleInput").value.trim();
-  const results=document.getElementById("librarySearchResults");
-  if(!title){alert("책 제목을 먼저 입력해 주세요.");return;}
-  libraryDraftSearchTitle=title;
-  results.innerHTML='<div class="library-empty">📚 Google 도서와 Open Library에서 표지를 찾고 있어요...</div>';
+  const title = document.getElementById("libraryTitleInput").value.trim();
+  const results = document.getElementById("librarySearchResults");
+  if (!title) { alert("책 제목을 먼저 입력해 주세요."); return; }
+  libraryDraftSearchTitle = title;
+  results.innerHTML = '<div class="library-empty">📚 Google 도서와 Open Library를 함께 검색하고 있어요...</div>';
+  const found = [];
+  const seen = new Set();
+  const errors = [];
 
-  const found=[];
-  const seen=new Set();
+  const googleTask = (async () => {
+    const url = "https://www.googleapis.com/books/v1/volumes?q=" +
+      encodeURIComponent("intitle:" + title) + "&maxResults=12&printType=books";
+    const response = await fetch(url, {headers:{"Accept":"application/json"}});
+    if (!response.ok) throw new Error("Google Books HTTP " + response.status);
+    const data = await response.json();
+    (data.items || []).forEach(item => {
+      const info = item.volumeInfo || {};
+      const key = (info.title || "").toLowerCase() + "|" + (info.authors || []).join(",");
+      if (seen.has(key)) return;
+      seen.add(key);
+      const links = info.imageLinks || {};
+      const cover = (links.thumbnail || links.smallThumbnail ||
+        (item.id ? "https://books.google.com/books/content?id=" + encodeURIComponent(item.id) + "&printsec=frontcover&img=1&zoom=2" : ""))
+        .replace(/^http:/,"https:").replace("&edge=curl","");
+      found.push({title:info.title || title, author_name:info.authors || [],
+        first_publish_year:info.publishedDate ? String(info.publishedDate).slice(0,4) : "",
+        cover_url:cover, source:"Google Books", subject:info.categories || []});
+    });
+    if (!(data.items || []).length) errors.push("Google Books 검색 결과 없음");
+  })();
 
-  /* Google Books: 국내외 도서 제목과 표지 검색 */
-  try{
-    const googleUrl="https://www.googleapis.com/books/v1/volumes?q="+
-      encodeURIComponent("intitle:"+title)+"&maxResults=8&langRestrict=ko";
-    const googleResponse=await fetch(googleUrl);
-    if(googleResponse.ok){
-      const googleData=await googleResponse.json();
-      (googleData.items||[]).forEach(item=>{
-        const info=item.volumeInfo||{};
-        const key=(info.title||"").toLowerCase()+"|"+(info.authors||[]).join(",");
-        if(seen.has(key))return;
-        seen.add(key);
-        const imageLinks=info.imageLinks||{};
-        const cover=(imageLinks.thumbnail||imageLinks.smallThumbnail||
-          (item.id ? "https://books.google.com/books/content?id="+encodeURIComponent(item.id)+"&printsec=frontcover&img=1&zoom=2&source=gbs_api" : ""))
-          .replace("http://","https://").replace("&edge=curl","");
-        found.push({
-          title:info.title||title,
-          author_name:info.authors||[],
-          first_publish_year:info.publishedDate?String(info.publishedDate).slice(0,4):"",
-          cover_url:cover,
-          source:"Google Books"
-        });
-      });
-    }
-  }catch(error){
-    /* Google Books 연결이 안 되면 아래 Open Library 검색을 시도해요. */
-  }
+  const openTask = (async () => {
+    const url = "https://openlibrary.org/search.json?title=" + encodeURIComponent(title) + "&limit=12";
+    const response = await fetch(url, {headers:{"Accept":"application/json"}});
+    if (!response.ok) throw new Error("Open Library HTTP " + response.status);
+    const data = await response.json();
+    (data.docs || []).forEach(doc => {
+      const key = (doc.title || "").toLowerCase() + "|" + (doc.author_name || []).join(",");
+      if (seen.has(key)) return;
+      seen.add(key);
+      found.push({title:doc.title || title, author_name:doc.author_name || [],
+        first_publish_year:doc.first_publish_year || "",
+        cover_url:doc.cover_i ? "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-M.jpg" : "",
+        cover_i:doc.cover_i || null, source:"Open Library", subject:doc.subject || []});
+    });
+    if (!(data.docs || []).length) errors.push("Open Library 검색 결과 없음");
+  })();
 
-  /* Open Library를 보조 검색으로 사용 */
-  try{
-    const openUrl="https://openlibrary.org/search.json?title="+
-      encodeURIComponent(title)+"&limit=8";
-    const openResponse=await fetch(openUrl);
-    if(openResponse.ok){
-      const openData=await openResponse.json();
-      (openData.docs||[]).forEach(doc=>{
-        const key=(doc.title||"").toLowerCase()+"|"+(doc.author_name||[]).join(",");
-        if(seen.has(key))return;
-        seen.add(key);
-        found.push({
-          title:doc.title||title,
-          author_name:doc.author_name||[],
-          first_publish_year:doc.first_publish_year||"",
-          cover_url:doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-M.jpg":"",
-          cover_i:doc.cover_i||null,
-          source:"Open Library"
-        });
-      });
-    }
-  }catch(error){
-    /* 두 번째 검색처가 실패해도 이미 찾은 결과는 보여줘요. */
-  }
-
-  results.innerHTML="";
-  if(!found.length){
-    results.innerHTML='<div class="library-empty">검색 사이트에 연결하지 못했어요. 잠시 후 다시 검색하거나, 제목을 짧게 입력해 보세요. 표지 없이 직접 등록할 수도 있어요.</div>';
+  const settled = await Promise.allSettled([googleTask, openTask]);
+  settled.forEach((result,index) => {
+    if (result.status === "rejected") errors.push((index===0 ? "Google Books: " : "Open Library: ") + (result.reason && result.reason.message || "연결 실패"));
+  });
+  results.innerHTML = "";
+  if (!found.length) {
+    const detail = errors.length ? errors.join(" / ") : "두 검색 사이트에서 일치하는 책을 찾지 못했어요.";
+    results.innerHTML = '<div class="library-empty">검색 결과가 없어요.<br><small>' + detail.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])) + '</small><br>제목의 핵심 단어만 입력해 다시 검색해 보세요. 직접 등록도 할 수 있어요.</div>';
     return;
   }
-
-  found.slice(0,12).forEach(doc=>{
-    const item=document.createElement("button");
-    item.type="button";item.className="library-result";
-    const img=document.createElement("img");
-    img.src=doc.cover_url||"";
-    img.alt="";
-    img.onerror=()=>{img.style.visibility="hidden";};
-    const info=document.createElement("span");
-    const strong=document.createElement("strong");strong.textContent=doc.title||title;
-    const author=document.createElement("small");author.textContent=(doc.author_name||["작가 정보 없음"]).slice(0,2).join(", ");
-    const year=document.createElement("small");year.textContent=doc.first_publish_year?" · "+doc.first_publish_year+"년":"";
-    const source=document.createElement("small");source.textContent=" · "+doc.source;
-    info.append(strong,author,year,source);item.append(img,info);
-    item.addEventListener("click",()=>addLibraryBookFromSearch(doc));
+  found.slice(0,16).forEach(doc => {
+    const item = document.createElement("button");
+    item.type = "button"; item.className = "library-result";
+    const img = document.createElement("img");
+    img.alt = ""; img.loading = "lazy";
+    if (doc.cover_url) img.src = doc.cover_url;
+    else img.style.display = "none";
+    img.onerror = () => { img.style.display = "none"; };
+    const info = document.createElement("span");
+    const strong = document.createElement("strong"); strong.textContent = doc.title || title;
+    const author = document.createElement("small"); author.textContent = (doc.author_name || ["작가 정보 없음"]).slice(0,2).join(", ");
+    const year = document.createElement("small"); year.textContent = doc.first_publish_year ? " · " + doc.first_publish_year + "년" : "";
+    const source = document.createElement("small"); source.textContent = " · " + doc.source;
+    info.append(strong,author,year,source); item.append(img,info);
+    item.addEventListener("click", () => addLibraryBookFromSearch(doc));
     results.appendChild(item);
   });
+  if (errors.length) {
+    const note = document.createElement("div");
+    note.className = "library-small-note";
+    note.textContent = "일부 검색처는 응답하지 않았어요: " + errors.join(" / ");
+    results.appendChild(note);
+  }
 }
+
 function addLibraryBookFromSearch(doc){
   const book={
     id:"book-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
@@ -2726,7 +2728,11 @@ async function openSharedRoom(room, edit=false, password="") {
   document.getElementById("sharedRoomCurrentName").textContent = "📚 " + room.name + " 책장";
   const isMine = !!(mySharedRoom && mySharedRoom.id === room.id);
   document.getElementById("sharedRoomModeLabel").textContent =
-    isMine ? "우리 반 · 편집 가능" : (edit ? "편집 가능" : "구경 중 · 읽기 전용");
+    isMine ? (sharedCanEdit ? "우리 반 · 편집 가능" : "우리 반 · 열람 중") : (edit ? "편집 가능" : "구경 중 · 읽기 전용");
+  const manageControls = document.getElementById("myRoomManageControls");
+  if (manageControls) manageControls.style.display = "flex";
+  const ownerDeleteButton = manageControls && manageControls.querySelector('button[onclick="deleteMyRoom()"]');
+  if (ownerDeleteButton) ownerDeleteButton.style.display = isMine ? "" : "none";
   document.getElementById("currentBookshelfHeading").textContent = room.name + "의 책장이에요 📚";
   document.getElementById("libraryProgress").style.display = "block";
   document.getElementById("sharedRoomEditPassword").value = "";
@@ -2795,6 +2801,7 @@ async function unlockSharedRoom() {
     if ((error.message || "").includes("수정할 도서를 찾을 수 없습니다.")) {
       sharedCanEdit = true;
       sharedEditPassword = password;
+      if (mySharedRoom && sharedRoom && mySharedRoom.id === sharedRoom.id) mySharedRoomPassword = password;
       document.getElementById("sharedRoomModeLabel").textContent = "편집 가능";
       document.querySelector(".library-actions").style.display = "flex";
       const note = document.getElementById("sharedReadOnlyNote");
@@ -2806,6 +2813,98 @@ async function unlockSharedRoom() {
     return;
   }
   // 극히 예외적으로 해당 UUID가 존재하는 경우는 저장이 이루어질 수 없도록 사용하지 않는 UUID 사용.
+}
+
+async function renameCurrentRoom() {
+  if (!sharedRoom) { alert("먼저 이름을 바꿀 도서관을 열어 주세요."); return; }
+  const password = prompt("이 도서관을 만든 선생님의 편집 비밀번호를 입력해 주세요.");
+  if (password === null || !password) return;
+  const newName = prompt("새로운 도서관 이름을 입력해 주세요.", sharedRoom.name);
+  if (!newName || newName.trim().length < 2) return;
+  try {
+    await sharedApi("/rest/v1/rpc/rename_room", {
+      method:"POST",
+      body:JSON.stringify({p_room_id:sharedRoom.id,p_password:password,p_new_name:newName.trim()})
+    });
+    const updated = {id:sharedRoom.id, name:newName.trim()};
+    if (mySharedRoom && mySharedRoom.id === sharedRoom.id) {
+      mySharedRoom = updated;
+      mySharedRoomPassword = password;
+      try { localStorage.setItem("hahaha_my_room", JSON.stringify(updated)); } catch(e) {}
+    }
+    await refreshSharedRooms();
+    await openSharedRoom(updated, true, password);
+    alert("도서관 이름을 변경했어요.");
+  } catch(error) {
+    alert("이름을 바꾸지 못했어요: " + error.message);
+  }
+}
+
+async function deleteMyRoom() {
+  if (!mySharedRoom) { alert("삭제할 우리 반 도서관 정보가 없어요."); return; }
+  if (!mySharedRoomPassword) {
+    alert("삭제하려면 우리 반 편집 비밀번호를 먼저 확인해야 해요.");
+    return;
+  }
+  const confirmed = confirm("정말 '" + mySharedRoom.name + "' 도서관을 삭제할까요? 책과 독서 기록도 모두 삭제되며 되돌릴 수 없어요.");
+  if (!confirmed) return;
+  const password = prompt("삭제 확인을 위해 우리 반 편집 비밀번호를 입력해 주세요.");
+  if (password === null) return;
+  try {
+    await sharedApi("/rest/v1/rpc/delete_room", {
+      method:"POST",
+      body:JSON.stringify({p_room_id:mySharedRoom.id,p_password:password})
+    });
+    mySharedRoom = null;
+    mySharedRoomPassword = "";
+    sharedRoom = null;
+    sharedCanEdit = false;
+    sharedEditPassword = "";
+    libraryBooks = [];
+    try { localStorage.removeItem("hahaha_my_room"); } catch(e) {}
+    document.getElementById("sharedRoomCurrent").style.display = "none";
+    document.getElementById("myRoomManageControls").style.display = "none";
+    renderLibrary();
+    document.getElementById("libraryProgress").style.display = "none";
+    document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
+    document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관이 삭제되었어요. 새 도서관을 만들 수 있어요.";
+    await refreshSharedRooms();
+    alert("우리 반 도서관과 책 기록을 삭제했어요.");
+  } catch(error) {
+    alert("삭제하지 못했어요: " + error.message);
+  }
+}
+
+async function masterDeleteRoom() {
+  if (!sharedRoom) { alert("먼저 삭제할 도서관을 열어 주세요."); return; }
+  const target = {id:sharedRoom.id, name:sharedRoom.name};
+  if (!confirm("마스터 권한으로 '" + target.name + "' 도서관을 삭제할까요? 책과 독서 기록도 모두 삭제되며 복구할 수 없습니다.")) return;
+  const masterPassword = prompt("마스터 비밀번호를 입력해 주세요.");
+  if (masterPassword === null || !masterPassword) return;
+  try {
+    await sharedApi("/rest/v1/rpc/master_delete_room", {
+      method:"POST",
+      body:JSON.stringify({p_room_id:target.id,p_master_password:masterPassword})
+    });
+    if (mySharedRoom && mySharedRoom.id === target.id) {
+      mySharedRoom = null;
+      mySharedRoomPassword = "";
+      try { localStorage.removeItem("hahaha_my_room"); } catch(e) {}
+    }
+    sharedRoom = null;
+    sharedCanEdit = false;
+    sharedEditPassword = "";
+    libraryBooks = [];
+    document.getElementById("sharedRoomCurrent").style.display = "none";
+    renderLibrary();
+    document.getElementById("libraryProgress").style.display = "none";
+    document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
+    document.getElementById("libraryShelfCaption").textContent = "도서관이 삭제되었어요.";
+    await refreshSharedRooms();
+    alert("'" + target.name + "' 도서관을 삭제했어요.");
+  } catch(error) {
+    alert("마스터 삭제에 실패했어요: " + error.message);
+  }
 }
 
 async function returnToMyRoom() {
@@ -2904,7 +3003,7 @@ async function openLibrary() {
   }
 
   if (mySharedRoom) {
-    await openSharedRoom(mySharedRoom, false, "");
+    await openSharedRoom(mySharedRoom, !!mySharedRoomPassword, mySharedRoomPassword);
     const status = document.getElementById("sharedRoomStatus");
     if (status) status.textContent = "우리 반 책장이 먼저 펼쳐져요. 다른 반 도서관은 아래에서 구경할 수 있어요.";
   } else {
