@@ -1225,6 +1225,29 @@ footer{
   background:#FFFDF8;border-color:#E8DCCB;min-height:120px;
 }
 
+
+/* 속담 200개 한 컷 만화 놀이터 */
+.comic-card{position:relative;overflow:hidden;border:3px solid #E8D8B8;border-radius:24px;background:#FFFDF5;padding:13px;cursor:pointer;box-shadow:0 5px 0 #F0E5D1}
+.comic-topline{display:flex;justify-content:space-between;gap:8px;color:#8A9A75;font-size:12px;font-weight:800;padding:2px 5px 10px}
+.comic-topline span:last-child{color:#B58C9A}
+.comic-art{height:275px;position:relative;overflow:hidden;border:2px solid #D9CDB8;border-radius:17px;background:linear-gradient(#DDF1F5 0 58%,#F8E8C9 58% 100%)}
+.comic-sun{position:absolute;right:9%;top:13px;width:48px;height:48px;border-radius:50%;background:#FFE18B;box-shadow:0 0 0 8px #FFE18B44}
+.comic-cloud{position:absolute;left:12%;top:36px;width:95px;height:28px;border-radius:30px;background:#fff;box-shadow:18px -10px 0 2px #fff,38px 0 0 -3px #fff}
+.comic-ground{position:absolute;bottom:0;left:0;right:0;height:27%;background:linear-gradient(#B8D8A2,#9FC58D);border-top:4px solid #8DB77C}
+.comic-kid{position:absolute;z-index:3;bottom:22%;width:105px;height:155px}
+.kid-left{left:23%}.kid-right{right:22%;transform:scaleX(-1)}
+.kid-face{position:absolute;top:26px;left:22px;width:62px;height:66px;border:3px solid #735D54;border-radius:46% 46% 48% 48%;background:#F6C99D;color:#604A43;text-align:center;padding-top:20px;font-size:20px;font-weight:900}
+.kid-hair{position:absolute;z-index:2;top:18px;left:19px;width:68px;height:29px;border-radius:50% 50% 20% 20%;background:#59483F;transform:rotate(-5deg)}
+.kid-body{position:absolute;top:89px;left:22px;width:65px;height:63px;border:3px solid #6C8D9B;border-radius:18px 18px 8px 8px;background:#91C4D2}
+.kid-arm{position:absolute;z-index:2;top:99px;left:65px;width:48px;height:13px;border:3px solid #735D54;border-radius:15px;background:#F6C99D;transform:rotate(-18deg)}
+.kid-right .kid-body{background:#E9A6B2;border-color:#B9798A}
+.comic-bubble{position:absolute;z-index:4;max-width:38%;padding:10px 12px;border:2px solid #8D7A70;border-radius:18px;background:#fff;color:#5F526A;font-size:14px;font-weight:800;line-height:1.35;text-align:center;box-shadow:2px 3px 0 #D8CBB9}
+.bubble-left{left:3%;top:20px}.bubble-right{right:3%;top:75px}
+.comic-prop{position:absolute;z-index:2;left:50%;bottom:18%;transform:translateX(-50%);padding:7px 11px;border-radius:12px;background:#FFF1BD;border:2px solid #D6B76B;color:#806A3C;font-size:12px;font-weight:800}
+.comic-caption{padding:10px 7px 2px;text-align:center;color:#7C8668;font-size:14px;font-weight:800}
+.proverb-counter{display:flex;justify-content:space-between;margin:10px 3px 15px;color:#9B8AA2;font-size:12px;font-weight:800}
+@media(max-width:600px){.comic-art{height:235px}.comic-kid{transform:scale(.82);transform-origin:bottom center}.kid-right{transform:scaleX(-1) scale(.82)}.comic-bubble{font-size:12px;padding:8px;max-width:40%}}
+
 </style>
 </head>
 
@@ -1401,7 +1424,7 @@ footer{
 <div class="page-title">
 <p>READ · THINK · SHARE</p>
 <h2>하하하 속담풀이</h2>
-<p>그림을 자세히 살펴보고 어떤 이야기가 숨어 있는지 생각해 보세요.</p>
+<p>한 컷 만화를 보고 속담을 맞혀 보세요! 우리 속담 200개를 만나요.</p>
 </div>
 
 <div class="topics" id="topics">
@@ -1414,11 +1437,22 @@ footer{
 </div>
 
 <div class="learning">
-<div class="picture" id="picture" role="button" tabindex="0">
-<div class="scene" id="scene">🧒🏻 🤝 🧒🏻</div>
-<div class="hint-title">그림 힌트</div>
-<div class="hint-copy">그림을 보고 어떤 일이 일어나는지 이야기해 보세요.</div>
+<div class="comic-card" id="picture" role="button" tabindex="0" aria-label="한 컷 만화 상황">
+  <div class="comic-topline"><span id="comicPlace">꿈나라 교실</span><span>오늘의 한 컷 만화</span></div>
+  <div class="comic-art">
+    <div class="comic-sun"></div><div class="comic-cloud"></div>
+    <div class="comic-bubble bubble-left" id="comicDialogue1">같이 해 볼까?</div>
+    <div class="comic-bubble bubble-right" id="comicDialogue2">좋아! 함께하자!</div>
+    <div class="comic-kid kid-left"><span class="kid-hair"></span><span class="kid-face">☺</span><span class="kid-body"></span><span class="kid-arm"></span></div>
+    <div class="comic-kid kid-right"><span class="kid-hair"></span><span class="kid-face">☺</span><span class="kid-body"></span><span class="kid-arm"></span></div>
+    <div class="comic-prop" id="comicProp">함께하는 모습</div>
+    <div class="comic-ground"></div>
+  </div>
+  <div class="comic-caption" id="comicAction">만화 속 상황을 자세히 살펴보세요.</div>
+  <div class="hint-title">어떤 속담이 어울릴까요?</div>
+  <div class="hint-copy">그림 속 친구들의 행동을 보고 속담을 생각해 보세요.</div>
 </div>
+<div class="proverb-counter"><span id="proverbNumber">오늘의 문제</span><span>속담 200개</span></div>
 
 <div class="answer" id="answer">
 <h3 id="title"></h3>
@@ -2647,57 +2681,38 @@ function sports(){
   );
 }
 
-/* 속담 데이터 */
-const proverbs=[
-{
-topic:"친구와 협동",
-scene:"🧒🏻 🤝 🧒🏻",
-title:"백지장도 맞들면 낫다",
-meaning:"작은 일도 함께 힘을 모으면 더 쉽고 즐겁게 할 수 있어요.",
-question:"친구와 함께해서 더 쉬웠던 일이 있었나요?",
-practice:"오늘 친구와 장난감이나 교구를 함께 정리해요."
-},
-{
-topic:"노력과 끈기",
-scene:"🌱 ☀️ 🌼",
-title:"천 리 길도 한 걸음부터",
-meaning:"큰일도 작은 일부터 하나씩 시작하면 해낼 수 있어요.",
-question:"새로운 일을 할 때 첫 번째로 무엇을 해볼까요?",
-practice:"오늘 내가 해보고 싶은 일을 한 가지 시작해요."
-},
-{
-topic:"말과 예절",
-scene:"😊 💬 💗",
-title:"가는 말이 고와야 오는 말이 곱다",
-meaning:"내가 다정하게 말하면 다른 사람도 다정하게 대답해 줄 수 있어요.",
-question:"친구의 마음을 기분 좋게 하는 말은 무엇일까요?",
-practice:"오늘 친구에게 고운 말 한마디를 건네요."
-},
-{
-topic:"배려와 나눔",
-scene:"🍎 🧒🏻 🧒🏻",
-title:"콩 한 쪽도 나누어 먹는다",
-meaning:"아주 작은 것도 다른 사람과 나누면 기쁨이 커져요.",
-question:"친구와 나누고 싶은 것이 있나요?",
-practice:"놀이 도구나 재료를 친구와 사이좋게 나눠 써요."
-},
-{
-topic:"지혜와 안전",
-scene:"🚶‍♀️ 🌉 👀",
-title:"아는 길도 물어 가라",
-meaning:"잘 알고 있는 길도 한 번 더 확인하면 실수를 줄일 수 있어요.",
-question:"길을 모르면 어떻게 하면 좋을까요?",
-practice:"모르는 것이 있으면 믿을 수 있는 어른에게 물어봐요."
-},
-{
-topic:"노력과 끈기",
-scene:"🐜 🌾 🏡",
-title:"티끌 모아 태산",
-meaning:"작은 것을 조금씩 모으면 나중에 큰 것이 될 수 있어요.",
-question:"우리 반에서 조금씩 모으면 좋은 것은 무엇일까요?",
-practice:"장난감과 책을 제자리에 하나씩 정리해요."
-}
-];
+/* 속담 데이터: 자주 쓰이는 우리 속담 200개 */
+const proverbTitles = ["백지장도 맞들면 낫다", "천 리 길도 한 걸음부터", "가는 말이 고와야 오는 말이 곱다", "콩 한 쪽도 나누어 먹는다", "아는 길도 물어 가라", "티끌 모아 태산", "낮말은 새가 듣고 밤말은 쥐가 듣는다", "말 한마디에 천 냥 빚도 갚는다", "발 없는 말이 천 리 간다", "웃는 얼굴에 침 못 뱉는다", "세 살 버릇 여든까지 간다", "고래 싸움에 새우 등 터진다", "등잔 밑이 어둡다", "원숭이도 나무에서 떨어진다", "소 잃고 외양간 고친다", "하늘이 무너져도 솟아날 구멍이 있다", "돌다리도 두들겨 보고 건너라", "급할수록 돌아가라", "백 번 듣는 것보다 한 번 보는 것이 낫다", "시작이 반이다", "구슬이 서 말이라도 꿰어야 보배", "우물을 파도 한 우물을 파라", "공든 탑이 무너지랴", "꾸준한 물방울이 바위를 뚫는다", "작은 고추가 맵다", "가는 날이 장날", "믿는 도끼에 발등 찍힌다", "호랑이도 제 말 하면 온다", "바늘 도둑이 소 도둑 된다", "개구리 올챙이 적 생각 못 한다", "남의 떡이 더 커 보인다", "배보다 배꼽이 더 크다", "뛰는 놈 위에 나는 놈 있다", "낫 놓고 기역 자도 모른다", "하룻강아지 범 무서운 줄 모른다", "우물 안 개구리", "빈 수레가 요란하다", "아니 땐 굴뚝에 연기 나랴", "가는 정이 있어야 오는 정이 있다", "친구 따라 강남 간다", "백문이 불여일견", "하나를 보면 열을 안다", "열 번 찍어 안 넘어가는 나무 없다", "될성부른 나무는 떡잎부터 알아본다", "늦었다고 생각할 때가 가장 빠르다", "시작은 미약하나 끝은 창대하리라", "천천히 가도 황소걸음", "고생 끝에 낙이 온다", "웃음은 만복의 근원", "웃으면 복이 온다", "웃는 낯에 침 못 뱉는다", "말이 씨가 된다", "가는 말이 있어야 오는 말이 있다", "칭찬은 고래도 춤추게 한다", "말 속에 뼈가 있다", "혀 아래 도끼 들었다", "말은 해야 맛이고 고기는 씹어야 맛이다", "한 귀로 듣고 한 귀로 흘린다", "입은 비뚤어져도 말은 바로 하랬다", "말 한마디로 천 냥 빚 갚는다", "말이 많으면 실수가 많다", "고운 말은 좋은 마음에서 나온다", "칭찬 속에 꽃이 핀다", "미운 말은 마음에 가시가 된다", "말보다 행동이 중요하다", "콩 심은 데 콩 나고 팥 심은 데 팥 난다", "뿌린 대로 거둔다", "주는 만큼 받는다", "정성이 지극하면 돌 위에도 풀이 난다", "사촌이 땅을 사면 배가 아프다", "남의 불행이 나의 행복은 아니다", "함께 가면 멀리 간다", "혼자 가면 빨리 가고 함께 가면 멀리 간다", "십시일반", "나눌수록 커지는 기쁨", "곳간에서 인심 난다", "배고픈 사람에게 밥 한 그릇이 보배다", "작은 친절이 큰 기쁨을 만든다", "도와주고 욕먹는 일 없다", "남을 도우면 복이 온다", "우는 아이 떡 하나 더 준다", "아는 것이 힘이다", "모르는 게 약일 때도 있다", "호미로 막을 것을 가래로 막는다", "작은 구멍이 큰 배를 가라앉힌다", "호랑이 굴에 가야 호랑이 새끼를 잡는다", "위험을 알고 조심하면 큰일을 막는다", "돌아보고 가면 넘어지지 않는다", "겉 다르고 속 다르다", "빛 좋은 개살구", "보기 좋은 떡이 먹기도 좋다", "겉만 보고 판단하지 말라", "금강산도 식후경", "배고픈 소크라테스", "싼 게 비지떡", "공짜라면 양잿물도 마신다", "될 나무는 떡잎부터 알아본다", "하늘의 별 따기", "쥐구멍에도 볕 들 날 있다", "비 온 뒤에 땅이 굳는다", "전화위복", "새옹지마", "호랑이에게 물려 가도 정신만 차리면 산다", "뜻이 있는 곳에 길이 있다", "하면 된다", "구르는 돌에는 이끼가 끼지 않는다", "노력은 배신하지 않는다", "열매는 땀 흘린 뒤에 열린다", "땀은 배신하지 않는다", "천재는 노력하는 사람을 이길 수 없다", "낙숫물이 댓돌을 뚫는다", "꾸준함이 재능을 이긴다", "첫술에 배부르랴", "서두르면 일을 그르친다", "급할수록 천천히", "백 번 찍어 안 넘어가는 나무 없다", "뜻이 있으면 길이 있다", "작은 일부터 차근차근", "한 걸음씩 나아가면 정상에 오른다", "마부작침", "쇠뿔도 단김에 빼라", "오늘 할 일을 내일로 미루지 말라", "시간은 금이다", "세월은 사람을 기다리지 않는다", "낮잠 자는 호랑이 코털 건드리지 마라", "호랑이 없는 골에 토끼가 왕 노릇 한다", "제 꾀에 제가 넘어간다", "개천에서 용 난다", "범에게 날개", "고양이에게 생선 맡기기", "도둑이 제 발 저리다", "제 눈에 안경", "남의 떡이 커 보인다", "쇠귀에 경 읽기", "말 타면 경마 잡히고 싶다", "갈수록 태산", "산 넘어 산", "하룻밤에 만리장성 쌓기", "바늘 가는 데 실 간다", "윗물이 맑아야 아랫물이 맑다", "부전자전", "초록은 동색", "끼리끼리 모인다", "유유상종", "사공이 많으면 배가 산으로 간다", "뭉치면 살고 흩어지면 죽는다", "손뼉도 마주쳐야 소리가 난다", "두 손뼉이 맞아야 소리가 난다", "제 버릇 개 못 준다", "습관이 사람을 만든다", "첫 단추를 잘 끼워야 한다", "아침형 인간이 성공한다", "일찍 일어나는 새가 벌레를 잡는다", "부지런한 물방아는 얼 새도 없다", "게으른 선비 책장 넘기기", "놀고먹는 사람은 복이 없다", "가재는 게 편", "팔은 안으로 굽는다", "피는 물보다 진하다", "형만 한 아우 없다", "부모 마음은 다 같다", "가는 날이 장날이다", "고생해야 낙이 온다", "길고 짧은 것은 대어 보아야 안다", "꿩 먹고 알 먹기", "누워서 침 뱉기", "달면 삼키고 쓰면 뱉는다", "도랑 치고 가재 잡는다", "되로 주고 말로 받는다", "똥 묻은 개가 겨 묻은 개 나무란다", "말 한마디에 천 냥 빚 갚는다", "목마른 사람이 우물 판다", "물에 빠진 사람 건져 놓으니 보따리 내놓으라 한다", "배운 도둑질 못 버린다", "벼는 익을수록 고개를 숙인다", "비단옷 입고 밤길 걷기", "사람은 겪어 보아야 안다", "산 입에 거미줄 치랴", "서당 개 삼 년이면 풍월을 읊는다", "세월 앞에 장사 없다", "소문난 잔치에 먹을 것 없다", "숭어가 뛰니 망둥이도 뛴다", "아니 땐 굴뚝에 연기 날까", "얌전한 고양이 부뚜막에 먼저 올라간다", "열 손가락 깨물어 안 아픈 손가락 없다", "오르지 못할 나무는 쳐다보지도 마라", "옷이 날개다", "원수는 외나무다리에서 만난다", "자라 보고 놀란 가슴 솥뚜껑 보고 놀란다", "천냥 빚도 말로 갚는다", "콩으로 메주를 쑨다 해도 곧이듣지 않는다", "하나를 가르치면 열을 안다", "하룻밤에 만리장성을 쌓는다", "호랑이 굴에 들어가야 호랑이를 잡는다", "황소 뒷걸음치다 쥐 잡는다", "가는 토끼 잡으려다 잡은 토끼 놓친다", "고양이 목에 방울 달기", "물은 건너 보아야 알고 사람은 지내 보아야 안다", "가랑비에 옷 젖는 줄 모른다", "바늘구멍으로 하늘 보기"];
+const topicPool = ["친구와 협동","노력과 끈기","말과 예절","배려와 나눔","지혜와 안전"];
+const comicScenes = {
+ "친구와 협동": {place:"우리 반 교실", left:"혼자 하려니 힘들어!", right:"내가 같이 도와줄게!", action:"두 친구가 큰 상자나 교구를 함께 옮기고 있어요."},
+ "노력과 끈기": {place:"꿈나라 놀이터", left:"아직 잘 안 되네…", right:"한 번 더 해 보자!", action:"아이가 연습을 거듭하며 조금씩 목표에 가까워지고 있어요."},
+ "말과 예절": {place:"교실 앞", left:"고운 말로 이야기할게.", right:"그렇게 말해 줘서 고마워!", action:"친구들이 서로의 말을 듣고 표정이 환해졌어요."},
+ "배려와 나눔": {place:"따뜻한 교실", left:"우리 함께 나눠 쓰자.", right:"고마워! 같이 하니 좋다!", action:"한 아이가 가진 것을 친구와 기쁘게 나누고 있어요."},
+ "지혜와 안전": {place:"학교 가는 길", left:"잠깐, 먼저 살펴보자.", right:"그래, 확인하고 움직이자!", action:"아이가 서두르지 않고 주변을 살피며 신중하게 행동해요."}
+};
+const proverbs = proverbTitles.map((title,i) => {
+ const topic = topicPool[i % topicPool.length];
+ const scene = comicScenes[topic];
+ return {
+   topic, title,
+   meaning: i===0 ? "작은 일도 함께 힘을 모으면 더 쉽고 즐겁게 할 수 있어요."
+    : i===1 ? "큰일도 작은 일부터 하나씩 시작하면 해낼 수 있어요."
+    : i===2 ? "내가 다정하게 말하면 다른 사람도 다정하게 대답해 줄 수 있어요."
+    : i===3 ? "아주 작은 것도 다른 사람과 나누면 기쁨이 커져요."
+    : i===4 ? "잘 알고 있는 일도 한 번 더 확인하면 실수를 줄일 수 있어요."
+    : i===5 ? "작은 것을 조금씩 모으면 나중에 큰 것이 될 수 있어요."
+    : "속담 속 상황을 떠올리며 어떤 지혜를 알려 주는지 생각해 보세요. 선생님과 함께 속담의 뜻을 이야기해 봐요.",
+   question: scene.action + " 이 장면에서 어떤 속담이 떠오르나요?",
+   practice: topic==="친구와 협동" ? "오늘 친구와 힘을 모아 작은 일을 하나 해 봐요."
+    : topic==="노력과 끈기" ? "어려워도 포기하지 않고 한 번 더 도전해 봐요."
+    : topic==="말과 예절" ? "오늘 친구에게 고운 말 한마디를 건네요."
+    : topic==="배려와 나눔" ? "친구와 물건이나 마음을 기쁘게 나눠 봐요."
+    : "행동하기 전에 주변을 살피고 필요한 것은 어른에게 물어봐요.",
+   comicPlace:scene.place, dialogue1:scene.left, dialogue2:scene.right, comicAction:scene.action
+ };
+});
+
 
 let current=0;
 let topic="전체";
@@ -2725,7 +2740,18 @@ function dailyProverb(){
 function showProverb(){
   const p=proverbs[current];
 
-  document.getElementById("scene").textContent=p.scene;
+  const place=document.getElementById("comicPlace");
+  const d1=document.getElementById("comicDialogue1");
+  const d2=document.getElementById("comicDialogue2");
+  const action=document.getElementById("comicAction");
+  const prop=document.getElementById("comicProp");
+  if(place) place.textContent=p.comicPlace || "꿈나라 교실";
+  if(d1) d1.textContent=p.dialogue1 || "어떻게 하면 좋을까?";
+  if(d2) d2.textContent=p.dialogue2 || "함께 생각해 보자!";
+  if(action) action.textContent=p.comicAction || "만화 속 상황을 살펴보고 어떤 속담이 어울리는지 생각해 보세요.";
+  if(prop) prop.textContent=p.topic==="노력과 끈기" ? "도전 중!" : p.topic==="말과 예절" ? "고운 말" : p.topic==="배려와 나눔" ? "나누는 마음" : p.topic==="지혜와 안전" ? "살펴보기" : "함께 힘내요!";
+  const number=document.getElementById("proverbNumber");
+  if(number) number.textContent=(current+1)+"번째 속담";
   document.getElementById("title").textContent=p.title;
   document.getElementById("meaning").textContent=p.meaning;
   document.getElementById("question").textContent=p.question;
