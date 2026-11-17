@@ -2077,7 +2077,12 @@ function renderLibrary(){
         plus.textContent="+";
         button.appendChild(plus);
         button.title="책 추가하기";
-        button.addEventListener("click",openBookEditor);
+        if (typeof sharedRoom !== "undefined" && sharedRoom && !sharedCanEdit) {
+          button.disabled = true;
+          button.title = "편집 비밀번호를 확인하면 책을 추가할 수 있어요.";
+        } else {
+          button.addEventListener("click",openBookEditor);
+        }
       }
       shelf.appendChild(button);
 
@@ -2630,7 +2635,7 @@ async function createSharedRoom() {
   }
 }
 
-async function openSharedRoom(room, edit=false, password="") {
+async async function openSharedRoom(room, edit=false, password="") {
   sharedRoom = room;
   sharedCanEdit = !!edit;
   sharedEditPassword = edit ? password : "";
@@ -2644,6 +2649,7 @@ async function openSharedRoom(room, edit=false, password="") {
   document.getElementById("libraryDetail").classList.remove("show");
   document.getElementById("libraryOrganization").classList.remove("show");
   await loadSharedBooks();
+  renderLibrary();
   const detailActions = document.querySelectorAll("#libraryDetail .library-actions button");
   detailActions.forEach(button => {
     button.disabled = !sharedCanEdit;
@@ -2716,8 +2722,8 @@ function leaveSharedRoom() {
   sharedRoom = null; sharedEditPassword = ""; sharedCanEdit = false; libraryBooks = [];
   document.getElementById("sharedRoomCurrent").style.display = "none";
   document.querySelector(".library-actions").style.display = "none";
-  document.getElementById("libraryShelves").innerHTML = "";
-  document.getElementById("libraryCount").textContent = "0";
+  renderLibrary();
+  document.getElementById("libraryProgress").style.display = "none";
   document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
   document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
   document.getElementById("libraryProgress").style.display = "none";
