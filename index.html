@@ -2676,7 +2676,17 @@ async function refreshSharedRooms() {
       arrow.textContent = "문 열기　↗";
       caption.append(small, arrow);
       card.append(scene, caption);
-      card.addEventListener("click", () => openSharedRoom(room, false));
+      card.addEventListener("click", async () => {
+        card.disabled = true;
+        status.textContent = room.name + " 책장을 펼치고 있어요...";
+        try {
+          await openSharedRoom(room, false);
+        } catch (error) {
+          status.textContent = room.name + " 책장을 열지 못했어요: " + (error.message || error);
+        } finally {
+          card.disabled = false;
+        }
+      });
       list.appendChild(card);
     });
   } catch (error) {
@@ -2725,6 +2735,11 @@ async function openSharedRoom(room, edit=false, password="") {
   document.getElementById("libraryOrganization").classList.remove("show");
   await loadSharedBooks();
   renderLibrary();
+  // 다른 반 집은 도서관 페이지 아래쪽에 있으므로, 입장하면 위쪽 책장으로 화면을 이동합니다.
+  const bookshelf = document.getElementById("currentClassBookshelf");
+  if (bookshelf) {
+    window.setTimeout(() => bookshelf.scrollIntoView({behavior:"smooth", block:"start"}), 80);
+  }
   const detailActions = document.querySelectorAll("#libraryDetail .library-actions button");
   detailActions.forEach(button => {
     button.disabled = !sharedCanEdit;
