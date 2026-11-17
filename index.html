@@ -1411,7 +1411,7 @@ footer{
     <button class="library-btn" onclick="searchLibraryBook()">도서관에서 표지 찾기</button>
     <button class="library-btn secondary" onclick="addManualLibraryBook()">표지 없이 직접 등록</button>
   </div>
-  <div class="library-small-note">책 제목으로 Open Library를 검색합니다. 검색 결과가 없으면 직접 등록할 수 있어요.</div>
+  <div class="library-small-note">예스24를 먼저 검색하고 Google 도서와 Open Library 결과도 함께 보여줍니다. 검색 결과가 없으면 직접 등록할 수 있어요.</div>
   <div class="library-search-results" id="librarySearchResults"></div>
   <button class="library-btn secondary" onclick="closeBookEditor()">닫기</button>
 </div>
@@ -2255,10 +2255,60 @@ async function searchLibraryBook(){
   const results = document.getElementById("librarySearchResults");
   if (!title) { alert("책 제목을 먼저 입력해 주세요."); return; }
   libraryDraftSearchTitle = title;
-  results.innerHTML = '<div class="library-empty">📚 Google 도서와 Open Library를 함께 검색하고 있어요...</div>';
+  results.innerHTML = '<div class="library-empty">📚 예스24, Google 도서와 Open Library를 함께 검색하고 있어요...</div>';
   const found = [];
   const seen = new Set();
   const errors = [];
+
+  const addResult = (doc) => {
+    const key = (doc.title || "").toLowerCase().replace(/\s+/g,"") + "|" +
+      (Array.isArray(doc.author_name) ? doc.author_name.join(",") : doc.author_name || "");
+    if (seen.has(key)) return;
+    seen.add(key);
+    found.push(doc);
+  };
+
+  // 예스24 검색은 API 키를 브라우저에 노출하지 않도록 Supabase Edge Function을 통해 호출합니다.
+  const yes24Task = (async () => {
+    const response = await fetch(SHARED_SUPABASE_URL + "/functions/v1/yes24-search", {
+      method: "POST",
+      headers: {
+        "apikey": SHARED_SUPABASE_KEY,
+        "Authorization": "Bearer " + SHARED_SUPABASE_KEY,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ query: title })
+    });
+    const raw = await response.text();
+    let payload;
+    try { payload = raw ? JSON.parse(raw) : {}; }
+    catch (_) { throw new Error("예스24 응답을 읽을 수 없어요."); }
+    if (!response.ok) {
+      throw new Error((payload && payload.error) || ("HTTP " + response.status));
+    }
+    if (payload && payload.success === false) {
+      throw new Error(payload.message || "예스24 검색에 실패했어요.");
+    }
+    const items = payload && payload.data && Array.isArray(payload.data.items)
+      ? payload.data.items
+      : (payload && Array.isArray(payload.items) ? payload.items : []);
+    items.forEach(item => {
+      const date = item.publishDate || item.pubDate || "";
+      addResult({
+        title: item.title || title,
+        author_name: item.author ? [item.author] : [],
+        first_publish_year: date ? String(date).slice(0,4) : "",
+        cover_url: item.cover || item.coverUrl || "",
+        source: "예스24",
+        subject: item.category ? [item.category] : [],
+        publisher: item.publisher || "",
+        isbn: item.isbn13 || item.isbn10 || "",
+        yes24Link: item.link || ""
+      });
+    });
+    if (!items.length) errors.push("예스24 검색 결과 없음");
+  })();
 
   const googleTask = (async () => {
     const url = "https://www.googleapis.com/books/v1/volumes?q=" +
@@ -2268,14 +2318,11 @@ async function searchLibraryBook(){
     const data = await response.json();
     (data.items || []).forEach(item => {
       const info = item.volumeInfo || {};
-      const key = (info.title || "").toLowerCase() + "|" + (info.authors || []).join(",");
-      if (seen.has(key)) return;
-      seen.add(key);
       const links = info.imageLinks || {};
       const cover = (links.thumbnail || links.smallThumbnail ||
         (item.id ? "https://books.google.com/books/content?id=" + encodeURIComponent(item.id) + "&printsec=frontcover&img=1&zoom=2" : ""))
         .replace(/^http:/,"https:").replace("&edge=curl","");
-      found.push({title:info.title || title, author_name:info.authors || [],
+      addResult({title:info.title || title, author_name:info.authors || [],
         first_publish_year:info.publishedDate ? String(info.publishedDate).slice(0,4) : "",
         cover_url:cover, source:"Google Books", subject:info.categories || []});
     });
@@ -2288,10 +2335,7 @@ async function searchLibraryBook(){
     if (!response.ok) throw new Error("Open Library HTTP " + response.status);
     const data = await response.json();
     (data.docs || []).forEach(doc => {
-      const key = (doc.title || "").toLowerCase() + "|" + (doc.author_name || []).join(",");
-      if (seen.has(key)) return;
-      seen.add(key);
-      found.push({title:doc.title || title, author_name:doc.author_name || [],
+      addResult({title:doc.title || title, author_name:doc.author_name || [],
         first_publish_year:doc.first_publish_year || "",
         cover_url:doc.cover_i ? "https://covers.openlibrary.org/b/id/" + doc.cover_i + "-M.jpg" : "",
         cover_i:doc.cover_i || null, source:"Open Library", subject:doc.subject || []});
@@ -2299,17 +2343,20 @@ async function searchLibraryBook(){
     if (!(data.docs || []).length) errors.push("Open Library 검색 결과 없음");
   })();
 
-  const settled = await Promise.allSettled([googleTask, openTask]);
+  const settled = await Promise.allSettled([yes24Task, googleTask, openTask]);
   settled.forEach((result,index) => {
-    if (result.status === "rejected") errors.push((index===0 ? "Google Books: " : "Open Library: ") + (result.reason && result.reason.message || "연결 실패"));
+    if (result.status === "rejected") {
+      errors.push((["예스24: ","Google Books: ","Open Library: "][index]) +
+        (result.reason && result.reason.message || "연결 실패"));
+    }
   });
   results.innerHTML = "";
   if (!found.length) {
-    const detail = errors.length ? errors.join(" / ") : "두 검색 사이트에서 일치하는 책을 찾지 못했어요.";
+    const detail = errors.length ? errors.join(" / ") : "세 검색 사이트에서 일치하는 책을 찾지 못했어요.";
     results.innerHTML = '<div class="library-empty">검색 결과가 없어요.<br><small>' + detail.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])) + '</small><br>제목의 핵심 단어만 입력해 다시 검색해 보세요. 직접 등록도 할 수 있어요.</div>';
     return;
   }
-  found.slice(0,16).forEach(doc => {
+  found.slice(0,24).forEach(doc => {
     const item = document.createElement("button");
     item.type = "button"; item.className = "library-result";
     const img = document.createElement("img");
