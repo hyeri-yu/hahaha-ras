@@ -2689,7 +2689,49 @@ async function refreshSharedRooms() {
           card.disabled = false;
         }
       });
-      list.appendChild(card);
+
+      // 집 카드 바로 아래에 마스터 전용 삭제 진입 버튼을 둡니다.
+      const entry = document.createElement("div");
+      entry.className = "shared-room-entry";
+      entry.style.cssText = "display:flex;flex-direction:column;align-items:center;gap:6px;";
+      const masterDelete = document.createElement("button");
+      masterDelete.type = "button";
+      masterDelete.className = "library-btn secondary";
+      masterDelete.textContent = "마스터 삭제";
+      masterDelete.style.cssText = "font-size:12px;padding:5px 12px;background:#fff0f0;color:#a33;border:1px solid #e7bcbc;";
+      masterDelete.addEventListener("click", async (event) => {
+        event.stopPropagation();
+        if (!confirm("'" + room.name + "' 도서관과 안의 책·독서 기록을 모두 삭제할까요? 삭제 후 복구할 수 없습니다.")) return;
+        const masterPassword = prompt("마스터 비밀번호를 입력해 주세요.");
+        if (masterPassword === null || !masterPassword) return;
+        masterDelete.disabled = true;
+        try {
+          await sharedApi("/rest/v1/rpc/master_delete_room", {
+            method:"POST",
+            body:JSON.stringify({p_room_id:room.id,p_master_password:masterPassword})
+          });
+          if (mySharedRoom && mySharedRoom.id === room.id) {
+            mySharedRoom = null;
+            mySharedRoomPassword = "";
+            try { localStorage.removeItem("hahaha_my_room"); } catch(e) {}
+          }
+          if (sharedRoom && sharedRoom.id === room.id) {
+            sharedRoom = null; sharedCanEdit = false; sharedEditPassword = ""; libraryBooks = [];
+            document.getElementById("sharedRoomCurrent").style.display = "none";
+            renderLibrary();
+            document.getElementById("libraryProgress").style.display = "none";
+            document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
+            document.getElementById("libraryShelfCaption").textContent = "도서관이 삭제되었어요.";
+          }
+          status.textContent = "'" + room.name + "' 도서관을 삭제했어요.";
+          await refreshSharedRooms();
+        } catch(error) {
+          alert("삭제하지 못했어요: " + error.message);
+          masterDelete.disabled = false;
+        }
+      });
+      entry.append(card, masterDelete);
+      list.appendChild(entry);
     });
   } catch (error) {
     status.textContent = "도서관 목록을 불러오지 못했어요: " + error.message;
