@@ -137,7 +137,22 @@ nav button:hover,nav a:hover{background:var(--lavender)}
   background:#fff;color:#5F526A;font:inherit;outline-color:#E58B9D;
 }
 .library-field textarea{min-height:100px;resize:vertical}
-.library-search-results{display:grid;gap:8px;margin:10px 0}
+.library-search-results{
+  display:grid;
+  gap:8px;
+  margin:10px 0;
+  max-height:280px;          /* 검색 결과는 약 3개 높이까지만 표시 */
+  overflow-y:auto;           /* 나머지 결과는 이 영역 안에서 스크롤 */
+  overflow-x:hidden;
+  padding:2px 6px 2px 0;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#c9d9bd #f4f7ef;
+}
+.library-search-results::-webkit-scrollbar{width:8px}
+.library-search-results::-webkit-scrollbar-track{background:#f4f7ef;border-radius:99px}
+.library-search-results::-webkit-scrollbar-thumb{background:#c9d9bd;border-radius:99px}
+.library-search-results .library-result{min-height:82px}
 .library-result{
   display:flex;gap:12px;align-items:center;text-align:left;width:100%;
   border:1px solid #E9DFE8;border-radius:13px;padding:9px;background:#fff;color:#5F526A;
