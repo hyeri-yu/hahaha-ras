@@ -78,6 +78,109 @@ nav button,nav a{
 
 nav button:hover,nav a:hover{background:var(--lavender)}
 
+
+/* 하하하 도서관 */
+.library-page-intro{
+  background:linear-gradient(135deg,#FFF4E9,#F8EEF5 55%,#EEF5EF);
+  border:1px solid #EDE0D5;border-radius:22px;padding:22px 18px;text-align:center;margin:18px 0;
+}
+.library-page-intro h2{color:#70577F;font-size:30px;margin:5px 0 8px;font-weight:800}
+.library-page-intro p{color:#8E7F91;margin:4px 0}
+.library-progress{
+  background:#fff;border:1px solid #F0E7E8;border-radius:18px;padding:17px;margin:18px 0;
+}
+.library-progress-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;color:#70577F;font-weight:800}
+.library-progress-track{height:14px;background:#F2EAF1;border-radius:99px;overflow:hidden;margin:12px 0 6px}
+.library-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#E58B9D,#E9B65F,#83B99B);border-radius:99px;transition:width .25s}
+.library-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:16px 0}
+.library-btn{border:0;border-radius:999px;padding:11px 19px;font-weight:800;background:#70577F;color:#fff}
+.library-btn.secondary{background:#F2EAF7;color:#70577F}
+.library-btn.gold{background:#F8E9CE;color:#896A39}
+.bookshelf-wrap{
+  background:#FBF7F1;border:1px solid #E9DED1;border-radius:20px;padding:18px 12px 22px;margin:16px 0;
+}
+.bookshelf-heading{text-align:center;color:#80658E;font-size:20px;font-weight:800;margin:0 0 14px}
+.bookshelf-row{
+  min-height:160px;display:flex;align-items:flex-end;gap:5px;padding:10px 10px 0;
+  border-bottom:13px solid #B98C66;border-radius:0 0 5px 5px;
+  box-shadow:0 5px 0 #8F694E;margin:0 0 22px;overflow-x:auto;
+}
+.bookshelf-row:last-child{margin-bottom:5px}
+.library-book{
+  flex:0 0 38px;height:var(--book-height,128px);min-width:32px;max-width:54px;
+  border:1.5px solid rgba(85,67,65,.55);border-bottom:0;border-radius:7px 7px 2px 2px;
+  background:var(--book-color,#EBC9B9);color:#5D4B4C;position:relative;
+  display:flex;align-items:center;justify-content:center;padding:8px 4px 7px;
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.35),inset -3px 0 0 rgba(80,50,40,.06);
+  cursor:pointer;overflow:hidden;transition:transform .15s;
+}
+.library-book:hover{transform:translateY(-5px)}
+.library-book-title{
+  writing-mode:vertical-rl;text-orientation:mixed;font-size:12px;line-height:1.2;
+  font-weight:800;max-height:100%;overflow:hidden;word-break:keep-all;
+}
+.library-book.empty{
+  background:rgba(255,255,255,.58);border:1.5px dashed #CDBEBD;color:#B3A5A4;
+  box-shadow:none;
+}
+.library-book.empty .library-book-title{font-size:19px;writing-mode:horizontal-tb}
+.library-book-count{font-size:12px;color:#998A92;text-align:center;margin-top:4px}
+.library-editor{
+  display:none;background:#FFFCF8;border:1px solid #EADFE7;border-radius:22px;padding:20px;margin:20px 0;
+}
+.library-editor.show{display:block}
+.library-editor h3{color:#70577F;font-size:23px;margin:0 0 13px}
+.library-field{display:grid;gap:6px;margin:12px 0}
+.library-field label{font-weight:800;color:#786782;font-size:14px}
+.library-field input,.library-field select,.library-field textarea{
+  width:100%;border:1px solid #E5D9E8;border-radius:12px;padding:11px 12px;
+  background:#fff;color:#5F526A;font:inherit;outline-color:#E58B9D;
+}
+.library-field textarea{min-height:100px;resize:vertical}
+.library-search-results{display:grid;gap:8px;margin:10px 0}
+.library-result{
+  display:flex;gap:12px;align-items:center;text-align:left;width:100%;
+  border:1px solid #E9DFE8;border-radius:13px;padding:9px;background:#fff;color:#5F526A;
+}
+.library-result img{width:48px;height:66px;object-fit:cover;border-radius:5px;background:#F2EDF1}
+.library-result strong{display:block;color:#70577F}
+.library-detail-top{display:grid;grid-template-columns:minmax(130px,220px) 1fr;gap:18px;align-items:start}
+.library-cover{
+  width:100%;height:245px;object-fit:cover;object-position:top center;
+  border-radius:12px;background:#F1EAF0;border:1px solid #E9DFE8;
+}
+.library-cover-placeholder{
+  height:245px;border-radius:12px;background:#F5EEF3;display:grid;place-items:center;
+  color:#A28EA3;font-size:50px;border:1px solid #E9DFE8;
+}
+.library-book-meta h3{font-size:22px;color:#70577F;margin:0 0 7px;line-height:1.4}
+.library-book-meta p{font-size:14px;color:#918396;margin:4px 0}
+.library-rating-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+.library-rating-label{min-width:105px;font-size:14px;font-weight:800;color:#786782}
+.library-stars{display:inline-flex;gap:2px}
+.library-star{border:0;background:transparent;padding:0 2px;color:#D8CDD8;font-size:27px;line-height:1;cursor:pointer}
+.library-star.active{color:#E9B65F}
+.library-small-note{font-size:12px;color:#A195A8}
+.library-organize{display:none;margin:18px 0;padding:18px;background:#FAF7FB;border:1px solid #EEE5F0;border-radius:18px}
+.library-organize.show{display:block}
+.library-stat-row{display:grid;grid-template-columns:105px 1fr 35px;gap:9px;align-items:center;margin:10px 0;font-size:13px;color:#786782}
+.library-stat-track{height:12px;border-radius:99px;background:#EEE8F0;overflow:hidden}
+.library-stat-bar{height:100%;background:linear-gradient(90deg,#E58B9D,#E9B65F);border-radius:99px}
+.library-list{display:grid;gap:8px;margin-top:15px}
+.library-list-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 12px;background:#fff;border:1px solid #EEE7F0;border-radius:12px}
+.library-list-item strong{color:#70577F}
+.library-empty{text-align:center;padding:22px;color:#A195A8;background:#fff;border-radius:13px}
+@media(max-width:600px){
+ .bookshelf-wrap{padding:13px 7px}
+ .bookshelf-row{min-height:130px;padding-left:5px;padding-right:5px;gap:3px}
+ .library-book{flex-basis:30px;min-width:27px}
+ .library-book-title{font-size:10px}
+ .library-detail-top{grid-template-columns:112px 1fr;gap:12px}
+ .library-cover,.library-cover-placeholder{height:185px}
+ .library-book-meta h3{font-size:18px}
+ .library-stat-row{grid-template-columns:82px 1fr 25px}
+}
+
 /* 방문자 카운터 */
 .visitor-counter{
   display:flex;
@@ -644,6 +747,113 @@ footer{
   .memo-panel{padding:15px}
   .safety-topics{grid-template-columns:1fr}
 }
+
+
+/* 하하하 도서관 - 햇살 가득한 유치원 도서관 테마 */
+#libraryPage{
+  --sun-cream:#FFF9E9;
+  --butter:#FFE99A;
+  --butter-deep:#F7D66B;
+  --leaf:#79A982;
+  --leaf-dark:#527E5B;
+  --sky:#DFF1E7;
+  --ink:#526B55;
+}
+#libraryPage .library-page-intro{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#FFF4C9 0%,#FFFBEA 48%,#E8F5E8 100%);
+  border:2px solid #F5E4A8;border-radius:28px;padding:27px 18px 24px;
+  box-shadow:0 7px 0 rgba(232,207,126,.18);
+}
+#libraryPage .library-page-intro:before,
+#libraryPage .library-page-intro:after{
+  content:"";position:absolute;width:78px;height:78px;border-radius:50%;
+  background:rgba(255,255,255,.45);pointer-events:none;
+}
+#libraryPage .library-page-intro:before{top:-30px;left:-18px}
+#libraryPage .library-page-intro:after{right:-20px;bottom:-35px}
+#libraryPage .library-page-intro h2{color:#527E5B;font-size:31px;letter-spacing:-1px}
+#libraryPage .library-page-intro p{color:#7B8E69}
+#libraryPage .library-page-intro p strong{display:inline-block;background:#FFF;border-radius:99px;padding:7px 14px;color:#668B59}
+#libraryPage .library-progress{
+  background:#FFFDF5;border:2px solid #F5E8B8;border-radius:22px;padding:18px;
+  box-shadow:0 4px 0 rgba(238,218,157,.18);
+}
+#libraryPage .library-progress-top{color:#63865D}
+#libraryPage .library-progress-track{height:16px;background:#F5F0D8;border:2px solid #F1E8C6}
+#libraryPage .library-progress-fill{background:linear-gradient(90deg,#F7D76D,#A8CD8B,#78B58A)}
+#libraryPage .library-progress-text{color:#80966E}
+#libraryPage .library-btn{
+  background:#79A982;color:#fff;border-radius:16px;padding:12px 19px;
+  box-shadow:0 4px 0 #5F9069;transition:transform .15s,box-shadow .15s;
+}
+#libraryPage .library-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 #5F9069}
+#libraryPage .library-btn.secondary{background:#FFF0B8;color:#6E8157;box-shadow:0 4px 0 #EBD78F}
+#libraryPage .library-btn.gold{background:#F8D978;color:#77613A;box-shadow:0 4px 0 #E7C45F}
+#libraryPage .bookshelf-wrap{
+  position:relative;background:linear-gradient(180deg,#F1F9E9,#FFFDF4 62%);
+  border:2px solid #DCEBD6;border-radius:25px;padding:20px 12px 24px;
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.55);
+}
+#libraryPage .bookshelf-heading{color:#5E8B63;font-size:21px}
+#libraryPage .bookshelf-heading:before{content:"🌿 ";font-size:18px}
+#libraryPage .bookshelf-row{
+  min-height:160px;gap:5px;padding:12px 10px 0;
+  border-bottom:12px solid #E9C979;border-radius:0 0 12px 12px;
+  box-shadow:0 5px 0 #D8B65F,0 8px 12px rgba(147,128,74,.10);
+  margin:0 0 23px;
+}
+#libraryPage .library-book{
+  border:2px solid rgba(110,139,94,.38);border-bottom:0;
+  border-radius:10px 10px 4px 4px;
+  box-shadow:inset 4px 0 0 rgba(255,255,255,.52),inset -3px 0 0 rgba(80,120,75,.06),0 2px 3px rgba(100,120,80,.08);
+}
+#libraryPage .library-book-title{color:#536C55;font-size:12px}
+#libraryPage .library-book.empty{
+  background:rgba(255,255,255,.72);border:2px dashed #C9DCC4;color:#8AA88A;
+  border-radius:10px 10px 4px 4px;
+}
+#libraryPage .library-book.empty .library-book-title{font-size:22px;color:#91B18F}
+#libraryPage .library-book-count{color:#7D9B78}
+#libraryPage .library-editor{
+  background:#FFFEF8;border:2px solid #F2E6B9;border-radius:24px;
+  box-shadow:0 6px 18px rgba(165,150,93,.08);
+}
+#libraryPage .library-editor h3{color:#5D865F}
+#libraryPage .library-field label{color:#66845F}
+#libraryPage .library-field input,
+#libraryPage .library-field select,
+#libraryPage .library-field textarea{
+  border:2px solid #E4EEDC;border-radius:14px;background:#fffef9;color:#526B55;
+}
+#libraryPage .library-field input:focus,
+#libraryPage .library-field select:focus,
+#libraryPage .library-field textarea:focus{outline:3px solid #F8E8A9}
+#libraryPage .library-result{border:2px solid #E5EEDC;border-radius:16px;background:#FFF}
+#libraryPage .library-result strong{color:#5D865F}
+#libraryPage .library-cover{border:3px solid #FFF;border-radius:16px;box-shadow:0 4px 12px rgba(92,118,83,.12)}
+#libraryPage .library-cover-placeholder{
+  border:2px dashed #CFE0C9;border-radius:16px;background:#F1F8EC;color:#83A77D;
+}
+#libraryPage .library-book-meta h3{color:#527E5B}
+#libraryPage .library-book-meta p{color:#84977C}
+#libraryPage .library-rating-label{color:#66845F}
+#libraryPage .library-star.active{color:#F1C84E}
+#libraryPage .library-small-note{color:#91A187}
+#libraryPage .library-organize{
+  background:#F7FBF1;border:2px solid #DCEBD6;border-radius:22px;
+}
+#libraryPage .library-stat-row{color:#66845F}
+#libraryPage .library-stat-track{background:#E8F0DF}
+#libraryPage .library-stat-bar{background:linear-gradient(90deg,#F5D66F,#9CCB91)}
+#libraryPage .library-list-item{border:1px solid #E2ECD9;border-radius:14px}
+#libraryPage .library-list-item strong{color:#5D865F}
+#libraryPage .library-empty{background:#FFFDF5;color:#91A187;border:1px dashed #DCE8D4;border-radius:15px}
+@media(max-width:600px){
+  #libraryPage .bookshelf-wrap{padding:16px 6px 20px}
+  #libraryPage .bookshelf-row{min-height:132px;padding-left:4px;padding-right:4px;gap:3px}
+}
+
 </style>
 </head>
 
@@ -668,6 +878,7 @@ footer{
 <button onclick="openRead()">속담풀이</button>
 <button onclick="coming()">명화감상</button>
 <button onclick="openSafety()">안전교육</button>
+<button onclick="openLibrary()">하하하 도서관</button>
 <a href="https://hahaha.qpfpahffo.workers.dev/" target="_blank" rel="noopener">놀이체육 ↗</a>
 </nav>
 
@@ -793,6 +1004,14 @@ footer{
 <span class="tag">체육 · 신체활동</span>
 </button>
 
+
+<button class="course" style="background:linear-gradient(135deg,#FFF4C9,#EAF5E8);border-color:#E6E8C8" onclick="openLibrary()">
+<span class="icon">📚</span>
+<h3>하하하 도서관</h3>
+<p>읽은 책을 책장에 꽂고, 나만의 생각과 별점을 기록해요.</p>
+<span class="tag">독서기록 · 책장 · 100권 도전</span>
+</button>
+
 <button class="course safety" onclick="openSafety()">
 <span class="icon">🧭</span>
 <h3>나침반 안전교육</h3>
@@ -847,6 +1066,102 @@ footer{
 
 <button class="btn primary" onclick="reveal()">속담과 뜻 만나기</button>
 <button class="btn soft" onclick="randomProverb()">다른 속담 뽑기</button>
+</div>
+</section>
+
+
+<!-- 하하하 도서관 -->
+<section id="libraryPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로</button>
+<div class="library-page-intro">
+  <div style="font-size:48px">📚</div>
+  <h2>하하하 도서관</h2>
+  <p>한 권 한 권 읽을 때마다 나만의 책장이 자라나요.</p>
+  <p><strong>2027년, 우리 함께 책 100권 읽기에 도전해요!</strong></p>
+</div>
+
+<div class="library-progress">
+  <div class="library-progress-top">
+    <span>🌱 나의 독서 나무</span>
+    <span><strong id="libraryCount">0</strong> / 100권</span>
+  </div>
+  <div class="library-progress-track"><div class="library-progress-fill" id="libraryProgressFill"></div></div>
+  <div class="library-small-note" id="libraryProgressText">첫 번째 책을 기다리고 있어요!</div>
+</div>
+
+<div class="library-actions">
+  <button class="library-btn" onclick="openBookEditor()">＋ 책 추가하기</button>
+  <button class="library-btn secondary" onclick="toggleBookOrganization()">📊 책 정리</button>
+</div>
+
+<div class="bookshelf-wrap">
+  <h3 class="bookshelf-heading">우리들의 책이 자라는 책장</h3>
+  <div id="libraryShelves"></div>
+  <div class="library-book-count" id="libraryShelfCaption">책을 추가하면 이곳에 책등이 하나씩 생겨요.</div>
+</div>
+
+<div class="library-editor" id="libraryEditor">
+  <h3>📖 새 책을 책장에 꽂아요</h3>
+  <div class="library-field">
+    <label for="libraryTitleInput">책 제목을 입력해 주세요</label>
+    <input id="libraryTitleInput" type="text" placeholder="예: 강아지똥" maxlength="100">
+  </div>
+  <div class="library-actions" style="justify-content:flex-start;margin:8px 0">
+    <button class="library-btn" onclick="searchLibraryBook()">도서관에서 표지 찾기</button>
+    <button class="library-btn secondary" onclick="addManualLibraryBook()">표지 없이 직접 등록</button>
+  </div>
+  <div class="library-small-note">책 제목으로 Open Library를 검색합니다. 검색 결과가 없으면 직접 등록할 수 있어요.</div>
+  <div class="library-search-results" id="librarySearchResults"></div>
+  <button class="library-btn secondary" onclick="closeBookEditor()">닫기</button>
+</div>
+
+<div class="library-editor" id="libraryDetail">
+  <h3>💗 나의 독서 기록</h3>
+  <div class="library-detail-top">
+    <div id="libraryCoverArea" class="library-cover-placeholder">📕</div>
+    <div class="library-book-meta">
+      <h3 id="libraryDetailTitle">책 제목</h3>
+      <p id="libraryDetailAuthor"></p>
+      <p id="libraryDetailYear"></p>
+      <div class="library-field">
+        <label for="libraryCategory">책 종류</label>
+        <select id="libraryCategory">
+          <option>창작동화</option><option>전래동화</option><option>명작동화</option>
+          <option>그림책</option><option>자연·과학</option><option>인성·사회</option>
+          <option>위인·역사</option><option>동시·동요</option><option>기타</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:15px">
+    <div class="library-rating-row">
+      <span class="library-rating-label">👧🏻 아이들의 평점</span>
+      <div class="library-stars" id="childrenStars"></div>
+      <span class="library-small-note" id="childrenRatingText">아직 별점 없음</span>
+    </div>
+    <div class="library-rating-row">
+      <span class="library-rating-label">👩🏻‍🏫 선생님의 평점</span>
+      <div class="library-stars" id="teacherStars"></div>
+      <span class="library-small-note" id="teacherRatingText">아직 별점 없음</span>
+    </div>
+  </div>
+  <div class="library-field">
+    <label for="libraryThoughts">💬 아이들의 생각</label>
+    <textarea id="libraryThoughts" placeholder="이 책을 읽고 어떤 생각이 들었나요? 기억에 남는 장면이나 재미있었던 점을 적어 보세요."></textarea>
+  </div>
+  <div class="library-actions">
+    <button class="library-btn" onclick="saveLibraryDetail()">기록 저장</button>
+    <button class="library-btn secondary" onclick="closeLibraryDetail()">닫기</button>
+    <button class="library-btn gold" onclick="deleteLibraryBook()">책 삭제</button>
+  </div>
+</div>
+
+<div class="library-organize" id="libraryOrganization">
+  <h3 style="color:#70577F;margin:0 0 5px">📊 우리가 읽은 책 정리</h3>
+  <p class="library-small-note">어떤 종류의 책을 많이 읽었는지 한눈에 살펴봐요.</p>
+  <div id="libraryCategoryStats"></div>
+  <h3 style="color:#70577F;margin:20px 0 8px">📚 읽은 책 목록</h3>
+  <div class="library-list" id="libraryBookList"></div>
 </div>
 </section>
 
@@ -1499,6 +1814,260 @@ const savedWeather=localStorage.getItem("rasWeather");
 if(savedWeather){
   document.getElementById("weather").value=savedWeather;
 }
+
+
+/* 하하하 도서관 - 책장과 독서 기록 */
+const LIBRARY_STORAGE_KEY="rasHahahaLibraryBooks";
+const LIBRARY_TARGET=100;
+const LIBRARY_COLORS=["#EBC9B9","#E7D7A9","#C9DCCB","#D8C8E6","#E9B9C5","#C7D8E8","#E8D7C5","#D9C9B7","#E7C9A9","#D2DCC7"];
+let libraryBooks=[];
+let activeLibraryBookId=null;
+let libraryDraftSearchTitle="";
+
+function loadLibraryBooks(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(LIBRARY_STORAGE_KEY)||"[]");
+    libraryBooks=Array.isArray(parsed)?parsed:[];
+  }catch(error){libraryBooks=[];}
+}
+function persistLibraryBooks(){
+  localStorage.setItem(LIBRARY_STORAGE_KEY,JSON.stringify(libraryBooks));
+}
+function openLibrary(){
+  loadLibraryBooks();
+  showPage("libraryPage");
+  renderLibrary();
+}
+function renderLibrary(){
+  const count=libraryBooks.length;
+  const countEl=document.getElementById("libraryCount");
+  if(!countEl)return;
+  countEl.textContent=count;
+  document.getElementById("libraryProgressFill").style.width=Math.min(100,count/LIBRARY_TARGET*100)+"%";
+  document.getElementById("libraryProgressText").textContent=
+    count>=LIBRARY_TARGET?"🎉 100권 목표를 달성했어요! 정말 멋져요!":
+    count===0?"첫 번째 책을 기다리고 있어요!":
+    "목표까지 "+(LIBRARY_TARGET-count)+"권 남았어요. 차근차근 읽어봐요!";
+  document.getElementById("libraryShelfCaption").textContent=
+    "지금까지 "+count+"권을 책장에 꽂았어요.";
+  const shelves=document.getElementById("libraryShelves");
+  shelves.innerHTML="";
+  for(let row=0;row<5;row++){
+    const shelf=document.createElement("div");
+    shelf.className="bookshelf-row";
+    for(let col=0;col<20;col++){
+      const index=row*20+col;
+      const book=libraryBooks[index];
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="library-book"+(book?"":" empty");
+      button.style.setProperty("--book-height",(92+(index*17%47))+"px");
+      if(book){
+        button.style.setProperty("--book-color",book.color||LIBRARY_COLORS[index%LIBRARY_COLORS.length]);
+        button.title=book.title;
+        const title=document.createElement("span");
+        title.className="library-book-title";
+        title.textContent=book.title;
+        button.appendChild(title);
+        button.addEventListener("click",()=>openLibraryBook(book.id));
+      }else{
+        const plus=document.createElement("span");
+        plus.className="library-book-title";
+        plus.textContent="+";
+        button.appendChild(plus);
+        button.title="책 추가하기";
+        button.addEventListener("click",openBookEditor);
+      }
+      shelf.appendChild(button);
+    }
+    shelves.appendChild(shelf);
+  }
+}
+function openBookEditor(){
+  document.getElementById("libraryEditor").classList.add("show");
+  document.getElementById("libraryDetail").classList.remove("show");
+  document.getElementById("libraryTitleInput").focus();
+  document.getElementById("librarySearchResults").innerHTML="";
+}
+function closeBookEditor(){document.getElementById("libraryEditor").classList.remove("show");}
+async function searchLibraryBook(){
+  const title=document.getElementById("libraryTitleInput").value.trim();
+  const results=document.getElementById("librarySearchResults");
+  if(!title){alert("책 제목을 먼저 입력해 주세요.");return;}
+  libraryDraftSearchTitle=title;
+  results.innerHTML='<div class="library-empty">📚 책 정보를 찾고 있어요...</div>';
+  try{
+    const url="https://openlibrary.org/search.json?title="+encodeURIComponent(title)+"&limit=8";
+    const response=await fetch(url);
+    if(!response.ok)throw new Error("검색에 실패했어요.");
+    const data=await response.json();
+    const docs=(data.docs||[]).slice(0,8);
+    results.innerHTML="";
+    if(!docs.length){
+      results.innerHTML='<div class="library-empty">검색 결과가 없어요. 제목을 확인하거나 표지 없이 직접 등록해 주세요.</div>';
+      return;
+    }
+    docs.forEach(doc=>{
+      const item=document.createElement("button");
+      item.type="button";item.className="library-result";
+      const cover=doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-M.jpg":"";
+      const img=document.createElement("img");
+      img.src=cover||"";
+      img.alt="";img.onerror=()=>{img.style.visibility="hidden";};
+      const info=document.createElement("span");
+      const strong=document.createElement("strong");strong.textContent=doc.title||title;
+      const author=document.createElement("small");author.textContent=(doc.author_name||["작가 정보 없음"]).slice(0,2).join(", ");
+      const year=document.createElement("small");year.textContent=doc.first_publish_year?" · "+doc.first_publish_year+"년":"";
+      info.append(strong,author,year);item.append(img,info);
+      item.addEventListener("click",()=>addLibraryBookFromSearch(doc));
+      results.appendChild(item);
+    });
+  }catch(error){
+    results.innerHTML='<div class="library-empty">도서관 검색에 연결하지 못했어요. 인터넷 연결을 확인하거나 직접 등록해 주세요.</div>';
+  }
+}
+function addLibraryBookFromSearch(doc){
+  const book={
+    id:"book-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
+    title:doc.title||libraryDraftSearchTitle,
+    author:(doc.author_name||[]).slice(0,3).join(", "),
+    year:doc.first_publish_year||"",
+    cover:doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-L.jpg":"",
+    category:guessLibraryCategory(doc.subject||[]),
+    childrenRating:0,teacherRating:0,thoughts:"",
+    color:LIBRARY_COLORS[libraryBooks.length%LIBRARY_COLORS.length],
+    addedAt:new Date().toISOString()
+  };
+  saveNewLibraryBook(book);
+}
+function guessLibraryCategory(subjects){
+  const text=subjects.join(" ").toLowerCase();
+  if(/science|nature|animal|plant|과학|자연/.test(text))return "자연·과학";
+  if(/history|biography|historical|역사|위인/.test(text))return "위인·역사";
+  if(/poetry|poem|시집|동시/.test(text))return "동시·동요";
+  if(/folklore|fairy tales|folk tales|전래|옛이야기/.test(text))return "전래동화";
+  return "그림책";
+}
+function addManualLibraryBook(){
+  const title=document.getElementById("libraryTitleInput").value.trim();
+  if(!title){alert("책 제목을 입력해 주세요.");return;}
+  saveNewLibraryBook({
+    id:"book-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
+    title,author:"",year:"",cover:"",category:"그림책",
+    childrenRating:0,teacherRating:0,thoughts:"",
+    color:LIBRARY_COLORS[libraryBooks.length%LIBRARY_COLORS.length],
+    addedAt:new Date().toISOString()
+  });
+}
+function saveNewLibraryBook(book){
+  if(libraryBooks.length>=LIBRARY_TARGET){
+    if(!confirm("100권 목표를 달성했어요! 책을 더 추가할까요?"))return;
+  }
+  libraryBooks.push(book);
+  persistLibraryBooks();
+  closeBookEditor();
+  document.getElementById("libraryTitleInput").value="";
+  renderLibrary();
+  openLibraryBook(book.id);
+}
+function openLibraryBook(id){
+  const book=libraryBooks.find(item=>item.id===id);
+  if(!book)return;
+  activeLibraryBookId=id;
+  document.getElementById("libraryEditor").classList.remove("show");
+  document.getElementById("libraryDetail").classList.add("show");
+  document.getElementById("libraryDetailTitle").textContent=book.title;
+  document.getElementById("libraryDetailAuthor").textContent=book.author?"글쓴이: "+book.author:"";
+  document.getElementById("libraryDetailYear").textContent=book.year?book.year+"년 출판":"";
+  const coverArea=document.getElementById("libraryCoverArea");
+  coverArea.innerHTML="";
+  if(book.cover){
+    const img=document.createElement("img");
+    img.className="library-cover";img.src=book.cover;img.alt=book.title+" 표지";
+    img.onerror=()=>{coverArea.innerHTML="📕";coverArea.className="library-cover-placeholder";};
+    coverArea.className="";coverArea.appendChild(img);
+  }else{
+    coverArea.className="library-cover-placeholder";coverArea.textContent="📕";
+  }
+  document.getElementById("libraryCategory").value=book.category||"그림책";
+  document.getElementById("libraryThoughts").value=book.thoughts||"";
+  renderLibraryStars("childrenStars","children",book.childrenRating||0);
+  renderLibraryStars("teacherStars","teacher",book.teacherRating||0);
+}
+function renderLibraryStars(containerId,type,rating){
+  const box=document.getElementById(containerId);box.innerHTML="";
+  for(let i=1;i<=5;i++){
+    const star=document.createElement("button");
+    star.type="button";star.className="library-star"+(i<=rating?" active":"");
+    star.textContent="★";star.setAttribute("aria-label",i+"점");
+    star.addEventListener("click",()=>{
+      const book=libraryBooks.find(item=>item.id===activeLibraryBookId);
+      if(!book)return;
+      book[type==="children"?"childrenRating":"teacherRating"]=i;
+      renderLibraryStars(containerId,type,i);
+      document.getElementById(type==="children"?"childrenRatingText":"teacherRatingText").textContent=i+"점 / 5점";
+    });
+    box.appendChild(star);
+  }
+  document.getElementById(type==="children"?"childrenRatingText":"teacherRatingText").textContent=
+    rating?rating+"점 / 5점":"아직 별점 없음";
+}
+function saveLibraryDetail(){
+  const book=libraryBooks.find(item=>item.id===activeLibraryBookId);
+  if(!book)return;
+  book.category=document.getElementById("libraryCategory").value;
+  book.thoughts=document.getElementById("libraryThoughts").value.trim();
+  persistLibraryBooks();renderLibrary();
+  alert("독서 기록을 저장했어요! 📚");
+}
+function closeLibraryDetail(){
+  document.getElementById("libraryDetail").classList.remove("show");
+  activeLibraryBookId=null;
+}
+function deleteLibraryBook(){
+  if(!activeLibraryBookId)return;
+  if(!confirm("이 책의 독서 기록을 삭제할까요?"))return;
+  libraryBooks=libraryBooks.filter(book=>book.id!==activeLibraryBookId);
+  persistLibraryBooks();closeLibraryDetail();renderLibrary();
+}
+function toggleBookOrganization(){
+  const panel=document.getElementById("libraryOrganization");
+  panel.classList.toggle("show");
+  if(panel.classList.contains("show"))renderLibraryOrganization();
+}
+function renderLibraryOrganization(){
+  const stats=document.getElementById("libraryCategoryStats");
+  const list=document.getElementById("libraryBookList");
+  stats.innerHTML="";list.innerHTML="";
+  if(!libraryBooks.length){
+    stats.innerHTML='<div class="library-empty">아직 기록한 책이 없어요. 첫 책을 읽고 책장에 꽂아봐요!</div>';
+    return;
+  }
+  const categories=["창작동화","전래동화","명작동화","그림책","자연·과학","인성·사회","위인·역사","동시·동요","기타"];
+  const counts={};
+  categories.forEach(category=>counts[category]=0);
+  libraryBooks.forEach(book=>counts[book.category||"그림책"]=(counts[book.category||"그림책"]||0)+1);
+  categories.filter(category=>counts[category]>0).sort((a,b)=>counts[b]-counts[a]).forEach(category=>{
+    const row=document.createElement("div");row.className="library-stat-row";
+    const label=document.createElement("strong");label.textContent=category;
+    const track=document.createElement("div");track.className="library-stat-track";
+    const bar=document.createElement("div");bar.className="library-stat-bar";
+    bar.style.width=(counts[category]/libraryBooks.length*100)+"%";track.appendChild(bar);
+    const value=document.createElement("span");value.textContent=counts[category]+"권";
+    row.append(label,track,value);stats.appendChild(row);
+  });
+  libraryBooks.forEach((book,index)=>{
+    const item=document.createElement("div");item.className="library-list-item";
+    const text=document.createElement("span");
+    const strong=document.createElement("strong");strong.textContent=(index+1)+". "+book.title;
+    const small=document.createElement("small");small.textContent=" · "+(book.category||"그림책");
+    text.append(strong,small);
+    const open=document.createElement("button");open.type="button";open.className="library-btn secondary";open.style.padding="7px 12px";open.textContent="기록 보기";
+    open.addEventListener("click",()=>openLibraryBook(book.id));
+    item.append(text,open);list.appendChild(item);
+  });
+}
+/* 기존 홈 이동 함수와 독립적으로 도서관 페이지 진입 */
 
 /* 화면 이동 */
 function showPage(id){
