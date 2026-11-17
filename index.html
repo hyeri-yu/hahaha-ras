@@ -1025,6 +1025,43 @@ footer{
 #libraryPage .library-progress{margin-top:18px}
 #libraryPage .library-actions{margin-top:14px}
 
+
+/* 학급 이름이 가려지지 않는 심플한 동화집 간판과 작은 문 아이콘 */
+.fairy-house-scene{height:190px}
+.fairy-name-sign{
+  position:absolute;z-index:5;left:50%;top:0;transform:translateX(-50%);
+  display:inline-flex;align-items:center;justify-content:center;
+  max-width:92%;min-width:104px;min-height:27px;padding:4px 13px;
+  border:2px solid rgba(255,255,255,.95);border-radius:999px;
+  background:var(--house-wall);color:#786b82;
+  box-shadow:0 3px 0 rgba(190,165,180,.18);
+  font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;
+}
+.fairy-roof{top:35px}
+.fairy-chimney{top:25px}
+.fairy-facade{top:99px}
+.fairy-window{top:9px;height:36px;width:55%;border-width:3px}
+.fairy-window:before,.fairy-window:after{display:none}
+.fairy-window strong{
+  width:22px;height:22px;padding:0;display:grid;place-items:center;
+  border-radius:50%;background:#fff0c9;color:#e5a4ad;font-size:13px;
+}
+.fairy-door{
+  width:20px;height:27px;bottom:0;border:2px solid #fffaf1;
+  border-bottom:0;border-radius:9px 9px 0 0;
+  background:linear-gradient(145deg,#f4c5cd 0 48%,#c7dfc6 49% 100%);
+}
+.fairy-door:after{right:3px;top:12px;width:3px;height:3px;background:#fffdf2}
+.fairy-flowerbed{bottom:-4px;font-size:14px;letter-spacing:2px}
+@media(max-width:600px){
+  .fairy-house-scene{height:174px}
+  .fairy-roof{top:31px}
+  .fairy-chimney{top:21px}
+  .fairy-facade{top:91px}
+  .fairy-name-sign{min-width:88px;min-height:25px;font-size:11px}
+}
+
 </style>
 </head>
 
@@ -2577,6 +2614,9 @@ async function refreshSharedRooms() {
       card.setAttribute("aria-label", room.name + " 도서관에 들어가기");
       const scene = document.createElement("span");
       scene.className = "fairy-house-scene";
+      const nameSign = document.createElement("span");
+      nameSign.className = "fairy-name-sign";
+      nameSign.textContent = room.name;
       const chimney = document.createElement("span");
       chimney.className = "fairy-chimney";
       const roof = document.createElement("span");
@@ -2586,7 +2626,8 @@ async function refreshSharedRooms() {
       const window = document.createElement("span");
       window.className = "fairy-window";
       const strong = document.createElement("strong");
-      strong.textContent = room.name;
+      strong.textContent = "✿";
+      strong.setAttribute("aria-hidden", "true");
       const glow = document.createElement("span");
       glow.className = "fairy-window-glow";
       window.append(strong, glow);
@@ -2596,7 +2637,7 @@ async function refreshSharedRooms() {
       flowerbed.className = "fairy-flowerbed";
       flowerbed.textContent = "✿　❀　✿";
       facade.append(window, door);
-      scene.append(chimney, roof, facade, flowerbed);
+      scene.append(nameSign, chimney, roof, facade, flowerbed);
       const caption = document.createElement("span");
       caption.className = "fairy-house-caption";
       const small = document.createElement("small");
@@ -2635,12 +2676,12 @@ async function createSharedRoom() {
   }
 }
 
-async async function openSharedRoom(room, edit=false, password="") {
+async async async async function openSharedRoom(room, edit=false, password="") {
   sharedRoom = room;
   sharedCanEdit = !!edit;
   sharedEditPassword = edit ? password : "";
   document.getElementById("sharedRoomCurrent").style.display = "block";
-  document.getElementById("sharedRoomCurrentName").textContent = "🏡 " + room.name + " 책장";
+  document.getElementById("sharedRoomCurrentName").textContent = "📚 " + room.name + " 책장";
   document.getElementById("sharedRoomModeLabel").textContent = edit ? "우리 반 · 편집 가능" : "구경 중 · 읽기 전용";
   document.getElementById("currentBookshelfHeading").textContent = room.name + "의 책장이에요 📚";
   document.getElementById("libraryProgress").style.display = "block";
