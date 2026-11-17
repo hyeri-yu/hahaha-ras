@@ -854,6 +854,70 @@ footer{
   #libraryPage .bookshelf-row{min-height:132px;padding-left:4px;padding-right:4px;gap:3px}
 }
 
+
+/* 책장 사이사이의 귀여운 초록 화분 */
+.library-plant{
+  flex:0 0 37px;align-self:flex-end;height:var(--plant-height,112px);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  position:relative;margin:0 2px 1px;pointer-events:none;
+}
+.library-plant-leaves{
+  font-size:31px;line-height:1.05;filter:drop-shadow(0 2px 1px rgba(91,130,79,.10));
+  transform:rotate(var(--plant-tilt,0deg));
+}
+.library-plant-pot{
+  width:29px;height:23px;margin-top:1px;position:relative;
+  background:linear-gradient(90deg,#F5C98E,#FFE0AC 48%,#EFC28B);
+  border:1.5px solid #D8AC75;border-radius:4px 4px 10px 10px;
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.35);
+}
+.library-plant-pot:before{
+  content:"";position:absolute;left:-3px;right:-3px;top:-4px;height:6px;
+  border-radius:4px;background:#F8D9A8;border:1px solid #D8AC75;
+}
+#libraryPage .bookshelf-row{position:relative}
+@media(max-width:600px){
+  .library-plant{flex-basis:25px;margin:0}
+  .library-plant-leaves{font-size:24px}
+  .library-plant-pot{width:23px;height:19px}
+}
+
+
+/* 책장별로 조금씩 다른 화분 실루엣과 따뜻한 도자기 화분 */
+.library-plant{
+  flex-basis:34px;margin-left:1px;margin-right:1px;
+  filter:drop-shadow(0 2px 2px rgba(103,125,81,.08));
+}
+.library-plant-leaves{
+  font-size:29px;line-height:1.1;
+  transform:rotate(var(--plant-tilt,0deg));
+}
+.library-plant-pot{
+  background:linear-gradient(90deg,#EFC58D,#FFE4B8 52%,#EBC18B);
+  border-color:#D8B17D;
+}
+.library-plant-pot:before{background:#F8DDB5;border-color:#D8B17D}
+.library-plant.plant-soft .library-plant-pot{
+  width:25px;height:20px;border-radius:8px 8px 9px 9px;
+  background:linear-gradient(90deg,#E9B7A7,#F8D3C3 55%,#E9B7A7);
+  border-color:#D7A99B;
+}
+.library-plant.plant-soft .library-plant-pot:before{
+  background:#F7D8CC;border-color:#D7A99B;
+}
+.library-plant.plant-tall .library-plant-pot{
+  width:23px;height:29px;border-radius:3px 3px 8px 8px;
+  background:linear-gradient(90deg,#B9D0B0,#DDE8C8 55%,#B9D0B0);
+  border-color:#A7C09C;
+}
+.library-plant.plant-tall .library-plant-pot:before{
+  background:#D8E6CB;border-color:#A7C09C;
+}
+@media(max-width:600px){
+  .library-plant{flex-basis:25px}
+  .library-plant-leaves{font-size:23px}
+}
+
 </style>
 </head>
 
@@ -1879,6 +1943,39 @@ function renderLibrary(){
         button.addEventListener("click",openBookEditor);
       }
       shelf.appendChild(button);
+
+      /* 책장마다 다른 위치와 모양으로 작은 초록 장식을 놓아 자연스럽게 꾸며요. */
+      const shelfDecor=[
+        [{at:2,leaf:"🌿",pot:"round",height:88,tilt:"-7deg"},
+         {at:12,leaf:"🌼",pot:"soft",height:70,tilt:"5deg"},
+         {at:18,leaf:"🍃",pot:"tall",height:96,tilt:"-3deg"}],
+        [{at:6,leaf:"🪴",pot:"round",height:105,tilt:"4deg"},
+         {at:16,leaf:"🌱",pot:"soft",height:73,tilt:"-5deg"}],
+        [{at:1,leaf:"🌸",pot:"soft",height:78,tilt:"-4deg"},
+         {at:9,leaf:"🌿",pot:"tall",height:100,tilt:"6deg"},
+         {at:17,leaf:"🍀",pot:"round",height:83,tilt:"-6deg"}],
+        [{at:4,leaf:"🌱",pot:"round",height:74,tilt:"5deg"},
+         {at:13,leaf:"🌼",pot:"tall",height:92,tilt:"-4deg"}],
+        [{at:7,leaf:"🍃",pot:"soft",height:84,tilt:"-6deg"},
+         {at:15,leaf:"🪴",pot:"round",height:102,tilt:"4deg"}]
+      ];
+      const decorations=shelfDecor[row]||[];
+      const decoration=decorations.find(item=>item.at===col);
+      if(decoration){
+        const plant=document.createElement("div");
+        plant.className="library-plant";
+        plant.classList.add("plant-"+decoration.pot);
+        plant.style.setProperty("--plant-height",decoration.height+"px");
+        plant.style.setProperty("--plant-tilt",decoration.tilt);
+        plant.style.setProperty("--pot-hue",((row*31+col*17)%28)+"deg");
+        const leaves=document.createElement("span");
+        leaves.className="library-plant-leaves";
+        leaves.textContent=decoration.leaf;
+        const pot=document.createElement("span");
+        pot.className="library-plant-pot";
+        plant.append(leaves,pot);
+        shelf.appendChild(plant);
+      }
     }
     shelves.appendChild(shelf);
   }
@@ -1895,36 +1992,86 @@ async function searchLibraryBook(){
   const results=document.getElementById("librarySearchResults");
   if(!title){alert("책 제목을 먼저 입력해 주세요.");return;}
   libraryDraftSearchTitle=title;
-  results.innerHTML='<div class="library-empty">📚 책 정보를 찾고 있어요...</div>';
+  results.innerHTML='<div class="library-empty">📚 여러 도서관에서 책 정보를 찾고 있어요...</div>';
+
+  const found=[];
+  const seen=new Set();
+
+  /* Google Books: 국내외 도서 제목과 표지 검색 */
   try{
-    const url="https://openlibrary.org/search.json?title="+encodeURIComponent(title)+"&limit=8";
-    const response=await fetch(url);
-    if(!response.ok)throw new Error("검색에 실패했어요.");
-    const data=await response.json();
-    const docs=(data.docs||[]).slice(0,8);
-    results.innerHTML="";
-    if(!docs.length){
-      results.innerHTML='<div class="library-empty">검색 결과가 없어요. 제목을 확인하거나 표지 없이 직접 등록해 주세요.</div>';
-      return;
+    const googleUrl="https://www.googleapis.com/books/v1/volumes?q="+
+      encodeURIComponent("intitle:"+title)+"&maxResults=8&langRestrict=ko";
+    const googleResponse=await fetch(googleUrl);
+    if(googleResponse.ok){
+      const googleData=await googleResponse.json();
+      (googleData.items||[]).forEach(item=>{
+        const info=item.volumeInfo||{};
+        const key=(info.title||"").toLowerCase()+"|"+(info.authors||[]).join(",");
+        if(seen.has(key))return;
+        seen.add(key);
+        const imageLinks=info.imageLinks||{};
+        const cover=(imageLinks.thumbnail||imageLinks.smallThumbnail||"")
+          .replace("http://","https://").replace("&edge=curl","");
+        found.push({
+          title:info.title||title,
+          author_name:info.authors||[],
+          first_publish_year:info.publishedDate?String(info.publishedDate).slice(0,4):"",
+          cover_url:cover,
+          source:"Google Books"
+        });
+      });
     }
-    docs.forEach(doc=>{
-      const item=document.createElement("button");
-      item.type="button";item.className="library-result";
-      const cover=doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-M.jpg":"";
-      const img=document.createElement("img");
-      img.src=cover||"";
-      img.alt="";img.onerror=()=>{img.style.visibility="hidden";};
-      const info=document.createElement("span");
-      const strong=document.createElement("strong");strong.textContent=doc.title||title;
-      const author=document.createElement("small");author.textContent=(doc.author_name||["작가 정보 없음"]).slice(0,2).join(", ");
-      const year=document.createElement("small");year.textContent=doc.first_publish_year?" · "+doc.first_publish_year+"년":"";
-      info.append(strong,author,year);item.append(img,info);
-      item.addEventListener("click",()=>addLibraryBookFromSearch(doc));
-      results.appendChild(item);
-    });
   }catch(error){
-    results.innerHTML='<div class="library-empty">도서관 검색에 연결하지 못했어요. 인터넷 연결을 확인하거나 직접 등록해 주세요.</div>';
+    /* Google Books 연결이 안 되면 아래 Open Library 검색을 시도해요. */
   }
+
+  /* Open Library를 보조 검색으로 사용 */
+  try{
+    const openUrl="https://openlibrary.org/search.json?title="+
+      encodeURIComponent(title)+"&limit=8";
+    const openResponse=await fetch(openUrl);
+    if(openResponse.ok){
+      const openData=await openResponse.json();
+      (openData.docs||[]).forEach(doc=>{
+        const key=(doc.title||"").toLowerCase()+"|"+(doc.author_name||[]).join(",");
+        if(seen.has(key))return;
+        seen.add(key);
+        found.push({
+          title:doc.title||title,
+          author_name:doc.author_name||[],
+          first_publish_year:doc.first_publish_year||"",
+          cover_url:doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-M.jpg":"",
+          cover_i:doc.cover_i||null,
+          source:"Open Library"
+        });
+      });
+    }
+  }catch(error){
+    /* 두 번째 검색처가 실패해도 이미 찾은 결과는 보여줘요. */
+  }
+
+  results.innerHTML="";
+  if(!found.length){
+    results.innerHTML='<div class="library-empty">검색 결과를 가져오지 못했어요. 인터넷 연결이나 브라우저의 외부 사이트 접근을 확인해 주세요. 아래에서 표지 없이 직접 등록할 수도 있어요.</div>';
+    return;
+  }
+
+  found.slice(0,12).forEach(doc=>{
+    const item=document.createElement("button");
+    item.type="button";item.className="library-result";
+    const img=document.createElement("img");
+    img.src=doc.cover_url||"";
+    img.alt="";
+    img.onerror=()=>{img.style.visibility="hidden";};
+    const info=document.createElement("span");
+    const strong=document.createElement("strong");strong.textContent=doc.title||title;
+    const author=document.createElement("small");author.textContent=(doc.author_name||["작가 정보 없음"]).slice(0,2).join(", ");
+    const year=document.createElement("small");year.textContent=doc.first_publish_year?" · "+doc.first_publish_year+"년":"";
+    const source=document.createElement("small");source.textContent=" · "+doc.source;
+    info.append(strong,author,year,source);item.append(img,info);
+    item.addEventListener("click",()=>addLibraryBookFromSearch(doc));
+    results.appendChild(item);
+  });
 }
 function addLibraryBookFromSearch(doc){
   const book={
@@ -1932,7 +2079,7 @@ function addLibraryBookFromSearch(doc){
     title:doc.title||libraryDraftSearchTitle,
     author:(doc.author_name||[]).slice(0,3).join(", "),
     year:doc.first_publish_year||"",
-    cover:doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-L.jpg":"",
+    cover:doc.cover_url?(doc.cover_url.includes("-M.")?doc.cover_url.replace("-M.","-L."):doc.cover_url):doc.cover_i?"https://covers.openlibrary.org/b/id/"+doc.cover_i+"-L.jpg":"",
     category:guessLibraryCategory(doc.subject||[]),
     childrenRating:0,teacherRating:0,thoughts:"",
     color:LIBRARY_COLORS[libraryBooks.length%LIBRARY_COLORS.length],
@@ -1983,7 +2130,7 @@ function openLibraryBook(id){
   coverArea.innerHTML="";
   if(book.cover){
     const img=document.createElement("img");
-    img.className="library-cover";img.src=book.cover;img.alt=book.title+" 표지";
+    img.className="library-cover";img.src=book.cover.startsWith("http://")?book.cover.replace("http://","https://"):book.cover;img.alt=book.title+" 표지";
     img.onerror=()=>{coverArea.innerHTML="📕";coverArea.className="library-cover-placeholder";};
     coverArea.className="";coverArea.appendChild(img);
   }else{
