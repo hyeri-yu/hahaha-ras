@@ -1005,6 +1005,26 @@ footer{
   .fairy-window{height:39px}
 }
 
+
+/* 우리 반 책장이 먼저, 다른 반 마을은 아래에 */
+#libraryPage .library-shared-panel{margin-bottom:14px}
+#libraryPage .library-shared-panel h3{color:#7f8f70}
+#libraryPage #currentClassBookshelf{margin-top:18px}
+#libraryPage #currentBookshelfHeading{color:#7e8d70}
+#libraryPage .other-rooms-section{
+  margin:34px 0 18px;padding:24px 20px 20px;border-radius:28px;
+  border:1px solid #eadff0;background:linear-gradient(180deg,#fcf8ff 0%,#fffdfb 100%);
+  box-shadow:0 8px 22px rgba(174,151,190,.08)
+}
+#libraryPage .other-rooms-heading{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+#libraryPage .other-rooms-heading h3{margin:0;color:#9982ad;font-size:1.18rem}
+#libraryPage .other-rooms-heading p{margin:5px 0 0;color:#a594a7;font-size:13px}
+#libraryPage .other-rooms-sparkle{display:grid;place-items:center;width:43px;height:43px;border-radius:15px;background:#f1e8fa;color:#b69acb;font-size:24px}
+#libraryPage .other-rooms-section .shared-room-list{margin-top:16px}
+#libraryPage .shared-room-current{margin-top:14px}
+#libraryPage .library-progress{margin-top:18px}
+#libraryPage .library-actions{margin-top:14px}
+
 </style>
 </head>
 
@@ -1232,15 +1252,14 @@ footer{
 </div>
 
 <div id="sharedLibraryPanel" class="library-shared-panel">
-  <h3>🏡 하하하 우리들의 도서관</h3>
-  <p>우리 반 도서관을 만들거나 다른 반의 책장을 구경해 보세요.</p>
+  <h3>🏡 우리 반 도서관</h3>
+  <p>먼저 우리 반 책장을 펼쳐 보세요. 다른 반 친구들의 책장은 아래에서 구경할 수 있어요.</p>
   <div class="shared-room-create">
     <input id="sharedRoomName" type="text" maxlength="60" placeholder="우리 반 이름 (예: 햇살반)">
     <input id="sharedRoomPassword" type="password" maxlength="100" placeholder="편집 비밀번호 (4자 이상)">
     <button class="library-btn" onclick="createSharedRoom()">우리 반 도서관 만들기</button>
   </div>
-  <div id="sharedRoomStatus" class="library-small-note" role="status">도서관 목록을 불러오는 중이에요...</div>
-  <div id="sharedRoomList" class="shared-room-list"></div>
+  <div id="sharedRoomStatus" class="library-small-note" role="status">우리 반 도서관을 만들거나 아래에서 반을 선택해 보세요.</div>
   <div id="sharedRoomCurrent" class="shared-room-current" style="display:none">
     <div><strong id="sharedRoomCurrentName"></strong><span id="sharedRoomModeLabel"></span></div>
     <div class="shared-room-controls">
@@ -1265,10 +1284,10 @@ footer{
   <button class="library-btn secondary" onclick="toggleBookOrganization()">📊 책 정리</button>
 </div>
 
-<div class="bookshelf-wrap">
-  <h3 class="bookshelf-heading">우리들의 책이 자라는 책장</h3>
+<div class="bookshelf-wrap" id="currentClassBookshelf">
+  <h3 class="bookshelf-heading" id="currentBookshelfHeading">우리 반 책장이 여기에 펼쳐져요 📚</h3>
   <div id="libraryShelves"></div>
-  <div class="library-book-count" id="libraryShelfCaption">책을 추가하면 이곳에 책등이 하나씩 생겨요.</div>
+  <div class="library-book-count" id="libraryShelfCaption">우리 반 도서관을 만들면 책장이 바로 나타나요.</div>
 </div>
 
 <div class="library-editor" id="libraryEditor">
@@ -1333,6 +1352,17 @@ footer{
   <div id="libraryCategoryStats"></div>
   <h3 style="color:#70577F;margin:20px 0 8px">📚 읽은 책 목록</h3>
   <div class="library-list" id="libraryBookList"></div>
+</div>
+
+<div class="other-rooms-section" id="otherRoomsSection">
+  <div class="other-rooms-heading">
+    <span class="other-rooms-sparkle">✦</span>
+    <div>
+      <h3>🌈 다른 반 도서관 구경하기</h3>
+      <p>아래 동화 속 집을 누르면 친구들 반의 책장으로 놀러 갈 수 있어요.</p>
+    </div>
+  </div>
+  <div id="sharedRoomList" class="shared-room-list"></div>
 </div>
 </section>
 
@@ -2605,8 +2635,10 @@ async function openSharedRoom(room, edit=false, password="") {
   sharedCanEdit = !!edit;
   sharedEditPassword = edit ? password : "";
   document.getElementById("sharedRoomCurrent").style.display = "block";
-  document.getElementById("sharedRoomCurrentName").textContent = "🚪 " + room.name;
-  document.getElementById("sharedRoomModeLabel").textContent = edit ? "편집 가능" : "읽기 전용";
+  document.getElementById("sharedRoomCurrentName").textContent = "🏡 " + room.name + " 책장";
+  document.getElementById("sharedRoomModeLabel").textContent = edit ? "우리 반 · 편집 가능" : "구경 중 · 읽기 전용";
+  document.getElementById("currentBookshelfHeading").textContent = room.name + "의 책장이에요 📚";
+  document.getElementById("libraryProgress").style.display = "block";
   document.getElementById("sharedRoomEditPassword").value = "";
   document.getElementById("libraryEditor").classList.remove("show");
   document.getElementById("libraryDetail").classList.remove("show");
@@ -2686,7 +2718,9 @@ function leaveSharedRoom() {
   document.querySelector(".library-actions").style.display = "none";
   document.getElementById("libraryShelves").innerHTML = "";
   document.getElementById("libraryCount").textContent = "0";
-  document.getElementById("libraryShelfCaption").textContent = "반을 선택하면 책장이 보여요.";
+  document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
+  document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
+  document.getElementById("libraryProgress").style.display = "none";
   const note = document.getElementById("sharedReadOnlyNote");
   if (note) note.remove();
 }
@@ -2749,11 +2783,16 @@ async function deleteLibraryBook() {
 
 function openLibrary() {
   showPage("libraryPage");
-  loadLibraryBooks();
+  sharedRoom = null;
+  sharedCanEdit = false;
+  sharedEditPassword = "";
+  libraryBooks = [];
+  renderLibrary();
   document.getElementById("libraryProgress").style.display = "none";
   document.querySelector(".library-actions").style.display = "none";
   document.getElementById("libraryShelves").innerHTML = "";
-  document.getElementById("libraryShelfCaption").textContent = "반을 선택하면 책장이 보여요.";
+  document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
+  document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
   document.getElementById("sharedRoomCurrent").style.display = "none";
   refreshSharedRooms();
 }
