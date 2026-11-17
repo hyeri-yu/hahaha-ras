@@ -1317,7 +1317,7 @@ footer{
     <div class="shared-room-controls">
       <input id="sharedRoomEditPassword" type="password" placeholder="이 반의 편집 비밀번호">
       <button class="library-btn secondary" onclick="unlockSharedRoom()">편집하기</button>
-      <button class="library-btn secondary" onclick="leaveSharedRoom()">다른 반 보기</button>
+      <button class="library-btn secondary" onclick="returnToMyRoom()">우리 반으로 돌아가기</button>
     </div>
   </div>
 </div>
@@ -2604,6 +2604,8 @@ const SHARED_SUPABASE_KEY = "sb_publishable_hbpSXzCmHJvczwTMuPqaxw_GFXi4rxv";
 let sharedRoom = null;
 let sharedEditPassword = "";
 let sharedCanEdit = false;
+let mySharedRoom = null;
+let mySharedRoomPassword = "";
 
 async function sharedApi(path, options={}) {
   const response = await fetch(SHARED_SUPABASE_URL + path, {
@@ -2696,6 +2698,9 @@ async function createSharedRoom() {
     document.getElementById("sharedRoomName").value = "";
     document.getElementById("sharedRoomPassword").value = "";
     status.textContent = "우리 반 도서관을 만들었어요!";
+    mySharedRoom = {id, name};
+    mySharedRoomPassword = password;
+    try { localStorage.setItem("hahaha_my_room", JSON.stringify({id, name})); } catch(e) {}
     await refreshSharedRooms();
     await openSharedRoom({id, name}, true, password);
   } catch (error) {
@@ -2709,7 +2714,9 @@ async function openSharedRoom(room, edit=false, password="") {
   sharedEditPassword = edit ? password : "";
   document.getElementById("sharedRoomCurrent").style.display = "block";
   document.getElementById("sharedRoomCurrentName").textContent = "📚 " + room.name + " 책장";
-  document.getElementById("sharedRoomModeLabel").textContent = edit ? "우리 반 · 편집 가능" : "구경 중 · 읽기 전용";
+  const isMine = !!(mySharedRoom && mySharedRoom.id === room.id);
+  document.getElementById("sharedRoomModeLabel").textContent =
+    isMine ? "우리 반 · 편집 가능" : (edit ? "편집 가능" : "구경 중 · 읽기 전용");
   document.getElementById("currentBookshelfHeading").textContent = room.name + "의 책장이에요 📚";
   document.getElementById("libraryProgress").style.display = "block";
   document.getElementById("sharedRoomEditPassword").value = "";
@@ -2786,15 +2793,24 @@ async function unlockSharedRoom() {
   // 극히 예외적으로 해당 UUID가 존재하는 경우는 저장이 이루어질 수 없도록 사용하지 않는 UUID 사용.
 }
 
-function leaveSharedRoom() {
-  sharedRoom = null; sharedEditPassword = ""; sharedCanEdit = false; libraryBooks = [];
+async function returnToMyRoom() {
+  if (mySharedRoom) {
+    await openSharedRoom(mySharedRoom, true, mySharedRoomPassword);
+    return;
+  }
+  sharedRoom = null;
+  sharedEditPassword = "";
+  sharedCanEdit = false;
+  libraryBooks = [];
   document.getElementById("sharedRoomCurrent").style.display = "none";
-  document.querySelector(".library-actions").style.display = "none";
+  const actions = document.querySelector("#libraryPage .library-actions");
+  if (actions) actions.style.display = "none";
   renderLibrary();
   document.getElementById("libraryProgress").style.display = "none";
-  document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
-  document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
-  document.getElementById("libraryProgress").style.display = "none";
+  document.getElementById("libraryShelfCaption").textContent =
+    "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
+  document.getElementById("currentBookshelfHeading").textContent =
+    "우리 반 책장이 여기에 펼쳐져요 📚";
   const note = document.getElementById("sharedReadOnlyNote");
   if (note) note.remove();
 }
@@ -2859,21 +2875,37 @@ async function deleteLibraryBook() {
   } catch (error) { alert("삭제하지 못했어요: " + error.message); }
 }
 
-function openLibrary() {
+async function openLibrary() {
   showPage("libraryPage");
-  sharedRoom = null;
-  sharedCanEdit = false;
-  sharedEditPassword = "";
-  libraryBooks = [];
-  renderLibrary();
-  document.getElementById("libraryProgress").style.display = "none";
-  const mainLibraryActions = document.querySelector("#libraryPage > .library-actions");
-  if (mainLibraryActions) mainLibraryActions.style.display = "flex";
-  document.getElementById("libraryShelves").innerHTML = "";
-  document.getElementById("libraryShelfCaption").textContent = "우리 반 도서관을 만들거나 아래에서 다른 반을 선택해 보세요.";
-  document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
-  document.getElementById("sharedRoomCurrent").style.display = "none";
-  refreshSharedRooms();
+  document.getElementById("libraryEditor").classList.remove("show");
+  document.getElementById("libraryDetail").classList.remove("show");
+  document.getElementById("libraryOrganization").classList.remove("show");
+
+  if (!mySharedRoom) {
+    try {
+      const saved = JSON.parse(localStorage.getItem("hahaha_my_room") || "null");
+      if (saved && saved.id && saved.name) mySharedRoom = saved;
+    } catch(e) {}
+  }
+
+  if (mySharedRoom) {
+    await openSharedRoom(mySharedRoom, false, "");
+    const status = document.getElementById("sharedRoomStatus");
+    if (status) status.textContent = "우리 반 책장이 먼저 펼쳐져요. 다른 반 도서관은 아래에서 구경할 수 있어요.";
+  } else {
+    sharedRoom = null;
+    sharedCanEdit = false;
+    sharedEditPassword = "";
+    libraryBooks = [];
+    renderLibrary();
+    document.getElementById("libraryProgress").style.display = "none";
+    document.getElementById("sharedRoomCurrent").style.display = "none";
+    document.getElementById("currentBookshelfHeading").textContent = "우리 반 책장이 여기에 펼쳐져요 📚";
+    document.getElementById("libraryShelfCaption").textContent = "먼저 우리 반 도서관을 만들어 주세요.";
+    const actions = document.querySelector("#libraryPage .library-actions");
+    if (actions) actions.style.display = "none";
+  }
+  await refreshSharedRooms();
 }
 </script>
 
