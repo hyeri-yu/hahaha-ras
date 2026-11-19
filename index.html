@@ -352,10 +352,14 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 .routine-add{background:var(--purple);color:white}
 .routine-grid-wrap{overflow-x:auto}
 .routine-grid{width:100%;min-width:650px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
-.routine-day{min-height:190px;padding:10px;background:#FCFAFD;border:1px solid #F0EBF2;border-radius:13px}
+.routine-day{min-height:190px;padding:10px;background:#FCFAFD;border:1px solid #F0EBF2;border-radius:13px;cursor:pointer;transition:background .15s,border-color .15s}
+.routine-day:focus-within,.routine-day:hover{border-color:#D9C8E5}
+.routine-day.drag-over{background:#F4ECFA;border:2px dashed #B99ACB}
 .routine-day h4{margin:0 0 10px;text-align:center;color:var(--purple);font-size:15px;padding:7px;background:#F7F3F8;border-radius:9px}
 .routine-items{display:grid;gap:7px}
-.routine-item{padding:9px;border-radius:9px;font-size:13px;font-weight:800;line-height:1.45;overflow-wrap:anywhere;cursor:pointer}
+.routine-item{padding:9px;border-radius:9px;font-size:13px;font-weight:800;line-height:1.45;overflow-wrap:anywhere;cursor:grab;user-select:none;touch-action:pan-y}
+.routine-item:active{cursor:grabbing}
+.routine-item.dragging{opacity:.4}
 .routine-item small{display:block;margin-top:4px;font-size:10px;font-weight:700;opacity:.8}
 .routine-item.pink{background:#FCECEF;color:#9D5C70}
 .routine-item.mint{background:#EAF4ED;color:#527E61}
@@ -2331,6 +2335,8 @@ const ROUTINE_STORAGE_KEY="rasWeeklyRoutine_v1";
 const ROUTINE_DAYS=["월요일","화요일","수요일","목요일","금요일"];
 let routineItems=loadRoutineItems();
 let editingRoutineId=null;
+let selectedRoutineDay=0;
+let draggedRoutineId=null;
 
 function loadRoutineItems(){
   try{
@@ -2352,25 +2358,52 @@ function renderRoutine(){
   ROUTINE_DAYS.forEach((day,dayIndex)=>{
     const column=document.createElement("section");
     column.className="routine-day";
+    column.addEventListener("click",event=>{
+      if(event.target.closest(".routine-item"))return;
+      resetRoutineForm();
+      selectedRoutineDay=dayIndex;
+      document.getElementById("routineDay").value=String(dayIndex);
+      openRoutineEditor();
+    });
+    column.addEventListener("dragover",event=>{event.preventDefault();column.classList.add("drag-over");});
+    column.addEventListener("dragleave",event=>{if(!column.contains(event.relatedTarget))column.classList.remove("drag-over");});
+    column.addEventListener("drop",event=>{
+      event.preventDefault();column.classList.remove("drag-over");
+      const targetCard=event.target.closest(".routine-item");
+      if(!draggedRoutineId)return;
+      const dayItems=routineItems.filter(item=>routineDays(item).includes(dayIndex))
+        .sort((a,b)=>routineOrderFor(a,dayIndex)-routineOrderFor(b,dayIndex));
+      const moving=dayItems.find(item=>String(item.id)===String(draggedRoutineId));
+      if(!moving)return;
+      const remaining=dayItems.filter(item=>String(item.id)!==String(draggedRoutineId));
+      let insertAt=targetCard?remaining.findIndex(item=>String(item.id)===String(targetCard.dataset.id)):remaining.length;
+      if(insertAt<0)insertAt=remaining.length;
+      remaining.splice(insertAt,0,moving);
+      remaining.forEach((item,index)=>{
+        if(!item.dayOrder)item.dayOrder={};
+        item.dayOrder[dayIndex]=index+1;
+      });
+      saveRoutineItems();renderRoutine();draggedRoutineId=null;
+    });
     const heading=document.createElement("h4");
     heading.textContent=day;
     const list=document.createElement("div");
     list.className="routine-items";
     const todayItems=routineItems
       .filter(item=>routineDays(item).includes(dayIndex))
-      .sort((a,b)=>(Number(a.order)||1)-(Number(b.order)||1));
+      .sort((a,b)=>routineOrderFor(a,dayIndex)-routineOrderFor(b,dayIndex));
     if(!todayItems.length){
       const empty=document.createElement("div");
       empty.className="routine-empty";
-      empty.textContent="등록된 일과가 없어요";
+      empty.textContent="＋ 눌러서 일과 추가";
       list.appendChild(empty);
     }else{
-      todayItems.forEach(item=>{
+      todayItems.forEach((item,index)=>{
         const card=document.createElement("button");
-        card.type="button";
+        card.type="button";card.draggable=true;card.dataset.id=item.id;
         card.className="routine-item "+(item.color||"pink");
         const title=document.createElement("span");
-        title.textContent=(Number(item.order)||1)+". "+item.title;
+        title.textContent=(index+1)+". "+item.title;
         card.appendChild(title);
         if(item.repeat!=="none"){
           const repeat=document.createElement("small");
@@ -2378,12 +2411,20 @@ function renderRoutine(){
           card.appendChild(repeat);
         }
         card.addEventListener("click",()=>editRoutine(item.id));
+        card.addEventListener("dragstart",event=>{
+          draggedRoutineId=item.id;event.dataTransfer.effectAllowed="move";
+          event.dataTransfer.setData("text/plain",String(item.id));
+          card.classList.add("dragging");
+        });
+        card.addEventListener("dragend",()=>{card.classList.remove("dragging");document.querySelectorAll(".routine-day").forEach(el=>el.classList.remove("drag-over"));});
         list.appendChild(card);
       });
     }
-    column.append(heading,list);
-    grid.appendChild(column);
+    column.append(heading,list);grid.appendChild(column);
   });
+}
+function routineOrderFor(item,dayIndex){
+  return Number(item.dayOrder&&item.dayOrder[dayIndex])||Number(item.order)||1;
 }
 function openRoutineEditor(){
   document.getElementById("routineEditor").classList.add("show");
@@ -2397,7 +2438,7 @@ function resetRoutineForm(){
   editingRoutineId=null;
   document.getElementById("routineEditorTitle").textContent="✏️ 하루 일과 추가하기";
   document.getElementById("routineActivity").value="";
-  document.getElementById("routineDay").value="0";
+  document.getElementById("routineDay").value=String(selectedRoutineDay);
   document.getElementById("routineOrder").value="1";
   document.getElementById("routineRepeat").value="none";
   document.getElementById("routineColor").value="pink";
@@ -2408,6 +2449,7 @@ function editRoutine(id){
   const item=routineItems.find(entry=>String(entry.id)===String(id));
   if(!item)return;
   editingRoutineId=item.id;
+  selectedRoutineDay=Number(item.day)||0;
   document.getElementById("routineEditorTitle").textContent="✏️ 하루 일과 수정하기";
   document.getElementById("routineActivity").value=item.title||"";
   document.getElementById("routineDay").value=String(item.day??0);
@@ -2447,6 +2489,7 @@ function deleteRoutine(){
   closeRoutineEditor();
 }
 document.getElementById("routineAddButton").addEventListener("click",()=>{
+  selectedRoutineDay=0;
   resetRoutineForm();
   openRoutineEditor();
 });
