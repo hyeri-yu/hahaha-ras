@@ -1341,6 +1341,37 @@ body > .shell {
   #readPage { padding-top:16px; }
 }
 </style>
+
+<style id="proverb-width-final-fix">
+/* 속담교실 좌우 폭 최종 조정: 화면 전체로 늘어나지 않도록 가운데 고정 */
+html, body { width:100%; }
+body > .shell, .shell {
+  width: min(1160px, calc(100% - 48px)) !important;
+  max-width: 1160px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+#readPage {
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  box-sizing:border-box !important;
+}
+#readPage .page-title, #readPage .topics, #readPage .learning {
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+}
+@media (max-width:600px) {
+  body > .shell, .shell { width:calc(100% - 28px) !important; }
+  #readPage .learning { padding:16px !important; }
+}
+</style>
+
 </head>
 
 <body>
