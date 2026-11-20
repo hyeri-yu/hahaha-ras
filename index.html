@@ -560,7 +560,12 @@ nav button:hover,nav a:hover{background:var(--lavender)}
 }
 .memo-empty{color:#A195A8;font-size:14px}
 
-.section{margin:35px 0 45px}
+/* 교실 선택 영역을 날짜·시간·긍정의 주문 영역과 같은 폭으로 정렬 */
+.section{
+  width:100%;
+  max-width:1160px;
+  margin:35px auto 45px;
+}
 .section h2{
   color:var(--purple);
   font-size:24px;
@@ -1299,6 +1304,12 @@ footer{
 #readPage .answer{background:linear-gradient(145deg,#FFF8ED,#F8F2FA);border:1px solid #F0E4D9}
 #readPage .answer h3{color:#80658E}
 #readPage .meaning{font-size:18px;line-height:1.9;color:#66566F}
+
+/* 교실 선택 영역도 상단 콘텐츠와 동일한 좌우 폭 유지 */
+#homePage > .section { width:100%; max-width:100%; margin-left:auto; margin-right:auto; }
+#homePage > .section > h2,
+#homePage > .section > .courses { width:100%; }
+
 </style>
 </head>
 
@@ -2945,11 +2956,8 @@ function openSafety(){
 }
 
 function sports(){
-  window.open(
-    "https://hahaha.qpfpahffo.workers.dev/",
-    "_blank",
-    "noopener"
-  );
+  // 같은 탭에서 열어 브라우저 뒤로가기로 꿈나라 교실에 돌아올 수 있게 합니다.
+  window.location.href = "https://hahaha.qpfpahffo.workers.dev/";
 }
 
 /* 속담 데이터: 만 3~5세가 생활 속에서 이해하기 쉬운 속담 100개 */
