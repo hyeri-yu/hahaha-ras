@@ -1305,8 +1305,8 @@ footer{
 /* 속담풀이 독립 페이지에서는 홈페이지와 다른 교실 이동 카드 숨기기 */
 #homePage { display: none !important; }
 #readPage { display: block !important; }
-/* 혹시 페이지 안에 남아 있는 교실 선택 카드도 표시하지 않습니다. */
-.courses, .course { display: none !important; }
+/* 홈페이지의 교실 선택 영역과 이동 카드를 모두 숨깁니다. */
+#courseSelectionSection, .courses, .course { display: none !important; }
 </style>
 
 <style>
@@ -1562,7 +1562,8 @@ body > .shell, .shell {
 </section>
 
 <!-- 과목 카드 -->
-<section class="section">
+<section class="section" id="courseSelectionSection">
+<h2>어떤 교실에서 배워볼까요?</h2>
 
 <div class="courses">
 
@@ -1608,9 +1609,9 @@ body > .shell, .shell {
 
 <!-- 속담풀이 -->
 <section id="readPage" class="page">
+<button class="back" onclick="home()">← 꿈나라 교실로 돌아가기</button>
 
 <div class="page-title">
-<p>READ · THINK · SHARE</p>
 <h2>하하하 속담풀이</h2>
 <p>매일 새로운 속담 하나! 그림 힌트를 보고 뜻과 지혜를 배워요.</p>
 </div>
