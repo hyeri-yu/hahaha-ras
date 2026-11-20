@@ -1372,6 +1372,21 @@ body > .shell, .shell {
 }
 </style>
 
+
+<style id="hide-other-class-navigation-final">
+/* 속담교실 상단의 다른 교실 이동 버튼과 색깔 카드 숨김 */
+header nav,
+header nav button,
+header nav a,
+#homePage .courses,
+#homePage .course,
+.courses,
+.course {
+  display: none !important;
+  visibility: hidden !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -1390,7 +1405,7 @@ body > .shell, .shell {
   <span class="brand-sub">READ · ART · SPORTS</span>
 </a>
 
-<nav>
+<nav hidden aria-hidden="true" style="display:none !important;">
 <button onclick="home()">홈</button>
 <button onclick="openRead()">속담풀이</button>
 <button onclick="coming()">명화감상</button>
