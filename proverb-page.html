@@ -1308,12 +1308,36 @@ footer{
 </style>
 
 <style>
-/* 속담교실은 독립 학습 화면: 상단 교실 이동 메뉴와 별도 뒤로가기 버튼은 숨김 */
+/* 속담교실 독립 화면 폭: 바깥 .shell의 좌우 여백을 그대로 따릅니다. */
 header nav { display:none !important; }
-#readPage { display:block !important; width:100%; max-width:1160px; margin:0 auto; padding:20px 0 50px; }
-#readPage .page-title, #readPage .topics, #readPage .learning { width:100%; }
-#readPage .learning { box-sizing:border-box; }
-@media (max-width: 750px) { #readPage { width:100%; } }
+body > .shell {
+  width:min(1160px, 94%);
+  max-width:1160px;
+  margin-left:auto;
+  margin-right:auto;
+}
+#readPage {
+  display:block !important;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  padding:20px 0 50px;
+  box-sizing:border-box;
+}
+#readPage .page-title,
+#readPage .topics,
+#readPage .learning {
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
+}
+#readPage .learning { overflow-wrap:anywhere; }
+@media (max-width:750px) {
+  body > .shell { width:94%; }
+  #readPage { padding-top:16px; }
+}
 </style>
 </head>
 
