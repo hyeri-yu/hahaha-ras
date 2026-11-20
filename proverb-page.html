@@ -1353,11 +1353,13 @@ body > .shell, .shell {
   box-sizing: border-box !important;
 }
 #readPage {
-  width:100% !important;
-  max-width:100% !important;
+  /* #readPage가 .shell 바깥에 있어도 독립적으로 좌우 폭을 제한 */
+  display:block !important;
+  width:min(1160px, calc(100% - 48px)) !important;
+  max-width:1160px !important;
   min-width:0 !important;
-  margin-left:auto !important;
-  margin-right:auto !important;
+  margin:0 auto !important;
+  padding:20px 0 50px !important;
   box-sizing:border-box !important;
 }
 #readPage .page-title, #readPage .topics, #readPage .learning {
@@ -1368,22 +1370,11 @@ body > .shell, .shell {
 }
 @media (max-width:600px) {
   body > .shell, .shell { width:calc(100% - 28px) !important; }
+  #readPage {
+    width:calc(100% - 28px) !important;
+    padding-top:16px !important;
+  }
   #readPage .learning { padding:16px !important; }
-}
-</style>
-
-
-<style id="hide-other-class-navigation-final">
-/* 속담교실 상단의 다른 교실 이동 버튼과 색깔 카드 숨김 */
-header nav,
-header nav button,
-header nav a,
-#homePage .courses,
-#homePage .course,
-.courses,
-.course {
-  display: none !important;
-  visibility: hidden !important;
 }
 </style>
 
@@ -1405,7 +1396,7 @@ header nav a,
   <span class="brand-sub">READ · ART · SPORTS</span>
 </a>
 
-<nav hidden aria-hidden="true" style="display:none !important;">
+<nav>
 <button onclick="home()">홈</button>
 <button onclick="openRead()">속담풀이</button>
 <button onclick="coming()">명화감상</button>
@@ -1572,7 +1563,6 @@ header nav a,
 
 <!-- 과목 카드 -->
 <section class="section">
-<h2>어떤 교실에서 배워볼까요?</h2>
 
 <div class="courses">
 
