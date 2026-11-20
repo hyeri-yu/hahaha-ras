@@ -2931,8 +2931,8 @@ function showPage(id){
 
 function home(){showPage("homePage")}
 function openRead(){
-  showPage("readPage");
-  dailyProverb();
+  // 속담교실은 홈 화면 안에서 펼치지 않고 별도 HTML 페이지로 이동
+  window.location.href = new URL("proverb-page.html", window.location.href).href;
 }
 
 /* 명화감상 교실 연결 */
