@@ -1310,14 +1310,21 @@ footer{
 #homePage > .section > h2,
 #homePage > .section > .courses { width:100%; }
 
-/* 요청사항: 도서관만 최대 1320px로 넓히고, 홈의 교실 이동 카드 영역은 숨김 */
-#libraryPage{
-  width:min(1320px, calc(100vw - 32px));
-  max-width:none;
-  position:relative;
-  left:50%;
-  transform:translateX(-50%);
+/* 최종 조정: 도서관 화면에서는 바깥 shell의 1160px 제한도 해제 */
+body:has(#libraryPage.active) .shell{
+  width:min(1320px, calc(100vw - 32px)) !important;
+  max-width:1320px !important;
 }
+#libraryPage.page.active{
+  width:100% !important;
+  max-width:none !important;
+  position:relative;
+  left:auto !important;
+  transform:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+}
+/* 홈 화면의 교실 이동 카드 영역 숨김 */
 #homePage > .section{display:none !important;}
 
 </style>
